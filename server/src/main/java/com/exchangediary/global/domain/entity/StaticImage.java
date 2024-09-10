@@ -16,6 +16,7 @@ import static lombok.AccessLevel.PROTECTED;
 @AllArgsConstructor(access = PRIVATE)
 public class StaticImage {
     @Id
+    @Column(name="image_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String url;
