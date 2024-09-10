@@ -1,6 +1,5 @@
 package com.exchangediary.diary.domain.entity;
 
-import com.exchangediary.diary.domain.PublicationStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -25,9 +24,9 @@ public class Diary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String writer;
+    private String profileImage;
     private String content;
     @Enumerated(EnumType.STRING)
     private PublicationStatus status;
     private int index;
-    private String profileImage;
 }

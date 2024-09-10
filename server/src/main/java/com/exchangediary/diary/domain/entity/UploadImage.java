@@ -1,6 +1,5 @@
 package com.exchangediary.diary.domain.entity;
 
-import com.exchangediary.diary.domain.PublicationStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

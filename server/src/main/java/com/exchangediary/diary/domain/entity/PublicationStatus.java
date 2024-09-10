@@ -1,4 +1,4 @@
-package com.exchangediary.diary.domain;
+package com.exchangediary.diary.domain.entity;
 
 public enum PublicationStatus {
     DRAFT,
