@@ -1,11 +1,14 @@
 package com.exchangediary.diary.domain.entity;
 
+import com.exchangediary.global.domain.entity.StaticImage;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,4 +32,8 @@ public class Diary {
     @Enumerated(EnumType.STRING)
     private PublicationStatus status;
     private int index;
+    @OneToOne
+    private UploadImage uploadImage;
+    @ManyToOne
+    private StaticImage staticImage;
 }
