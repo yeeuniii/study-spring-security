@@ -1,5 +1,6 @@
 package com.exchangediary.diary.domain.entity;
 
+import com.exchangediary.global.domain.entity.BaseEntity;
 import com.exchangediary.global.domain.entity.StaticImage;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,7 +23,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Builder
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PRIVATE)
-public class Diary {
+public class Diary extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
