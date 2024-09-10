@@ -1,6 +1,9 @@
 package com.exchangediary.diary.domain.entity;
 
+import com.exchangediary.diary.domain.PublicationStatus;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,7 +26,8 @@ public class Diary {
     private Long id;
     private String writer;
     private String content;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private PublicationStatus status;
     private int index;
     private String profileImage;
 }
