@@ -1,5 +1,6 @@
 package com.exchangediary.diary.domain.entity;
 
+import com.exchangediary.global.domain.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Builder
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PRIVATE)
-public class Sticker {
+public class Sticker extends BaseEntity {
     @Id
     @Column(name="sticker_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
