@@ -1,4 +1,4 @@
-package com.exchangediary.global.domain;
+package com.exchangediary.global.domain.entity;
 
 public enum StaticImageType {
     CHARACTER,

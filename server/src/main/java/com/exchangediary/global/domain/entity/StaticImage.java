@@ -1,12 +1,10 @@
-package com.exchangediary.global.domain;
+package com.exchangediary.global.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.annotations.NotFound;
 
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
