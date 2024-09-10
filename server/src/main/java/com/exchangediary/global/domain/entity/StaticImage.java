@@ -14,7 +14,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Builder
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PRIVATE)
-public class StaticImage {
+public class StaticImage extends BaseEntity {
     @Id
     @Column(name="image_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
