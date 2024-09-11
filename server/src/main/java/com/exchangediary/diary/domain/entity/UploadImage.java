@@ -1,6 +1,7 @@
 package com.exchangediary.diary.domain.entity;
 
 import com.exchangediary.global.domain.entity.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,6 +24,7 @@ import static lombok.AccessLevel.PROTECTED;
 public class UploadImage extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "upload_image_id")
     private Long id;
     private String url;
     @Enumerated(EnumType.STRING)
