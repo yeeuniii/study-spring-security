@@ -1,6 +1,7 @@
 package com.exchangediary.diary.domain.entity;
 
 import com.exchangediary.global.domain.entity.BaseEntity;
+import com.exchangediary.global.domain.entity.StaticImage;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,12 +21,18 @@ public class Sticker extends BaseEntity {
     @Column(name="sticker_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private Long diaryId;
     private Double coordX;
     private Double coordY;
     private Integer coordZ;
     private Double width;
     private Double height;
     private Double rotation;
-    private Long imageId;
+
+    @ManyToOne
+    @JoinColumn(name = "diary_id")
+    private Diary diary;
+
+    @ManyToOne
+    @JoinColumn(name = "image_id")
+    private StaticImage staticImage;
 }
