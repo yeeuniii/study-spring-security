@@ -24,19 +24,19 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @Builder
-@NoArgsConstructor(access = PROTECTED)
+@NoArgsConstructor(access = PROTECTED, force = true)
 @AllArgsConstructor(access = PRIVATE)
 public class Diary extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "diary_id")
     private Long id;
-    private String writer;
-    private String profileImage;
+    private final String writer;
+    private final String profileImage;
+    private final Integer index;
     private String content;
     @Enumerated(EnumType.STRING)
     private PublicationStatus status;
-    private Integer index;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "upload_image_id")
     private UploadImage uploadImage;
