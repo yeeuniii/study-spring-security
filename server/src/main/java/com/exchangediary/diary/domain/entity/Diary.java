@@ -40,6 +40,6 @@ public class Diary extends BaseEntity {
     @JoinColumn(name = "upload_image_id")
     private UploadImage uploadImage;
     @ManyToOne
-    @JoinColumn(name = "static_image_id")
+    @JoinColumn(name = "image_id")
     private StaticImage staticImage;
 }
