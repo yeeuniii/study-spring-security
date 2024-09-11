@@ -27,11 +27,9 @@ public class Sticker extends BaseEntity {
     private Double width;
     private Double height;
     private Double rotation;
-
     @ManyToOne
     @JoinColumn(name = "diary_id")
     private Diary diary;
-
     @ManyToOne
     @JoinColumn(name = "image_id")
     private StaticImage staticImage;
