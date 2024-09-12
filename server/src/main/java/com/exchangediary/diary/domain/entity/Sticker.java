@@ -4,6 +4,7 @@ import com.exchangediary.global.domain.entity.BaseEntity;
 import com.exchangediary.global.domain.entity.StaticImage;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,10 +34,10 @@ public class Sticker extends BaseEntity {
     private final Double width;
     private final Double height;
     private final Double rotation;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id")
     private Diary diary;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private StaticImage staticImage;
 }
