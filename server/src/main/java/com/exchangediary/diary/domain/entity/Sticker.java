@@ -36,8 +36,8 @@ public class Sticker extends BaseEntity {
     private final Double rotation;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id")
-    private Diary diary;
+    private final Diary diary;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
-    private StaticImage staticImage;
+    private final StaticImage staticImage;
 }
