@@ -20,19 +20,19 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @Builder
-@NoArgsConstructor(access = PROTECTED)
+@NoArgsConstructor(access = PROTECTED, force = true)
 @AllArgsConstructor(access = PRIVATE)
 public class Sticker extends BaseEntity {
     @Id
     @Column(name="sticker_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private Double coordX;
-    private Double coordY;
-    private Integer coordZ;
-    private Double width;
-    private Double height;
-    private Double rotation;
+    private final Double coordX;
+    private final Double coordY;
+    private final Integer coordZ;
+    private final Double width;
+    private final Double height;
+    private final Double rotation;
     @ManyToOne
     @JoinColumn(name = "diary_id")
     private Diary diary;
