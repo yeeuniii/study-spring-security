@@ -19,14 +19,14 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @Builder
-@NoArgsConstructor(access = PROTECTED)
+@NoArgsConstructor(access = PROTECTED, force = true)
 @AllArgsConstructor(access = PRIVATE)
 public class UploadImage extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "upload_image_id")
     private Long id;
-    private String url;
+    private final String url;
     @Enumerated(EnumType.STRING)
     private PublicationStatus status;
 }
