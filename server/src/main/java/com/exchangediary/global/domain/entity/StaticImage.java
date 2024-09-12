@@ -12,14 +12,14 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter
 @Builder
-@NoArgsConstructor(access = PROTECTED)
+@NoArgsConstructor(access = PROTECTED, force = true)
 @AllArgsConstructor(access = PRIVATE)
 public class StaticImage extends BaseEntity {
     @Id
     @Column(name="image_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String url;
+    private final String url;
     @Enumerated(EnumType.STRING)
-    private StaticImageType type;
+    private final StaticImageType type;
 }
