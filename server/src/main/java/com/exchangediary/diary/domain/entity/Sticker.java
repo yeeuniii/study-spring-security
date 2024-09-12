@@ -25,7 +25,7 @@ import static lombok.AccessLevel.PROTECTED;
 @AllArgsConstructor(access = PRIVATE)
 public class Sticker extends BaseEntity {
     @Id
-    @Column(name="sticker_id")
+    @Column(name = "sticker_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private final Double coordX;
