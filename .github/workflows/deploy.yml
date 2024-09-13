@@ -49,7 +49,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           port: 22
           source: "server/build/libs/*.jar"
-          target: "/home/ec2-user/app/"
+          target: "/home/ec2-user/app/server/build/libs/"
 
       - name: Start Application on EC2
         uses: appleboy/ssh-action@master
@@ -59,4 +59,4 @@ jobs:
           key: ${{ secrets.EC2_KEY }}      # SSH 개인 키
           port: 22
           script: |
-            nohup java -jar /home/ec2-user/app/*.jar --server.port=8080 > app.log 2>&1 &
+            nohup java -jar /home/ec2-user/app/server/build/libs/*.jar --server.port=8080 > /home/ec2-user/app/app.log 2>&1 &
