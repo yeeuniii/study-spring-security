@@ -31,17 +31,7 @@ jobs:
           cd server  # server 디렉토리로 이동
           ./gradlew clean build  # Gradle 빌드 수행
 
-      - name: Upload JAR to EC2
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_KEY }}
-          port: 22
-          source: "server/build/libs/*.jar"
-          target: "/home/ec2-user/app/"
-
-      - name: Deploy to EC2
+      - name: Upload and Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}    # EC2 서버 IP
@@ -52,5 +42,6 @@ jobs:
           script: |
             cd /home/ec2-user/app
             pkill -f 'java -jar' || echo "No app running"
-            rm -rf *.jar
+            rm -rf *.jar  # 기존 JAR 파일 삭제
+            scp -i ~/.ssh/my-key.pem ${{ github.workspace }}/server/build/libs/*.jar ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/app/  # JAR 파일 업로드
             nohup java -jar /home/ec2-user/app/*.jar --server.port=8080 > app.log 2>&1 &
