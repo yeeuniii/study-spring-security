@@ -24,7 +24,6 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: gradle
 
       - name: Build Backend (Spring Boot)
         run: |
@@ -38,7 +37,8 @@ jobs:
           username: ${{ secrets.EC2_USER }}  # EC2 사용자명
           key: ${{ secrets.EC2_KEY }}      # SSH 개인 키
           port: 22
-          timeout: 10m
+          timeout: 3m
+          command_timeout: 10m
           debug: true
           script: |
             cd /home/ec2-user/app
