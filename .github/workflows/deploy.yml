@@ -38,7 +38,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}  # EC2 사용자명
           key: ${{ secrets.EC2_KEY }}      # SSH 개인 키
           port: 22
-          timeout: 120
+          timeout: 120s
           debug: true
           script: |
             cd /home/ec2-user/app
