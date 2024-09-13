@@ -9,6 +9,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      POSTGRESQL_NAME: ${{ secrets.POSTGRESQL_NAME }}
+      POSTGRESQL_USER: ${{ secrets.POSTGRESQL_USER }}
+      POSTGRESQL_PWD: ${{ secrets.POSTGRESQL_PWD }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
