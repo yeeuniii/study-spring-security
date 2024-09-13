@@ -38,11 +38,11 @@ jobs:
           username: ${{ secrets.EC2_USER }}  # EC2 사용자명
           key: ${{ secrets.EC2_KEY }}      # SSH 개인 키
           port: 22
-          timeout: 120s
+          timeout: 10m
           debug: true
           script: |
             cd /home/ec2-user/app
             pkill -f 'java -jar' || echo "No app running"
             rm -rf *.jar
             scp ${{ github.workspace }}/server/build/libs/*.jar ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/app/
-            nohup java -jar /home/ec2-user/app/*.jar --server.port=8080 > /dev/null 2>&1 &
+            nohup java -jar /home/ec2-user/app/*.jar --server.port=8080 > /dev/null 2>&1 & disown
