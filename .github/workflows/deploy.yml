@@ -38,6 +38,8 @@ jobs:
           username: ${{ secrets.EC2_USER }}  # EC2 사용자명
           key: ${{ secrets.EC2_KEY }}      # SSH 개인 키
           port: 22
+          timeout: 120
+          debug: true
           script: |
             cd /home/ec2-user/app
             pkill -f 'java -jar' || echo "No app running"
