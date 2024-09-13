@@ -13,10 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK 21
+      # 2. Java 환경 세팅 (Amazon Corretto JDK 21 사용)
+      - name: Set up JDK 21 (Amazon Corretto)
         uses: actions/setup-java@v2
         with:
-          java-version: '21'  # Java 21로 설정
+          java-version: '21'
+          distribution: 'corretto'
+          cache: gradle
 
       - name: Build Backend (Spring Boot)
         run: |
