@@ -32,7 +32,7 @@ jobs:
           ./gradlew clean build  # Gradle 빌드 수행
 
       - name: Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.3
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}    # EC2 서버 IP
           username: ${{ secrets.EC2_USER }}  # EC2 사용자명
