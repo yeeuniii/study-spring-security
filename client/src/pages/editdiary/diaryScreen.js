@@ -1,15 +1,23 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   View,
-  Text,
-  TextInput,
   StyleSheet,
-  Image,
   Pressable,
-} from 'react-native';
+  ImageBackground,
+  Modal,
+  Text,
+} from "react-native";
+import TopButton from "./components/topButton";
+import Icon from "react-native-vector-icons/Feather";
+import OutputModal from "./components/outputModal";
 
 function DiaryScreen() {
-  const [inputText, setInputText] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [inputText, setInputText] = useState("");
+
+  function onChangeModalVisible() {
+    setModalVisible(!modalVisible);
+  }
 
   function onchangeTextHandler(text) {
     setInputText(text);
@@ -17,41 +25,43 @@ function DiaryScreen() {
 
   const sendToServer = async () => {
     try {
-      const response = await fetch('https://your-backend-api.com/api/data', {
+      const response = await fetch("http://15.164.64.10:8080/", {
         //백엔드 url 필요
         // 백엔드 API URL
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({userInput: inputText}), // 입력값을 JSON으로 변환하여 전송
+        body: JSON.stringify({ userInput: inputText }), // 입력값을 JSON으로 변환하여 전송
       });
 
       const result = await response.json(); // 백엔드로부터 응답 받기
       console.log(result);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   return (
-    <View style={styles.mainContainer}>
-      <Text>2024년 9월 20일</Text>
-      <Image source={require('../../../asset/temp.jpeg')} />
-      <TextInput
-        style={styles.textInputStyle}
-        multiline={true}
-        onChangeText={onchangeTextHandler}
-      />
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.customButtonStyle}>
-          <Text style={styles.buttonText}>임시저장</Text>
-        </Pressable>
-        <Pressable style={styles.customButtonStyle}>
-          <Text style={styles.buttonText}>업로드</Text>
+    <ImageBackground
+      source={require("../editdiary/asset/background.png")}
+      style={styles.imageBackground}
+    >
+      <View style={styles.mainContainer}>
+        <TopButton />
+      </View>
+      <View style={styles.otherButtonContainer}>
+        <View style={styles.textEditContainer}></View>
+        <Pressable style={styles.outputButton} onPress={onChangeModalVisible}>
+          <Icon name={"arrow-up-right"} size={30} />
         </Pressable>
       </View>
-    </View>
+      <OutputModal
+        onChangeModalVisible={onChangeModalVisible}
+        modalVisible={modalVisible}
+        Coment={"일기가 작성되었어요!"}
+      />
+    </ImageBackground>
   );
 }
 
@@ -59,31 +69,31 @@ export default DiaryScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1,
-    justifyContent: 'center', // 세로 중앙 정렬
-    alignItems: 'center',
-    // backgroundColor: '#ccc111',
-  },
-  textInputStyle: {
     // flex: 1,
-    height: 200,
-    width: 300,
-    borderRadius: 8,
-    backgroundColor: '#cccccc',
-    margin: 12,
+    alignItems: "center",
+    margin: 32,
   },
-  customButtonStyle: {
-    height: 24,
-    width: 86,
-    backgroundColor: '#cccccc',
-    margin: 12,
-    borderRadius: 8,
-  },
-  buttonText: {
+  imageBackground: {
     flex: 1,
-    textAlign: 'center',
+    resizeMode: "cover",
   },
-  buttonContainer: {
-    flexDirection: 'row',
+  otherButtonContainer: {
+    // borderWidth: 1,
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
+    marginRight: 22,
+  },
+  textEditContainer: {
+    width: 38,
+    height: 176,
+    borderWidth: 1,
+  },
+  outputButton: {
+    width: 38,
+    height: 38,
+    borderWidth: 0.5,
+    borderRadius: 19,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
