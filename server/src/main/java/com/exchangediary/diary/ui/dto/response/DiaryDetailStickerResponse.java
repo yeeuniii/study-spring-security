@@ -1,7 +1,10 @@
 package com.exchangediary.diary.ui.dto.response;
 
 import com.exchangediary.diary.domain.entity.Sticker;
+import com.exchangediary.global.domain.entity.StaticImage;
 import lombok.Builder;
+
+import java.util.Optional;
 
 @Builder
 public record DiaryDetailStickerResponse (
@@ -23,7 +26,8 @@ public record DiaryDetailStickerResponse (
                 .width(sticker.getWidth())
                 .height(sticker.getHeight())
                 .rotation(sticker.getRotation())
-                .imageUrl("api/images/upload/" + sticker.getStaticImage().getId())
+                .imageUrl(Optional.ofNullable(sticker.getStaticImage()).map(StaticImage::getUrl)
+                        .orElse(null))
                 .build();
     }
 }
