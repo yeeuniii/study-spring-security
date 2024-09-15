@@ -1,9 +1,7 @@
-package com.exchangediary.diary.domain.ui.dto.response;
+package com.exchangediary.diary.ui.dto.response;
 
 import com.exchangediary.diary.domain.entity.Sticker;
 import lombok.Builder;
-
-import java.util.List;
 
 @Builder
 public record DiaryDetailStickerResponse (
@@ -25,7 +23,7 @@ public record DiaryDetailStickerResponse (
                 .width(sticker.getWidth())
                 .height(sticker.getHeight())
                 .rotation(sticker.getRotation())
-                .imageUrl(sticker.getStaticImage().getUrl())
+                .imageUrl("api/images/upload/" + sticker.getStaticImage().getId())
                 .build();
     }
 }

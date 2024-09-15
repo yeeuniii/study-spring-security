@@ -27,8 +27,16 @@ public class UploadImage extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "upload_image_id")
     private Long id;
+    private final String filename;
+    private final String contentType;
     @Lob
-    private final byte[] url;
+    @Column(name = "image", columnDefinition = "bytea")
+    private final byte[] image;
+    private String url;
     @Enumerated(EnumType.STRING)
     private PublicationStatus status;
+
+    public void generateImageUrl(String url) {
+        this.url = url;
+    }
 }

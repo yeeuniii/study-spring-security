@@ -1,7 +1,10 @@
-package com.exchangediary.diary.domain.ui.dto.response;
+package com.exchangediary.diary.ui.dto.response;
 
 import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.entity.Sticker;
+import com.exchangediary.diary.domain.entity.UploadImage;
+import com.exchangediary.global.domain.entity.StaticImage;
+import com.exchangediary.global.util.DateTimeUtil;
 import lombok.Builder;
 
 import java.util.List;
@@ -24,9 +27,11 @@ public record DiaryDetailResponse(
 
         return DiaryDetailResponse.builder()
                 .diaryId(diary.getId())
-                .createdAt(diary.getCreatedAt().toString())
-                .todayMoodUrl(diary.getMoodImage().getUrl())
-                .imageUrl(Optional.ofNullable(diary.getUploadImage().getUrl()).orElse(null))
+                .createdAt(DateTimeUtil.KOREAN_DATE_FORMAT.format(diary.getCreatedAt()))
+                .todayMoodUrl(Optional.ofNullable(diary.getMoodImage()).map(StaticImage::getUrl)
+                        .orElse(null))
+                .imageUrl(Optional.ofNullable(diary.getUploadImage()).map(UploadImage::getUrl)
+                        .orElse(null))
                 .content(diary.getContent())
                 .stickers(Optional.ofNullable(stickersResponse).orElse(null))
                 .build();

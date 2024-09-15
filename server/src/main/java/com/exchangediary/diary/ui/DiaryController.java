@@ -1,9 +1,8 @@
-package com.exchangediary.diary.domain.ui;
+package com.exchangediary.diary.ui;
 
-import com.exchangediary.diary.domain.service.DiaryQueryService;
-import com.exchangediary.diary.domain.ui.dto.response.DiaryDetailResponse;
+import com.exchangediary.diary.service.DiaryQueryService;
+import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

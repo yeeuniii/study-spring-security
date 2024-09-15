@@ -41,6 +41,6 @@ public class Diary extends BaseEntity {
     @JoinColumn(name = "upload_image_id")
     private UploadImage uploadImage;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_id")
+    @JoinColumn(name = "mood_image_id")
     private StaticImage moodImage;
 }

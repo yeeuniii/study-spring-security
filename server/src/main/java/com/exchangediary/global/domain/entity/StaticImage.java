@@ -26,8 +26,16 @@ public class StaticImage extends BaseEntity {
     @Column(name = "image_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private final String filename;
+    private final String contentType;
     @Lob
-    private final byte[] url;
+    @Column(name = "image", columnDefinition = "bytea")
+    private final byte[] image;
+    private String url;
     @Enumerated(EnumType.STRING)
     private final StaticImageType type;
+
+    public void generateImageUrl(String url) {
+        this.url = url;
+    }
 }
