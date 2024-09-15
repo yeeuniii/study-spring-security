@@ -83,7 +83,6 @@ export default DiaryScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    // flex: 1,
     alignItems: "center",
     margin: 32,
   },
@@ -92,7 +91,6 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   otherButtonContainer: {
-    // borderWidth: 1,
     alignItems: "flex-end",
     justifyContent: "flex-end",
     marginRight: 22,

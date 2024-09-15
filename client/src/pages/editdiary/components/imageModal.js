@@ -1,10 +1,50 @@
 import React from "react";
 import { View, Text, StyleSheet, Modal, Pressable } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
-import * as Animatable from "react-native-animatable";
+import * as ImagePicker from "react-native-image-picker";
 
 function ImageModal({ imageModalVisible, onChangeImageModalVisible }) {
   if (imageModalVisible === undefined) imageModalVisible = false;
+
+  const openGallery = () => {
+    const options = {
+      mediaType: "photo",
+      includeBase64: false,
+    };
+
+    ImagePicker.launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (response.errorCode) {
+        console.log("ImagePicker Error: ", response.errorMessage);
+      } else {
+        console.log("Gallery Response:", response);
+        // 갤러리에서 선택한 이미지를 처리할 수 있습니다.
+      }
+      onChangeImageModalVisible(); // 모달 닫기
+    });
+  };
+
+  const openCamera = () => {
+    const options = {
+      mediaType: "photo",
+      saveToPhotos: true,
+      cameraType: "back",
+    };
+
+    ImagePicker.launchCamera(options, (response) => {
+      if (response.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (response.errorCode) {
+        console.log("ImagePicker Error: ", response.errorCode);
+      } else {
+        console.log("Image URI: ", response.assets[0].uri);
+        // 이미지 데이터를 가져오고 싶은 경우 response.assets[0]에 접근 가능
+      }
+      onChangeImageModalVisible(); // 모달 닫기
+    });
+  };
+
   return (
     <Modal
       animationType="fade"
@@ -17,14 +57,11 @@ function ImageModal({ imageModalVisible, onChangeImageModalVisible }) {
           <Text style={styles.textStyle}>입력할 방법을 선택해주세요.</Text>
           <View style={styles.separator}></View>
           <View style={styles.centerContainer}>
-            <Pressable
-              style={styles.buttonStyle}
-              onPress={onChangeImageModalVisible}
-            >
+            <Pressable style={styles.buttonStyle} onPress={openCamera}>
               <Icon name="camera" size={50} />
               <Text>카메라</Text>
             </Pressable>
-            <Pressable style={styles.buttonStyle}>
+            <Pressable style={styles.buttonStyle} onPress={openGallery}>
               <Icon name="film" size={50} />
               <Text>갤러리</Text>
             </Pressable>
@@ -41,7 +78,6 @@ const styles = StyleSheet.create({
   modalContainer: {
     width: "100%",
     height: "22%",
-    // borderWidth: 1,
     backgroundColor: "white",
   },
   imageModalOverLay: {
@@ -65,8 +101,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-around",
-    // borderWidth: 1,
-    // alignItems: "center", // 부모 컨테이너에서 중앙 정렬
   },
   buttonStyle: {
     alignItems: "center",
