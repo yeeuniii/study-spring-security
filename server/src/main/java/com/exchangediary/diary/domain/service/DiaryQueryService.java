@@ -1,10 +1,31 @@
 package com.exchangediary.diary.domain.service;
 
+import com.exchangediary.diary.domain.entity.Diary;
+import com.exchangediary.diary.domain.entity.DiaryRepository;
+import com.exchangediary.diary.domain.entity.Sticker;
+import com.exchangediary.diary.domain.entity.StickerRepository;
+import com.exchangediary.diary.domain.ui.dto.response.DiaryDetailResponse;
+import com.exchangediary.global.domain.entity.StaticImage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
+@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class DiaryQueryService {
+    private final DiaryRepository diaryRepository;
+    private final StickerRepository stickerRepository;
 
+    public DiaryDetailResponse viewDetail(Long diaryId) {
+        // exception 핸들러 추가 시 orElseThrow로 수정
+        Diary diary = diaryRepository.findById(diaryId).orElse(null);
+        if (diary == null) {
+            return null;
+        }
+        List<Sticker> stickers = stickerRepository.findByDiary(diary);
+        return DiaryDetailResponse.from(diary, stickers);
+    }
 }

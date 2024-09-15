@@ -31,9 +31,9 @@ public class Diary extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "diary_id")
     private Long id;
-    private final String writer;
-    private final String profileImage;
-    private final Integer index;
+//    private final String writer;
+//    private final String profileImage;
+//    private final Integer index;
     private String content;
     @Enumerated(EnumType.STRING)
     private PublicationStatus status;

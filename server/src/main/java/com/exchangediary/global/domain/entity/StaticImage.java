@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,8 @@ public class StaticImage extends BaseEntity {
     @Column(name = "image_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private final String url;
+    @Lob
+    private final byte[] url;
     @Enumerated(EnumType.STRING)
     private final StaticImageType type;
 }
