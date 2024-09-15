@@ -3,7 +3,11 @@ import { View, Text, StyleSheet, Modal, Pressable } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import * as ImagePicker from "react-native-image-picker";
 
-function ImageModal({ imageModalVisible, onChangeImageModalVisible }) {
+function ImageModal({
+  imageModalVisible,
+  onChangeImageModalVisible,
+  setSelectImage,
+}) {
   if (imageModalVisible === undefined) imageModalVisible = false;
 
   const openGallery = () => {
@@ -19,6 +23,7 @@ function ImageModal({ imageModalVisible, onChangeImageModalVisible }) {
         console.log("ImagePicker Error: ", response.errorMessage);
       } else {
         console.log("Gallery Response:", response);
+        setSelectImage(response.assets[0]);
       }
       onChangeImageModalVisible();
     });
@@ -38,6 +43,7 @@ function ImageModal({ imageModalVisible, onChangeImageModalVisible }) {
         console.log("ImagePicker Error: ", response.errorCode);
       } else {
         console.log("Image URI: ", response.assets[0].uri);
+        setSelectImage(response.assets[0]);
       }
       onChangeImageModalVisible();
     });

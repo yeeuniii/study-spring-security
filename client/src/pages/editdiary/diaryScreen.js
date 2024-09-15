@@ -4,8 +4,7 @@ import {
   StyleSheet,
   Pressable,
   ImageBackground,
-  Modal,
-  Text,
+  Image,
 } from "react-native";
 import TopButton from "./components/topButton";
 import Icon from "react-native-vector-icons/Feather";
@@ -16,6 +15,7 @@ function DiaryScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [inputText, setInputText] = useState("");
   const [imageModalVisible, setImageModalVisible] = useState(false);
+  const [selectImage, setSelectImage] = useState(null);
 
   function onChangeImageModalVisible() {
     setImageModalVisible(!imageModalVisible);
@@ -56,6 +56,9 @@ function DiaryScreen() {
       <View style={styles.mainContainer}>
         <TopButton />
       </View>
+      {selectImage && (
+        <Image source={{ uri: selectImage.uri }} style={styles.imagePreview} />
+      )}
       <View style={styles.otherButtonContainer}>
         <View style={styles.textEditContainer}>
           <Pressable onPress={onChangeImageModalVisible}>
@@ -69,6 +72,7 @@ function DiaryScreen() {
       <ImageModal
         imageModalVisible={imageModalVisible}
         onChangeImageModalVisible={onChangeImageModalVisible}
+        setSelectImage={setSelectImage}
       />
       <OutputModal
         onChangeModalVisible={onChangeModalVisible}
@@ -121,5 +125,9 @@ const styles = StyleSheet.create({
   imageModalOverLay: {
     flex: 1,
     justifyContent: "flex-end",
+  },
+  imagePreview: {
+    width: 100,
+    height: 100,
   },
 });
