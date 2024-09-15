@@ -13,14 +13,14 @@ public record DiaryRequest (
         Long todayMoodId
         //String imageUrl
 ) {
-    public Diary toEntity(StaticImage moodImage, UploadImage uploadImage) {
+    public Diary toEntity(StaticImage moodImage) { //Todo: 매개변수 uploadImage 추가
         LocalDateTime parsedCreatedAt = LocalDateTime.parse(createdAt, DateTimeFormatter.ofPattern("yyyy년 M월 d일"));
 
         return Diary.builder()
                 .createdAt(parsedCreatedAt)
                 .content(content)
                 .moodImage(moodImage)
-                //.imageUrl(uploadImage)
+                //.uploadImage(uploadImage)
                 .build();
     }
 }
