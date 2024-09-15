@@ -1,5 +1,6 @@
 package com.exchangediary.diary.domain.entity;
 
+import com.exchangediary.diary.ui.dto.request.StickerRequest;
 import com.exchangediary.global.domain.entity.BaseEntity;
 import com.exchangediary.global.domain.entity.StaticImage;
 import jakarta.persistence.Column;
@@ -40,4 +41,20 @@ public class Sticker extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private final StaticImage staticImage;
+
+    public static Sticker of(
+            StickerRequest stickerRequest,
+            int coordZ,
+            Diary diary,
+            StaticImage staticImage) {
+        return Sticker.builder()
+                .coordX(stickerRequest.coordX())
+                .coordY(stickerRequest.coordY())
+                .coordZ(coordZ)
+                .width(stickerRequest.width())
+                .height(stickerRequest.height())
+                .diary(diary)
+                .staticImage(staticImage)
+                .build();
+    }
 }
