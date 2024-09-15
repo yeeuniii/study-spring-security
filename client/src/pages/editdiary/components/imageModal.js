@@ -19,9 +19,8 @@ function ImageModal({ imageModalVisible, onChangeImageModalVisible }) {
         console.log("ImagePicker Error: ", response.errorMessage);
       } else {
         console.log("Gallery Response:", response);
-        // 갤러리에서 선택한 이미지를 처리할 수 있습니다.
       }
-      onChangeImageModalVisible(); // 모달 닫기
+      onChangeImageModalVisible();
     });
   };
 
@@ -39,9 +38,8 @@ function ImageModal({ imageModalVisible, onChangeImageModalVisible }) {
         console.log("ImagePicker Error: ", response.errorCode);
       } else {
         console.log("Image URI: ", response.assets[0].uri);
-        // 이미지 데이터를 가져오고 싶은 경우 response.assets[0]에 접근 가능
       }
-      onChangeImageModalVisible(); // 모달 닫기
+      onChangeImageModalVisible();
     });
   };
 
