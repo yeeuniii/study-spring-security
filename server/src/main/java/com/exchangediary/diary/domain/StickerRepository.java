@@ -1,4 +1,4 @@
-package com.exchangediary.diary.service;
+package com.exchangediary.diary.domain;
 
 import com.exchangediary.diary.domain.entity.Sticker;
 import org.springframework.data.repository.CrudRepository;
