@@ -56,18 +56,23 @@ function DiaryScreen() {
       <View style={styles.mainContainer}>
         <TopButton />
       </View>
-      {selectImage && (
-        <Image source={{ uri: selectImage.uri }} style={styles.imagePreview} />
-      )}
       <View style={styles.otherButtonContainer}>
-        <View style={styles.textEditContainer}>
-          <Pressable onPress={onChangeImageModalVisible}>
-            <Icon name={"image"} size={30} />
+        {selectImage && (
+          <Image
+            source={{ uri: selectImage.uri }}
+            style={styles.imagePreview}
+          />
+        )}
+        <View styles={styles.centerContainer}>
+          <View style={styles.textEditContainer}>
+            <Pressable onPress={onChangeImageModalVisible}>
+              <Icon name={"image"} size={30} />
+            </Pressable>
+          </View>
+          <Pressable style={styles.outputButton} onPress={onChangeModalVisible}>
+            <Icon name={"arrow-up-right"} size={30} />
           </Pressable>
         </View>
-        <Pressable style={styles.outputButton} onPress={onChangeModalVisible}>
-          <Icon name={"arrow-up-right"} size={30} />
-        </Pressable>
       </View>
       <ImageModal
         imageModalVisible={imageModalVisible}
@@ -98,6 +103,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "flex-end",
     marginRight: 22,
+    flexDirection: "row",
   },
   textEditContainer: {
     width: 38,
@@ -127,7 +133,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   imagePreview: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
+    marginRight: 100,
+    marginBottom: 30,
+  },
+  centerContainer: {
+    flex: 1,
+    flexDirection: "row",
   },
 });
