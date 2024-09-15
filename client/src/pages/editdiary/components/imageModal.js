@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Modal, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Modal,
+  Pressable,
+  TouchableWithoutFeedback,
+} from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import * as ImagePicker from "react-native-image-picker";
 
@@ -9,6 +16,10 @@ function ImageModal({
   setSelectImage,
 }) {
   if (imageModalVisible === undefined) imageModalVisible = false;
+
+  const handleCloseModal = () => {
+    onChangeImageModalVisible(); // 모달을 닫는 콜백 호출
+  };
 
   const openGallery = () => {
     const options = {
@@ -56,22 +67,24 @@ function ImageModal({
       visible={imageModalVisible}
       onRequestClose={onChangeImageModalVisible}
     >
-      <View style={styles.imageModalOverLay}>
-        <View style={styles.modalContainer}>
-          <Text style={styles.textStyle}>입력할 방법을 선택해주세요.</Text>
-          <View style={styles.separator}></View>
-          <View style={styles.centerContainer}>
-            <Pressable style={styles.buttonStyle} onPress={openCamera}>
-              <Icon name="camera" size={50} />
-              <Text>카메라</Text>
-            </Pressable>
-            <Pressable style={styles.buttonStyle} onPress={openGallery}>
-              <Icon name="film" size={50} />
-              <Text>갤러리</Text>
-            </Pressable>
+      <TouchableWithoutFeedback onPress={handleCloseModal}>
+        <View style={styles.imageModalOverLay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.textStyle}>입력할 방법을 선택해주세요.</Text>
+            <View style={styles.separator}></View>
+            <View style={styles.centerContainer}>
+              <Pressable style={styles.buttonStyle} onPress={openCamera}>
+                <Icon name="camera" size={50} />
+                <Text>카메라</Text>
+              </Pressable>
+              <Pressable style={styles.buttonStyle} onPress={openGallery}>
+                <Icon name="film" size={50} />
+                <Text>갤러리</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 }
