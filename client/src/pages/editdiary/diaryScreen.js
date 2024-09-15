@@ -10,10 +10,16 @@ import {
 import TopButton from "./components/topButton";
 import Icon from "react-native-vector-icons/Feather";
 import OutputModal from "./components/outputModal";
+import ImageModal from "./components/imageModal";
 
 function DiaryScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [inputText, setInputText] = useState("");
+  const [imageModalVisible, setImageModalVisible] = useState(false);
+
+  function onChangeImageModalVisible() {
+    setImageModalVisible(!imageModalVisible);
+  }
 
   function onChangeModalVisible() {
     setModalVisible(!modalVisible);
@@ -51,11 +57,19 @@ function DiaryScreen() {
         <TopButton />
       </View>
       <View style={styles.otherButtonContainer}>
-        <View style={styles.textEditContainer}></View>
+        <View style={styles.textEditContainer}>
+          <Pressable onPress={onChangeImageModalVisible}>
+            <Icon name={"image"} size={30} />
+          </Pressable>
+        </View>
         <Pressable style={styles.outputButton} onPress={onChangeModalVisible}>
           <Icon name={"arrow-up-right"} size={30} />
         </Pressable>
       </View>
+      <ImageModal
+        imageModalVisible={imageModalVisible}
+        onChangeImageModalVisible={onChangeImageModalVisible}
+      />
       <OutputModal
         onChangeModalVisible={onChangeModalVisible}
         modalVisible={modalVisible}
@@ -87,6 +101,10 @@ const styles = StyleSheet.create({
     width: 38,
     height: 176,
     borderWidth: 1,
+    borderRadius: 19,
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
   },
   outputButton: {
     width: 38,
@@ -95,5 +113,15 @@ const styles = StyleSheet.create({
     borderRadius: 19,
     alignItems: "center",
     justifyContent: "center",
+  },
+  modalContainer: {
+    width: "100%",
+    height: 150,
+    borderWidth: 1,
+    backgroundColor: "white",
+  },
+  imageModalOverLay: {
+    flex: 1,
+    justifyContent: "flex-end",
   },
 });
