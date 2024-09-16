@@ -1,13 +1,15 @@
 package com.exchangediary.diary.ui.dto.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
+@Builder
 public class UploadImageRequest {
     private MultipartFile file;
 }

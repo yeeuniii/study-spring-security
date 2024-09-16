@@ -35,8 +35,9 @@ public class DiaryController {
             @RequestPart(name = "data") DiaryRequest diaryRequest,
             @RequestPart(name = "file", required = false) MultipartFile file) {
 
-        UploadImageRequest uploadImageRequest = new UploadImageRequest();
-        uploadImageRequest.setFile(file);
+        UploadImageRequest uploadImageRequest = UploadImageRequest.builder()
+                .file(file)
+                .build();
 
         Diary diary = diaryCommandService.createDiary(diaryRequest, uploadImageRequest);
         return ResponseEntity
