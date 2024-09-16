@@ -32,7 +32,7 @@ public class DiaryController {
 
     @PostMapping
     public ResponseEntity<Long> createDiary(
-            @RequestPart(name = "data") DiaryRequest diaryRequest,
+            @Valid @RequestPart(name = "data") DiaryRequest diaryRequest,
             @RequestPart(name = "file", required = false) MultipartFile file) {
 
         UploadImageRequest uploadImageRequest = UploadImageRequest.builder()
