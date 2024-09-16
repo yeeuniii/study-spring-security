@@ -14,7 +14,10 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/stack": "^6.4.1",
     "react": "17.0.2",
-    "react-native": "0.68.2"
+    "react-native": "^0.68.7",
+    "react-native-pell-rich-editor": "^1.9.0",
+    "react-native-vector-icons": "^10.1.0",
+    "react-native-webview": "^13.12.2"
   },
   "devDependencies": {
     "@babel/core": "7.25.2",
