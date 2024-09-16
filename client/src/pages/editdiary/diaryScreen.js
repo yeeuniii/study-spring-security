@@ -100,7 +100,9 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   otherButtonContainer: {
-    alignItems: "flex-end",
+    flex: 1,
+    borderWidth: 1,
+    // alignItems: "flex-end",
     justifyContent: "flex-end",
     marginRight: 22,
     flexDirection: "row",
@@ -133,9 +135,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   imagePreview: {
-    width: 150,
-    height: 150,
-    marginRight: 100,
+    width: 200,
+    height: 200,
+    marginRight: 75,
+    // marginTop: 30,
     marginBottom: 30,
   },
   centerContainer: {

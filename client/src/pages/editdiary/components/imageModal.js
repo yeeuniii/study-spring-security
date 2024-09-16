@@ -29,11 +29,11 @@ function ImageModal({
 
     ImagePicker.launchImageLibrary(options, (response) => {
       if (response.didCancel) {
-        console.log("User cancelled image picker");
+        // console.log("User cancelled image picker");
       } else if (response.errorCode) {
-        console.log("ImagePicker Error: ", response.errorMessage);
+        // console.log("ImagePicker Error: ", response.errorMessage);
       } else {
-        console.log("Gallery Response:", response);
+        // console.log("Gallery Response:", response);
         setSelectImage(response.assets[0]);
       }
       onChangeImageModalVisible();
@@ -67,6 +67,7 @@ function ImageModal({
       visible={imageModalVisible}
       onRequestClose={onChangeImageModalVisible}
     >
+      {/* 화면 다른 부분을 터치했을때 모달이 닫히게 함 */}
       <TouchableWithoutFeedback onPress={handleCloseModal}>
         <View style={styles.imageModalOverLay}>
           <View style={styles.modalContainer}>
