@@ -14,7 +14,8 @@ public record DiaryRequest (
         //String imageUrl
 ) {
     public Diary toEntity(StaticImage moodImage) { //Todo: 매개변수 uploadImage 추가
-        LocalDateTime parsedCreatedAt = LocalDateTime.parse(createdAt, DateTimeFormatter.ofPattern("yyyy년 M월 d일"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일 H:mm:ss");
+        LocalDateTime parsedCreatedAt = LocalDateTime.parse(createdAt, formatter);
 
         return Diary.builder()
                 .createdAt(parsedCreatedAt)
