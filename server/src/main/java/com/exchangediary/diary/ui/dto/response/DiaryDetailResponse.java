@@ -21,11 +21,8 @@ public record DiaryDetailResponse(
         ) {
     public static DiaryDetailResponse of (Diary diary, List<Sticker> stickers) {
         List<DiaryDetailStickerResponse> stickersResponse = convertStickersResponse(stickers);
-
         String todayMoodUrl = extractTodayMoodImageUrl(diary);
-
         String imageUrl = extractImageUrl(diary);
-
         List<DiaryDetailStickerResponse> stickerList = extractStickers(stickersResponse);
 
         return DiaryDetailResponse.builder()
