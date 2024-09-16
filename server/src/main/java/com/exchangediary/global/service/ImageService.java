@@ -56,25 +56,25 @@ public class ImageService {
      * @return
      * @throws IOException
      */
-//    public StaticImage saveStaticImage(MultipartFile file, StaticImageType type)
-//            throws IOException {
-//        String extension = file.getOriginalFilename().substring(file.getOriginalFilename()
-//                .lastIndexOf("."));
-//        String newFilename = "/api/images/static/" + UUID.randomUUID().toString() + extension;;
-//
-//        StaticImage image = StaticImage.builder()
-//                .contentType(file.getContentType())
-//                .filename(newFilename)
-//                .image(file.getBytes())
-//                .type(type)
-//                .build();
-//
-//        StaticImage save = staticImageRepository.save(image);
-//        save.generateImageUrl("/api/images/static/" + save.getId());
-//        return save;
-//    }
-//
-//    public Optional<StaticImage> getStaticImage(Long id){
-//        return staticImageRepository.findById(id);
-//    }
+    public StaticImage saveStaticImage(MultipartFile file, StaticImageType type)
+            throws IOException {
+        String extension = file.getOriginalFilename().substring(file.getOriginalFilename()
+                .lastIndexOf("."));
+        String newFilename = "/api/images/static/" + UUID.randomUUID().toString() + extension;;
+
+        StaticImage image = StaticImage.builder()
+                .contentType(file.getContentType())
+                .filename(newFilename)
+                .image(file.getBytes())
+                .type(type)
+                .build();
+
+        StaticImage save = staticImageRepository.save(image);
+        save.generateImageUrl("/api/images/static/" + save.getId());
+        return save;
+    }
+
+    public Optional<StaticImage> getStaticImage(Long id){
+        return staticImageRepository.findById(id);
+    }
 }

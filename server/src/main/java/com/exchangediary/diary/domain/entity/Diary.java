@@ -34,9 +34,9 @@ public class Diary extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "diary_id")
     private Long id;
-    private final String writer;
-    private final String profileImage;
-    private final Integer index;
+//    private final String writer;
+//    private final String profileImage;
+//    private final Integer index;
     private String content;
     @Enumerated(EnumType.STRING)
     private PublicationStatus status;
@@ -44,6 +44,6 @@ public class Diary extends BaseEntity {
     @JoinColumn(name = "upload_image_id")
     private UploadImage uploadImage;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_id")
+    @JoinColumn(name = "mood_image_id")
     private StaticImage moodImage;
 }
