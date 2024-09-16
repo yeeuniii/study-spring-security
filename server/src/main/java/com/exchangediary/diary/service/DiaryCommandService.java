@@ -23,12 +23,11 @@ import java.io.IOException;
 public class DiaryCommandService {
     private final DiaryRepository diaryRepository;
     private final StaticImageRepository staticImageRepository;
-    private final UploadImageRepository uploadImageRepository;
     private final ImageService imageService;
 
     public Diary createDiary(DiaryRequest diaryRequest, UploadImageRequest uploadImageRequest) {
-        StaticImage moodImage =
-                staticImageRepository.findById(diaryRequest.todayMoodId()).orElse(null);
+        StaticImage moodImage = staticImageRepository.findById(diaryRequest.todayMoodId())
+                .orElse(null); // ToDo: 아이디 못 찾는 경우 예외처리
         UploadImage uploadImage = null;
         MultipartFile file = uploadImageRequest.getFile();
         if (file != null && !file.isEmpty()) {
