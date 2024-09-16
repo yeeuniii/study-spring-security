@@ -9,7 +9,6 @@ import lombok.Builder;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Builder
 public record DiaryDetailResponse(
@@ -21,18 +20,10 @@ public record DiaryDetailResponse(
         List<DiaryDetailStickerResponse> stickers
         ) {
     public static DiaryDetailResponse of (Diary diary, List<Sticker> stickers) {
-        List<DiaryDetailStickerResponse> stickersResponse = stickers.stream()
-                .map(DiaryDetailStickerResponse::from)
-                .collect(Collectors.toList());
-
-        String todayMoodUrl = Optional.ofNullable(diary.getMoodImage()).map(StaticImage::getUrl)
-                .orElse(null);
-
-        String imageUrl = Optional.ofNullable(diary.getUploadImage()).map(UploadImage::getUrl)
-                .orElse(null);
-
-        List<DiaryDetailStickerResponse> stickerList = Optional.ofNullable(stickersResponse)
-                .orElse(null);
+        List<DiaryDetailStickerResponse> stickersResponse = convertStickersResponse(stickers);
+        String todayMoodUrl = extractTodayMoodImageUrl(diary);
+        String imageUrl = extractImageUrl(diary);
+        List<DiaryDetailStickerResponse> stickerList = extractStickers(stickersResponse);
 
         return DiaryDetailResponse.builder()
                 .diaryId(diary.getId())
@@ -42,5 +33,31 @@ public record DiaryDetailResponse(
                 .content(diary.getContent())
                 .stickers(stickerList)
                 .build();
+    }
+
+    private static List<DiaryDetailStickerResponse> extractStickers(
+            List<DiaryDetailStickerResponse> stickersResponse) {
+        List<DiaryDetailStickerResponse> stickerList = Optional.ofNullable(stickersResponse)
+                .orElse(null);
+        return stickerList;
+    }
+
+    private static String extractImageUrl(Diary diary) {
+        String imageUrl = Optional.ofNullable(diary.getUploadImage()).map(UploadImage::getUrl)
+                .orElse(null);
+        return imageUrl;
+    }
+
+    private static String extractTodayMoodImageUrl(Diary diary) {
+        String todayMoodUrl = Optional.ofNullable(diary.getMoodImage()).map(StaticImage::getUrl)
+                .orElse(null);
+        return todayMoodUrl;
+    }
+
+    private static List<DiaryDetailStickerResponse> convertStickersResponse(List<Sticker> stickers) {
+        List<DiaryDetailStickerResponse> stickersResponse = stickers.stream()
+                .map(DiaryDetailStickerResponse::from)
+                .toList();
+        return stickersResponse;
     }
 }
