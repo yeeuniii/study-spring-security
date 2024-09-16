@@ -39,7 +39,9 @@ public class DiaryController {
         uploadImageRequest.setFile(file);
 
         Diary diary = diaryCommandService.createDiary(diaryRequest, uploadImageRequest);
-        return ResponseEntity.created(URI.create(String.format("/diary/%d/", diary.getId()))).body(diary.getId());
+        return ResponseEntity
+                .created(URI.create(String.format("/diary/%d/", diary.getId())))
+                .body(diary.getId());
     }
 
     @GetMapping("/{diaryId}")
