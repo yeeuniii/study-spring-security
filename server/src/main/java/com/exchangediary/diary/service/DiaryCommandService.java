@@ -17,8 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class DiaryCommandService {
     private final DiaryRepository diaryRepository;
