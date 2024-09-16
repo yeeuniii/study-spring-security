@@ -39,7 +39,7 @@ public class DiaryCommandService {
                 throw new RuntimeException("Error saving upload image", e);
             }
         }
-        Diary diary = diaryRequest.toEntity(moodImage, uploadImage);
+        Diary diary = Diary.of(diaryRequest, moodImage, uploadImage);
         return diaryRepository.save(diary);
     }
 }

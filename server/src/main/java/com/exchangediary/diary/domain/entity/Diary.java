@@ -1,5 +1,6 @@
 package com.exchangediary.diary.domain.entity;
 
+import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.global.domain.entity.BaseEntity;
 import com.exchangediary.global.domain.entity.StaticImage;
 import jakarta.persistence.Column;
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
@@ -46,4 +48,12 @@ public class Diary extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mood_image_id")
     private StaticImage moodImage;
+
+    public static Diary of(DiaryRequest diaryRequest, StaticImage moodImage, UploadImage uploadImage) {
+        return Diary.builder()
+                .content(diaryRequest.content())
+                .moodImage(moodImage)
+                .uploadImage(uploadImage)
+                .build();
+    }
 }
