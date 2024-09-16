@@ -4,6 +4,7 @@ import com.exchangediary.diary.domain.entity.UploadImage;
 import com.exchangediary.global.domain.entity.StaticImage;
 import com.exchangediary.global.service.ImageService;
 import com.exchangediary.global.service.StaticImageQueryService;
+import com.exchangediary.global.ui.dto.response.MoodsResponse;
 import com.exchangediary.global.ui.dto.response.StickersResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +29,14 @@ public class StaticImageController {
         return ResponseEntity
                 .ok()
                 .body(stickers);
+    }
+
+    @GetMapping("moods")
+    public ResponseEntity<MoodsResponse> findMoods() {
+        MoodsResponse moods = staticImageQueryService.findMoods();
+        return ResponseEntity
+                .ok()
+                .body(moods);
     }
 
     @GetMapping("api/images/upload/{id}")
