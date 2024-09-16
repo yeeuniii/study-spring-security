@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
   otherButtonContainer: {
     flex: 1,
     borderWidth: 1,
-    // alignItems: "flex-end",
     justifyContent: "flex-end",
     marginRight: 22,
     flexDirection: "row",
@@ -110,7 +109,6 @@ const styles = StyleSheet.create({
   textEditContainer: {
     width: 38,
     height: 176,
-    borderWidth: 1,
     borderRadius: 19,
     backgroundColor: "white",
     alignItems: "center",
@@ -138,7 +136,6 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     marginRight: 75,
-    // marginTop: 30,
     marginBottom: 30,
   },
   centerContainer: {
