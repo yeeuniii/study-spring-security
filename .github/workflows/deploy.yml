@@ -62,9 +62,15 @@ jobs:
             pkill -f 'java -jar' || echo "No app running"
             rm -rf *.jar
 
-      - name: Copy JAR to EC2
-        run: |
-          scp -i ${{ secrets.EC2_KEY }} ${{ github.workspace }}/server/build/libs/*.jar ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/app/
+      - name: Deploy Prod use SCP
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          port: 22
+          source: "./server/build/libs/*.jar"
+          target: "/home/ec2-user/app"
 
       - name: Start Application on EC2
         uses: appleboy/ssh-action@v0.1.3
