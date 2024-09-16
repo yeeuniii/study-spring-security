@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,7 +27,16 @@ public class UploadImage extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "upload_image_id")
     private Long id;
-    private final String url;
+    private final String filename;
+    private final String contentType;
+    @Lob
+    @Column(name = "image", columnDefinition = "bytea")
+    private final byte[] image;
+    private String url;
     @Enumerated(EnumType.STRING)
     private PublicationStatus status;
+
+    public void generateImageUrl(String url) {
+        this.url = url;
+    }
 }
