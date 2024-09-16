@@ -6,13 +6,11 @@ import com.exchangediary.diary.domain.entity.UploadImage;
 import com.exchangediary.global.domain.entity.StaticImage;
 import com.exchangediary.global.util.DateTimeUtil;
 import lombok.Builder;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
 @Builder
-@RequiredArgsConstructor
 public record DiaryDetailResponse(
         Long diaryId,
         String createdAt,
