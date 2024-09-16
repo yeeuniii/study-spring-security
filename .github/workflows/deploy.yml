@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 3000s
 
     env:
       POSTGRESQL_NAME: ${{ secrets.POSTGRESQL_NAME }}
