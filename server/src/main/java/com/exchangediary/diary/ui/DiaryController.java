@@ -16,7 +16,7 @@ public class DiaryController {
     private final DiaryQueryService diaryQueryService;
 
     @GetMapping("/{diaryId}")
-    public ResponseEntity<DiaryDetailResponse> viewDetail (@PathVariable("diaryId")Long diaryId) {
+    public ResponseEntity<DiaryDetailResponse> viewDetail (@PathVariable Long diaryId) {
         DiaryDetailResponse diaryDetailResponse = diaryQueryService.viewDetail(diaryId);
 
         return ResponseEntity

@@ -19,7 +19,7 @@ public class DiaryQueryService {
     private final StickerRepository stickerRepository;
 
     public DiaryDetailResponse viewDetail(Long diaryId) {
-        // exception 핸들러 추가 시 orElseThrow로 수정
+        // TODO: exception 핸들러 추가 시 orElseThrow로 수정
         Diary diary = diaryRepository.findById(diaryId).orElse(null);
 //        if (diary == null) {
 //            return null;
