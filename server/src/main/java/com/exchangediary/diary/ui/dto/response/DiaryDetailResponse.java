@@ -25,15 +25,22 @@ public record DiaryDetailResponse(
                 .map(DiaryDetailStickerResponse::from)
                 .collect(Collectors.toList());
 
+        String todayMoodUrl = Optional.ofNullable(diary.getMoodImage()).map(StaticImage::getUrl)
+                .orElse(null);
+
+        String imageUrl = Optional.ofNullable(diary.getUploadImage()).map(UploadImage::getUrl)
+                .orElse(null);
+
+        List<DiaryDetailStickerResponse> stickerList = Optional.ofNullable(stickersResponse)
+                .orElse(null);
+
         return DiaryDetailResponse.builder()
                 .diaryId(diary.getId())
                 .createdAt(DateTimeUtil.KOREAN_DATE_FORMAT.format(diary.getCreatedAt()))
-                .todayMoodUrl(Optional.ofNullable(diary.getMoodImage()).map(StaticImage::getUrl)
-                        .orElse(null))
-                .imageUrl(Optional.ofNullable(diary.getUploadImage()).map(UploadImage::getUrl)
-                        .orElse(null))
+                .todayMoodUrl(todayMoodUrl)
+                .imageUrl(imageUrl)
                 .content(diary.getContent())
-                .stickers(Optional.ofNullable(stickersResponse).orElse(null))
+                .stickers(stickerList)
                 .build();
     }
 }

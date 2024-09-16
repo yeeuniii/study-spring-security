@@ -18,6 +18,9 @@ public record DiaryDetailStickerResponse (
         String imageUrl
 ) {
     public static DiaryDetailStickerResponse from (Sticker sticker) {
+        String imageUrl = Optional.ofNullable(sticker.getStaticImage()).map(StaticImage::getUrl)
+                .orElse(null);
+
         return DiaryDetailStickerResponse.builder()
                 .stickerId(sticker.getId())
                 .coordX(sticker.getCoordX())
@@ -26,8 +29,7 @@ public record DiaryDetailStickerResponse (
                 .width(sticker.getWidth())
                 .height(sticker.getHeight())
                 .rotation(sticker.getRotation())
-                .imageUrl(Optional.ofNullable(sticker.getStaticImage()).map(StaticImage::getUrl)
-                        .orElse(null))
+                .imageUrl(imageUrl)
                 .build();
     }
 }
