@@ -1,48 +1,56 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   StyleSheet,
   Pressable,
   ImageBackground,
-  Image,
-  Modal,
-} from 'react-native';
-import TopButton from './components/topButton';
-import Icon from 'react-native-vector-icons/Feather';
-import {
-  RichEditor,
-  RichToolbar,
-  actions,
-} from 'react-native-pell-rich-editor';
-import OutputModal from './components/outputModal';
-import ImageModal from './components/imageModal';
-import RNFS from 'react-native-fs';
+  TouchableWithoutFeedback,
+} from "react-native";
+import TopButton from "./components/topButton";
+import Icon from "react-native-vector-icons/Feather";
+import { RichEditor } from "react-native-pell-rich-editor";
+import OutputModal from "./components/outputModal";
+import ImageModal from "./components/imageModal";
+import RNFS from "react-native-fs";
+import Icon2 from "react-native-vector-icons/MaterialCommunityIcons";
+import TextModal from "./components/textModal";
+import { RichToolbar, actions } from "react-native-pell-rich-editor";
 
 function DiaryScreen() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState("");
   const [imageModalVisible, setImageModalVisible] = useState(false);
   const [selectImage, setSelectImage] = useState(null);
+  const [textModal, setTextModal] = useState(false);
 
   const richText = useRef();
 
   function onChangeImageModalVisible() {
     setImageModalVisible(!imageModalVisible);
   }
+
+  function onChangeTextModal() {
+    setTextModal(!textModal);
+  }
+
   function onChangeModalVisible() {
     setModalVisible(!modalVisible);
+  }
+
+  function closeTextModal() {
+    setTextModal(false);
   }
 
   useEffect(() => {
     if (selectImage) {
       const insertImageToEditor = async () => {
         try {
-          const base64Image = await RNFS.readFile(selectImage.uri, 'base64'); // Base64로 변환
-          const imageSource = `data:image/jpeg;base64,${base64Image}`; // Base64로 인코딩된 이미지 URI
+          const base64Image = await RNFS.readFile(selectImage.uri, "base64");
+          const imageSource = `data:image/jpeg;base64,${base64Image}`;
 
           richText.current?.insertImage(imageSource);
         } catch (error) {
-          console.log('Error converting image to base64:', error);
+          console.log("Error converting image to base64:", error);
         }
       };
       insertImageToEditor();
@@ -51,56 +59,69 @@ function DiaryScreen() {
 
   const sendToServer = async () => {
     try {
-      const response = await fetch('http://15.164.64.10:8080/', {
+      const response = await fetch("http://15.164.64.10:8080/", {
         //백엔드 url 필요
         // 백엔드 API URL
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userInput: inputText }), // 입력값을 JSON으로 변환하여 전송
+        body: JSON.stringify({ userInput: inputText }),
       });
 
-      const result = await response.json(); // 백엔드로부터 응답 받기
+      const result = await response.json();
       console.log(result);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   return (
     <ImageBackground
-      source={require('../editdiary/asset/background.png')}
+      source={require("../editdiary/asset/background.png")}
       style={styles.imageBackground}
     >
       <View style={styles.mainContainer}>
         <TopButton />
       </View>
-      <View style={styles.editorContainer}>
-        <RichToolbar
-          editor={richText}
-          actions={[actions.setBold, actions.setItalic, actions.setUnderline]}
-        />
-        <RichEditor
-          ref={richText}
-          style={styles.richEditor}
-          placeholder='여기에 일기를 작성하세요...'
-          onChange={(text) => setInputText(text)} // 텍스트가 변경될 때 inputText에 저장
-        />
-      </View>
-      <View style={styles.otherButtonContainer}>
-        <View styles={styles.centerContainer}>
-          <View style={styles.textEditContainer}>
-            <Pressable onPress={onChangeImageModalVisible}>
-              <Icon name={'image'} size={30} />
+      <TouchableWithoutFeedback onPress={closeTextModal}>
+        <View style={styles.otherButtonContainer}>
+          <TextModal
+            richText={richText}
+            textModal={textModal}
+            onChangeTextModal={onChangeTextModal}
+          />
+          <RichEditor
+            ref={richText}
+            style={[styles.richEditor, { color: "black" }]}
+            placeholder="여기에 일기를 작성하세요..."
+            onChange={(text) => setInputText(text)}
+          />
+          <View styles={styles.centerContainer}>
+            <View style={styles.textEditContainer}>
+              <Pressable>
+                <Icon2
+                  name={"format-title"}
+                  size={30}
+                  onPress={onChangeTextModal}
+                />
+              </Pressable>
+              <Pressable onPress={onChangeImageModalVisible}>
+                <Icon name={"image"} size={30} />
+              </Pressable>
+              <Pressable>
+                <Icon name={"plus-circle"} size={30} />
+              </Pressable>
+            </View>
+            <Pressable
+              style={styles.outputButton}
+              onPress={onChangeModalVisible}
+            >
+              <Icon name={"arrow-up-right"} size={30} />
             </Pressable>
           </View>
-          <View style={styles.textEditContainer}></View>
-          <Pressable style={styles.outputButton} onPress={onChangeModalVisible}>
-            <Icon name={'arrow-up-right'} size={30} />
-          </Pressable>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
       <ImageModal
         imageModalVisible={imageModalVisible}
         onChangeImageModalVisible={onChangeImageModalVisible}
@@ -109,7 +130,7 @@ function DiaryScreen() {
       <OutputModal
         onChangeModalVisible={onChangeModalVisible}
         modalVisible={modalVisible}
-        Coment={'일기가 작성되었어요!'}
+        Coment={"일기가 작성되었어요!"}
       />
     </ImageBackground>
   );
@@ -119,61 +140,63 @@ export default DiaryScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     margin: 32,
   },
   imageBackground: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   editorContainer: {
     flex: 1,
     marginHorizontal: 16,
     marginTop: 20,
-    borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   richEditor: {
+    marginTop: 10,
     flex: 1,
-    minHeight: 200,
-    padding: 10,
-    borderColor: '#ccc',
-    borderWidth: 1,
+    minHeight: 500,
+    marginRight: 10,
+    marginLeft: 20,
+    borderColor: "#ccc",
   },
   otherButtonContainer: {
     flex: 1,
-    borderWidth: 1,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     marginRight: 22,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   textEditContainer: {
     width: 38,
     height: 176,
     borderRadius: 19,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "white",
+    marginRight: 30,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 3,
   },
   outputButton: {
     width: 38,
     height: 38,
     borderWidth: 0.5,
     borderRadius: 19,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   modalContainer: {
-    width: '100%',
+    width: "100%",
     height: 150,
     borderWidth: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   imageModalOverLay: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   imagePreview: {
     width: 200,
@@ -183,6 +206,7 @@ const styles = StyleSheet.create({
   },
   centerContainer: {
     flex: 1,
-    flexDirection: 'row',
+    marginRight: 20,
+    flexDirection: "row",
   },
 });

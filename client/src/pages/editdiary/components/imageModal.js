@@ -67,7 +67,6 @@ function ImageModal({
       visible={imageModalVisible}
       onRequestClose={onChangeImageModalVisible}
     >
-      {/* 화면 다른 부분을 터치했을때 모달이 닫히게 함 */}
       <TouchableWithoutFeedback onPress={handleCloseModal}>
         <View style={styles.imageModalOverLay}>
           <View style={styles.modalContainer}>
