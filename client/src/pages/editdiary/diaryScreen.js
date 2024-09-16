@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Pressable,
   ImageBackground,
+  Image,
   Modal,
 } from 'react-native';
 import TopButton from './components/topButton';
@@ -14,13 +15,19 @@ import {
   actions,
 } from 'react-native-pell-rich-editor';
 import OutputModal from './components/outputModal';
+import ImageModal from "./components/imageModal";
 
 function DiaryScreen() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState("");
+  const [imageModalVisible, setImageModalVisible] = useState(false);
+  const [selectImage, setSelectImage] = useState(null);
 
   const richText = useRef();
-
+  
+  function onChangeImageModalVisible() {
+    setImageModalVisible(!imageModalVisible);
+  }
   function onChangeModalVisible() {
     setModalVisible(!modalVisible);
   }
@@ -65,11 +72,28 @@ function DiaryScreen() {
         />
       </View>
       <View style={styles.otherButtonContainer}>
+        {selectImage && (
+          <Image
+            source={{ uri: selectImage.uri }}
+            style={styles.imagePreview}
+          />
+        )}
+        <View styles={styles.centerContainer}>
+          <View style={styles.textEditContainer}>
+            <Pressable onPress={onChangeImageModalVisible}>
+              <Icon name={"image"} size={30} />
+            </Pressable>
+          </View>
         <View style={styles.textEditContainer}></View>
         <Pressable style={styles.outputButton} onPress={onChangeModalVisible}>
           <Icon name={'arrow-up-right'} size={30} />
         </Pressable>
       </View>
+      <ImageModal
+        imageModalVisible={imageModalVisible}
+        onChangeImageModalVisible={onChangeImageModalVisible}
+        setSelectImage={setSelectImage}
+      />
       <OutputModal
         onChangeModalVisible={onChangeModalVisible}
         modalVisible={modalVisible}
@@ -83,8 +107,7 @@ export default DiaryScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    // flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     margin: 32,
   },
   imageBackground: {
@@ -108,15 +131,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   otherButtonContainer: {
-    // borderWidth: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
+    flex: 1,
+    borderWidth: 1,
+    justifyContent: "flex-end",
     marginRight: 22,
+    flexDirection: "row",
   },
   textEditContainer: {
     width: 38,
     height: 176,
-    borderWidth: 1,
+    borderRadius: 19,
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
   },
   outputButton: {
     width: 38,
@@ -125,5 +152,25 @@ const styles = StyleSheet.create({
     borderRadius: 19,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  modalContainer: {
+    width: "100%",
+    height: 150,
+    borderWidth: 1,
+    backgroundColor: "white",
+  },
+  imageModalOverLay: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  imagePreview: {
+    width: 200,
+    height: 200,
+    marginRight: 75,
+    marginBottom: 30,
+  },
+  centerContainer: {
+    flex: 1,
+    flexDirection: "row",
   },
 });
