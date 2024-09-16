@@ -7,22 +7,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-public class StickerController {
-    private final StickerCommandService stickerCommandService;
+@RequestMapping("/diary")
+public class DiaryController {
+    private final StickerCommandService diaryCommandService;
 
-    @PostMapping("/diary/{diaryId}/sticker/{stickerId}")
+    @PostMapping("/{diaryId}/sticker/{stickerId}")
     public ResponseEntity<Void> createSticker(
             @RequestBody StickerRequest stickerRequest,
             @PathVariable Long diaryId,
             @PathVariable Long stickerId
             ) {
-        stickerCommandService.createSticker(stickerRequest, diaryId, stickerId);
+        diaryCommandService.createSticker(stickerRequest, diaryId, stickerId);
         return ResponseEntity
                 .created(URI.create("/diary/" + diaryId))
                 .build();
