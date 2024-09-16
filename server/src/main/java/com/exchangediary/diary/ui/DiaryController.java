@@ -1,7 +1,12 @@
 package com.exchangediary.diary.ui;
 
+import com.exchangediary.diary.domain.entity.Diary;
+//import com.exchangediary.diary.service.DiaryCommandService;
+//import com.exchangediary.diary.ui.dto.request.DiaryRequest;
+//import com.exchangediary.diary.ui.dto.request.UploadImageRequest;
 import com.exchangediary.diary.service.StickerCommandService;
 import com.exchangediary.diary.ui.dto.request.StickerRequest;
+import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import jakarta.validation.Valid;
 import com.exchangediary.diary.service.DiaryQueryService;
 import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
@@ -12,16 +17,37 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/diary")
 public class DiaryController {
-    private final StickerCommandService diaryCommandService;
+//    private final DiaryCommandService diaryCommandService;
+    private final StickerCommandService stickerCommandService;
     private final DiaryQueryService diaryQueryService;
+    private final MonthlyQueryService monthlyQueryService;
+
+//    @PostMapping
+//    public ResponseEntity<Long> createDiary(
+//            @Valid @RequestPart(name = "data") DiaryRequest diaryRequest,
+//            @RequestPart(name = "file", required = false) MultipartFile file) {
+//
+//        UploadImageRequest uploadImageRequest = UploadImageRequest.builder()
+//                .file(file)
+//                .build();
+//
+//        Diary diary = diaryCommandService.createDiary(diaryRequest, uploadImageRequest);
+//        return ResponseEntity
+//                .created(URI.create(String.format("/diary/%d/", diary.getId())))
+//                .body(diary.getId());
+//    }
 
     @GetMapping("/{diaryId}")
     public ResponseEntity<DiaryDetailResponse> viewDetail (@PathVariable Long diaryId) {
@@ -38,9 +64,16 @@ public class DiaryController {
             @PathVariable Long diaryId,
             @PathVariable Long stickerId
     ) {
-        diaryCommandService.createSticker(stickerRequest, diaryId, stickerId);
+        stickerCommandService.createSticker(stickerRequest, diaryId, stickerId);
         return ResponseEntity
                 .created(URI.create("/diary/" + diaryId))
                 .build();
     }
+
+    @GetMapping("/monthly")
+    public ResponseEntity<DiaryMonthlyResponse> getMonthlyDiary(@RequestParam int year, @RequestParam int month) {
+        DiaryMonthlyResponse response = monthlyQueryService.getMonthlyDiary(year, month);
+        return ResponseEntity.ok(response);
+    }
+
 }
