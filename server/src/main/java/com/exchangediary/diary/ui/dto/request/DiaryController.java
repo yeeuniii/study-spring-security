@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/diary")
@@ -25,6 +27,6 @@ public class DiaryController {
         uploadImageRequest.setFile(file);
 
         Diary diary = diaryCommandService.createDiary(diaryRequest, uploadImageRequest);
-        return ResponseEntity.status(201).body(diary.getId());
+        return ResponseEntity.created(URI.create(String.format("/diary/%d/", diary.getId()))).body(diary.getId());
     }
 }
