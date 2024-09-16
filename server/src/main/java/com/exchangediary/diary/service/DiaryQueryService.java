@@ -1,9 +1,9 @@
 package com.exchangediary.diary.service;
 
+import com.exchangediary.diary.domain.StickerRepository;
 import com.exchangediary.diary.domain.entity.Diary;
-import com.exchangediary.diary.domain.entity.DiaryRepository;
+import com.exchangediary.diary.domain.DiaryRepository;
 import com.exchangediary.diary.domain.entity.Sticker;
-import com.exchangediary.diary.domain.entity.StickerRepository;
 import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
