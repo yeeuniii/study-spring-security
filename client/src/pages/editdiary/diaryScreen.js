@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -15,22 +15,39 @@ import {
   actions,
 } from 'react-native-pell-rich-editor';
 import OutputModal from './components/outputModal';
-import ImageModal from "./components/imageModal";
+import ImageModal from './components/imageModal';
+import RNFS from 'react-native-fs';
 
 function DiaryScreen() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState('');
   const [imageModalVisible, setImageModalVisible] = useState(false);
   const [selectImage, setSelectImage] = useState(null);
 
   const richText = useRef();
-  
+
   function onChangeImageModalVisible() {
     setImageModalVisible(!imageModalVisible);
   }
   function onChangeModalVisible() {
     setModalVisible(!modalVisible);
   }
+
+  useEffect(() => {
+    if (selectImage) {
+      const insertImageToEditor = async () => {
+        try {
+          const base64Image = await RNFS.readFile(selectImage.uri, 'base64'); // Base64로 변환
+          const imageSource = `data:image/jpeg;base64,${base64Image}`; // Base64로 인코딩된 이미지 URI
+
+          richText.current?.insertImage(imageSource);
+        } catch (error) {
+          console.log('Error converting image to base64:', error);
+        }
+      };
+      insertImageToEditor();
+    }
+  }, [selectImage]);
 
   const sendToServer = async () => {
     try {
@@ -72,22 +89,17 @@ function DiaryScreen() {
         />
       </View>
       <View style={styles.otherButtonContainer}>
-        {selectImage && (
-          <Image
-            source={{ uri: selectImage.uri }}
-            style={styles.imagePreview}
-          />
-        )}
         <View styles={styles.centerContainer}>
           <View style={styles.textEditContainer}>
             <Pressable onPress={onChangeImageModalVisible}>
-              <Icon name={"image"} size={30} />
+              <Icon name={'image'} size={30} />
             </Pressable>
           </View>
-        <View style={styles.textEditContainer}></View>
-        <Pressable style={styles.outputButton} onPress={onChangeModalVisible}>
-          <Icon name={'arrow-up-right'} size={30} />
-        </Pressable>
+          <View style={styles.textEditContainer}></View>
+          <Pressable style={styles.outputButton} onPress={onChangeModalVisible}>
+            <Icon name={'arrow-up-right'} size={30} />
+          </Pressable>
+        </View>
       </View>
       <ImageModal
         imageModalVisible={imageModalVisible}
@@ -107,7 +119,7 @@ export default DiaryScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     margin: 32,
   },
   imageBackground: {
@@ -133,17 +145,17 @@ const styles = StyleSheet.create({
   otherButtonContainer: {
     flex: 1,
     borderWidth: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     marginRight: 22,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   textEditContainer: {
     width: 38,
     height: 176,
     borderRadius: 19,
-    backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   outputButton: {
     width: 38,
@@ -154,14 +166,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   modalContainer: {
-    width: "100%",
+    width: '100%',
     height: 150,
     borderWidth: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   imageModalOverLay: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
   },
   imagePreview: {
     width: 200,
@@ -171,6 +183,6 @@ const styles = StyleSheet.create({
   },
   centerContainer: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
 });
