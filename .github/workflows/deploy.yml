@@ -29,9 +29,29 @@ jobs:
         run: |
           cd server  # server 디렉토리로 이동
           ./gradlew clean build  # Gradle 빌드 수행
+          
+      - name: Kill Existing Application on EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}    # EC2 서버 IP
+          username: ${{ secrets.EC2_USER }}  # EC2 사용자명
+          key: ${{ secrets.EC2_KEY }}      # SSH 개인 키
+          port: 22
+          script: |
+            ps aux | grep 'java -jar' | grep -v grep | awk '{print $2}' | xargs -r kill -9 || echo "No app running"
+            
+      - name: Upload JAR to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          port: 22
+          source: "server/build/libs/*.jar"
+          target: "/home/ec2-user/app/server/build/libs/"
 
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.3
+      - name: Start Application on EC2
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}    # EC2 서버 IP
           username: ${{ secrets.EC2_USER }}  # EC2 사용자명
@@ -56,3 +76,4 @@ jobs:
           script: |
             cd /home/ec2-user/app
             nohup java -jar *.jar --server.port=8080 > /dev/null 2>&1 &
+
