@@ -12,12 +12,14 @@ import com.exchangediary.global.domain.entity.StaticImage;
 import com.exchangediary.global.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class DiaryCommandService {
     private final DiaryRepository diaryRepository;
     private final StaticImageRepository staticImageRepository;
