@@ -20,7 +20,7 @@ public record DiaryDetailResponse(
         String content,
         List<DiaryDetailStickerResponse> stickers
         ) {
-    public static DiaryDetailResponse from (Diary diary, List<Sticker> stickers) {
+    public static DiaryDetailResponse of (Diary diary, List<Sticker> stickers) {
         List<DiaryDetailStickerResponse> stickersResponse = stickers.stream()
                 .map(DiaryDetailStickerResponse::from)
                 .collect(Collectors.toList());

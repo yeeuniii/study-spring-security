@@ -25,6 +25,6 @@ public class DiaryQueryService {
 //            return null;
 //        }
         List<Sticker> stickers = stickerRepository.findByDiary(diary);
-        return DiaryDetailResponse.from(diary, stickers);
+        return DiaryDetailResponse.of(diary, stickers);
     }
 }
