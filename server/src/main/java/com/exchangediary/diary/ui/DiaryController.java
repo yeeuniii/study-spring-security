@@ -2,6 +2,7 @@ package com.exchangediary.diary.ui;
 
 import com.exchangediary.diary.service.StickerCommandService;
 import com.exchangediary.diary.ui.dto.request.StickerRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,7 @@ public class DiaryController {
 
     @PostMapping("/{diaryId}/sticker/{stickerId}")
     public ResponseEntity<Void> createSticker(
-            @RequestBody StickerRequest stickerRequest,
+            @RequestBody @Valid StickerRequest stickerRequest,
             @PathVariable Long diaryId,
             @PathVariable Long stickerId
             ) {
