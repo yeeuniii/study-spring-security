@@ -1,6 +1,5 @@
 package com.exchangediary.diary.service;
 
-import com.exchangediary.diary.domain.UploadImageRepository;
 import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.DiaryRepository;
 import com.exchangediary.diary.domain.entity.PublicationStatus;
@@ -8,7 +7,6 @@ import com.exchangediary.diary.domain.entity.UploadImage;
 import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.diary.ui.dto.request.UploadImageRequest;
 import com.exchangediary.global.domain.StaticImageRepository;
-import com.exchangediary.global.domain.entity.ErrorCode;
 import com.exchangediary.global.domain.entity.ImageUploadException;
 import com.exchangediary.global.domain.entity.NotFoundException;
 import com.exchangediary.global.domain.entity.StaticImage;

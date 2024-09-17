@@ -5,6 +5,8 @@ import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.DiaryRepository;
 import com.exchangediary.diary.domain.entity.Sticker;
 import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
+import com.exchangediary.global.exception.ErrorCode;
+import com.exchangediary.global.exception.GlobalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +21,8 @@ public class DiaryQueryService {
     private final StickerRepository stickerRepository;
 
     public DiaryDetailResponse viewDetail(Long diaryId) {
-        // TODO: exception 핸들러 추가 시 orElseThrow로 수정
-        Diary diary = diaryRepository.findById(diaryId).orElse(null);
-//        if (diary == null) {
-//            return null;
-//        }
+        Diary diary = diaryRepository.findById(diaryId)
+                .orElseThrow(() -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
         List<Sticker> stickers = stickerRepository.findByDiary(diary);
         return DiaryDetailResponse.of(diary, stickers);
     }

@@ -1,11 +1,11 @@
-package com.exchangediary.global.ui.dto.response;
+package com.exchangediary.global.exception;
 
-import com.exchangediary.global.domain.entity.ErrorCode;
 import lombok.Builder;
+import org.springframework.http.HttpStatus;
 
 @Builder
 public record ErrorResponse(
-        int statusCode,
+        HttpStatus statusCode,
         String message
 ) {
     public static ErrorResponse from(ErrorCode errorCode) {

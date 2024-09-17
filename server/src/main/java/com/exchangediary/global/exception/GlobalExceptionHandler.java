@@ -1,9 +1,5 @@
-package com.exchangediary.global.ui;
+package com.exchangediary.global.exception;
 
-import com.exchangediary.global.domain.entity.ErrorCode;
-import com.exchangediary.global.domain.entity.ImageUploadException;
-import com.exchangediary.global.domain.entity.NotFoundException;
-import com.exchangediary.global.ui.dto.response.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,8 +12,8 @@ public class GlobalExceptionHandler {
         return makeErrorResponse(ErrorCode.INVALID_INPUT);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFound(NotFoundException exception) {
+    @ExceptionHandler(GlobalException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(GlobalException exception) {
         return makeErrorResponse(exception.getErrorCode());
     }
 

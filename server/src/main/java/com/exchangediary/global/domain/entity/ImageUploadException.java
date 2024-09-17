@@ -1,5 +1,6 @@
 package com.exchangediary.global.domain.entity;
 
+import com.exchangediary.global.exception.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
