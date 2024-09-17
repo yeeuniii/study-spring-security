@@ -9,6 +9,7 @@ import com.exchangediary.global.ui.dto.request.StaticImageUploadRequest;
 import com.exchangediary.global.ui.dto.response.MoodsResponse;
 import com.exchangediary.global.ui.dto.response.StickersResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -83,7 +84,7 @@ public class StaticImageController {
     @PostMapping("static-image/upload")
     public ResponseEntity<Long> createDiary(
             @RequestPart(name = "data") @Valid StaticImageUploadRequest request,
-            @RequestPart(name = "file", required = false) MultipartFile file) throws IOException {
+            @RequestPart(name = "file") @NotNull MultipartFile file) throws IOException {
         StaticImage image = staticImageCommandService.createStaticImage(request, file);
         return ResponseEntity
                 .created(URI.create(String.format("/api/images/static/%d", image.getId())))

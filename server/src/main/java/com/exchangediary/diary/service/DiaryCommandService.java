@@ -36,8 +36,7 @@ public class DiaryCommandService {
             try {
                 uploadImage = imageService.saveUploadImage(file, PublicationStatus.PUBLISHED);
             } catch (IOException e) {
-                e.printStackTrace();
-//                throw new ImageUploadException(ErrorCode.IMAGE_UPLOAD_ERROR, e);
+                throw new GlobalException(ErrorCode.IMAGE_UPLOAD_ERROR);
             }
         }
         Diary diary = Diary.of(diaryRequest, moodImage, uploadImage);

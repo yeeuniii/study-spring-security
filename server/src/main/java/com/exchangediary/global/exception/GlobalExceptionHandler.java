@@ -17,11 +17,6 @@ public class GlobalExceptionHandler {
         return makeErrorResponse(exception.getErrorCode());
     }
 
-//    @ExceptionHandler(ImageUploadException.class)
-//    public ResponseEntity<ErrorResponse> handleImageUploadException(ImageUploadException exception) {
-//        return makeErrorResponse(exception.getErrorCode());
-//    }
-
     private ResponseEntity<ErrorResponse> makeErrorResponse(ErrorCode errorCode) {
         ErrorResponse response = ErrorResponse.builder()
                 .statusCode(errorCode.getStatusCode())
