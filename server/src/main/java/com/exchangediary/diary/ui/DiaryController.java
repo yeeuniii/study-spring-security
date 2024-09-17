@@ -1,5 +1,9 @@
 package com.exchangediary.diary.ui;
 
+import com.exchangediary.diary.domain.entity.Diary;
+import com.exchangediary.diary.service.DiaryCommandService;
+import com.exchangediary.diary.ui.dto.request.DiaryRequest;
+import com.exchangediary.diary.ui.dto.request.UploadImageRequest;
 import com.exchangediary.diary.service.StickerCommandService;
 import com.exchangediary.diary.ui.dto.request.StickerRequest;
 import jakarta.validation.Valid;
@@ -12,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 
@@ -20,8 +26,22 @@ import java.net.URI;
 @RequiredArgsConstructor
 @RequestMapping("/diary")
 public class DiaryController {
-    private final StickerCommandService diaryCommandService;
+    private final DiaryCommandService diaryCommandService;
+    private final StickerCommandService stickerCommandService;
     private final DiaryQueryService diaryQueryService;
+
+    @PostMapping
+    public ResponseEntity<Long> createDiary(
+            @RequestPart(name = "data") @Valid DiaryRequest diaryRequest,
+            @RequestPart(name = "file", required = false) MultipartFile file) {
+        UploadImageRequest uploadImageRequest = UploadImageRequest.builder()
+                .file(file)
+                .build();
+        Diary diary = diaryCommandService.createDiary(diaryRequest, uploadImageRequest);
+        return ResponseEntity
+                .created(URI.create(String.format("/diary/%d/", diary.getId())))
+                .body(diary.getId());
+    }
 
     @GetMapping("/{diaryId}")
     public ResponseEntity<DiaryDetailResponse> viewDetail (@PathVariable Long diaryId) {
@@ -38,7 +58,7 @@ public class DiaryController {
             @PathVariable Long diaryId,
             @PathVariable Long stickerId
     ) {
-        diaryCommandService.createSticker(stickerRequest, diaryId, stickerId);
+        stickerCommandService.createSticker(stickerRequest, diaryId, stickerId);
         return ResponseEntity
                 .created(URI.create("/diary/" + diaryId))
                 .build();

@@ -13,6 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
 
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
@@ -30,6 +32,7 @@ public class UploadImage extends BaseEntity {
     private final String filename;
     private final String contentType;
     @Lob
+    @JdbcType(VarbinaryJdbcType.class)
     @Column(name = "image", columnDefinition = "bytea")
     private final byte[] image;
     private String url;
