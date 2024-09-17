@@ -1,10 +1,10 @@
-package com.exchangediary.global.domain.entity;
+package com.exchangediary.global.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class NotFoundException extends RuntimeException {
+public class GlobalException extends RuntimeException {
     private final ErrorCode errorCode;
 }

@@ -6,8 +6,8 @@ import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.entity.Sticker;
 import com.exchangediary.diary.ui.dto.request.StickerRequest;
 import com.exchangediary.global.domain.StaticImageRepository;
-import com.exchangediary.global.domain.entity.ErrorCode;
-import com.exchangediary.global.domain.entity.NotFoundException;
+import com.exchangediary.global.exception.ErrorCode;
+import com.exchangediary.global.exception.GlobalException;
 import com.exchangediary.global.domain.entity.StaticImage;
 
 import lombok.RequiredArgsConstructor;
@@ -24,9 +24,9 @@ public class StickerCommandService {
 
     public void createSticker(StickerRequest stickerRequest, long diaryId, long stickerId) {
         Diary diary = diaryRepository.findById(diaryId)
-                .orElseThrow(() -> new NotFoundException(ErrorCode.DIARY_NOT_FOUND));
+                .orElseThrow(() -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
         StaticImage stickerImage = staticImageRepository.findById(stickerId)
-                .orElseThrow(() -> new NotFoundException(ErrorCode.STICKER_IMAGE_NOT_FOUND));
+                .orElseThrow(() -> new GlobalException(ErrorCode.STICKER_IMAGE_NOT_FOUND));
         int coordZ = stickerRepository.countByDiaryId(diaryId) + 1;
         Sticker sticker = Sticker.of(stickerRequest, coordZ, diary, stickerImage);
         stickerRepository.save(sticker);
