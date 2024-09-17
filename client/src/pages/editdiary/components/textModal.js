@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, StyleSheet } from "react-native";
 import { RichToolbar, actions } from "react-native-pell-rich-editor";
 import Icon2 from "react-native-vector-icons/MaterialCommunityIcons";
