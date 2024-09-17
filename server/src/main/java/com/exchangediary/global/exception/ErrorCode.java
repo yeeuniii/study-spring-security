@@ -1,4 +1,4 @@
-package com.exchangediary.global.domain.entity;
+package com.exchangediary.global.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

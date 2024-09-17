@@ -6,8 +6,8 @@ import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.entity.Sticker;
 import com.exchangediary.diary.ui.dto.request.StickerRequest;
 import com.exchangediary.global.domain.StaticImageRepository;
-import com.exchangediary.global.domain.entity.ErrorCode;
-import com.exchangediary.global.domain.entity.NotFoundException;
+import com.exchangediary.global.exception.ErrorCode;
+import com.exchangediary.global.exception.NotFoundException;
 import com.exchangediary.global.domain.entity.StaticImage;
 
 import lombok.RequiredArgsConstructor;

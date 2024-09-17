@@ -1,8 +1,5 @@
-package com.exchangediary.global.ui;
+package com.exchangediary.global.exception;
 
-import com.exchangediary.global.domain.entity.ErrorCode;
-import com.exchangediary.global.domain.entity.NotFoundException;
-import com.exchangediary.global.ui.dto.response.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

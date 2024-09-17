@@ -1,6 +1,5 @@
-package com.exchangediary.global.ui.dto.response;
+package com.exchangediary.global.exception;
 
-import com.exchangediary.global.domain.entity.ErrorCode;
 import lombok.Builder;
 
 @Builder
