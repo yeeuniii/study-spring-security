@@ -24,9 +24,9 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = PROTECTED, force = true)
 @AllArgsConstructor(access = PRIVATE)
-@Builder
 public class Diary extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

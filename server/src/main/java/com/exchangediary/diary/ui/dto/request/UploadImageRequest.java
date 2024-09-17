@@ -6,10 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UploadImageRequest {
     private MultipartFile file;
 }
