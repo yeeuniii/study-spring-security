@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleInvalidArgumentException(Exception exception) {
-        return makeErrorResponse(ErrorCode.INVALID_INPUT);
+        return makeErrorResponse(ErrorCode.INVALID_INPUT_BAD_REQUEST);
     }
 
     @ExceptionHandler(GlobalException.class)
@@ -17,10 +17,10 @@ public class GlobalExceptionHandler {
         return makeErrorResponse(exception.getErrorCode());
     }
 
-    @ExceptionHandler(ImageUploadException.class)
-    public ResponseEntity<ErrorResponse> handleImageUploadException(ImageUploadException exception) {
-        return makeErrorResponse(exception.getErrorCode());
-    }
+//    @ExceptionHandler(ImageUploadException.class)
+//    public ResponseEntity<ErrorResponse> handleImageUploadException(ImageUploadException exception) {
+//        return makeErrorResponse(exception.getErrorCode());
+//    }
 
     private ResponseEntity<ErrorResponse> makeErrorResponse(ErrorCode errorCode) {
         ErrorResponse response = ErrorResponse.builder()
