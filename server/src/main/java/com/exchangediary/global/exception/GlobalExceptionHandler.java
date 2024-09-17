@@ -12,8 +12,8 @@ public class GlobalExceptionHandler {
         return makeErrorResponse(ErrorCode.INVALID_INPUT);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFound(NotFoundException exception) {
+    @ExceptionHandler(GlobalException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(GlobalException exception) {
         return makeErrorResponse(exception.getErrorCode());
     }
 
