@@ -3,6 +3,7 @@ package com.exchangediary.diary.ui;
 import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.service.DiaryCommandService;
 import com.exchangediary.diary.service.DiaryQueryService;
+import com.exchangediary.diary.service.MonthlyQueryService;
 import com.exchangediary.diary.service.StickerCommandService;
 import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.diary.ui.dto.request.StickerRequest;
@@ -19,12 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +32,7 @@ public class DiaryController {
     private final DiaryCommandService diaryCommandService;
     private final StickerCommandService stickerCommandService;
     private final DiaryQueryService diaryQueryService;
+    private final MonthlyQueryService monthlyQueryService;
 
     @PostMapping
     public ResponseEntity<Long> createDiary(
@@ -69,9 +69,12 @@ public class DiaryController {
     }
 
     @GetMapping("/monthly")
-    public ResponseEntity<DiaryMonthlyResponse> getMonthlyDiary(@RequestParam int year, @RequestParam int month) {
-        DiaryMonthlyResponse response = monthlyQueryService.getMonthlyDiary(year, month);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<DiaryMonthlyResponse> viewMonthlyDiary(@RequestParam int year, @RequestParam int month) {
+        DiaryMonthlyResponse diaryMonthlyResponse = monthlyQueryService.viewMonthlyDiary(year, month);
+
+        return ResponseEntity
+                .ok()
+                .body(diaryMonthlyResponse);
     }
 
 }

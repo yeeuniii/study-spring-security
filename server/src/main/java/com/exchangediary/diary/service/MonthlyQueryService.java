@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,13 +15,8 @@ import java.util.stream.Collectors;
 public class MonthlyQueryService {
     private final DiaryRepository diaryRepository;
 
-    public DiaryMonthlyResponse getMonthlyDiary(int year, int month) {
+    public DiaryMonthlyResponse viewMonthlyDiary(int year, int month) {
         List<Diary> diaries = diaryRepository.findDiariesByYearAndMonth(year, month);
-
-        List<DiaryMonthlyResponse.DiaryInfo> dayList = diaries.stream()
-                .map(diary -> new DiaryMonthlyResponse.DiaryInfo(diary.getCreatedAt().toLocalDate(), diary.getId()))
-                .collect(Collectors.toList());
-
-        return new DiaryMonthlyResponse(year, month, dayList);
+        return DiaryMonthlyResponse.of(year, month, diaries);
     }
 }

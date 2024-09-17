@@ -2,10 +2,13 @@ package com.exchangediary.diary.domain;
 
 import com.exchangediary.diary.domain.entity.Diary;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
-    List<Diary> findDiariesByYearAndMonth(@Param("year") int year, @Param("month") int month);
+
+    @Query("SELECT d FROM Diary d WHERE YEAR(d.createdAt) = :year AND MONTH(d.createdAt) = :month")
+    List<Diary> findDiariesByYearAndMonth(int year, int month);
 }
