@@ -33,7 +33,6 @@ function ImageModal({
       } else if (response.errorCode) {
         // console.log("ImagePicker Error: ", response.errorMessage);
       } else {
-        // console.log("Gallery Response:", response);
         setSelectImage(response.assets[0]);
       }
       onChangeImageModalVisible();

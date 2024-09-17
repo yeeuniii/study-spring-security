@@ -14,7 +14,6 @@ import ImageModal from "./components/imageModal";
 import RNFS from "react-native-fs";
 import Icon2 from "react-native-vector-icons/MaterialCommunityIcons";
 import TextModal from "./components/textModal";
-import { RichToolbar, actions } from "react-native-pell-rich-editor";
 
 function DiaryScreen() {
   const [modalVisible, setModalVisible] = useState(false);
