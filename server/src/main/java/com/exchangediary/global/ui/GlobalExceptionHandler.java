@@ -1,6 +1,7 @@
 package com.exchangediary.global.ui;
 
 import com.exchangediary.global.domain.entity.ErrorCode;
+import com.exchangediary.global.domain.entity.ImageUploadException;
 import com.exchangediary.global.domain.entity.NotFoundException;
 import com.exchangediary.global.ui.dto.response.ErrorResponse;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFound(NotFoundException exception) {
+        return makeErrorResponse(exception.getErrorCode());
+    }
+
+    @ExceptionHandler(ImageUploadException.class)
+    public ResponseEntity<ErrorResponse> handleImageUploadException(ImageUploadException exception) {
         return makeErrorResponse(exception.getErrorCode());
     }
 
