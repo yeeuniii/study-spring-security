@@ -16,7 +16,7 @@ public class MonthlyQueryService {
     private final DiaryRepository diaryRepository;
 
     public DiaryMonthlyResponse viewMonthlyDiary(int year, int month) {
-        List<Diary> diaries = diaryRepository.findDiariesByYearAndMonth(year, month);
+        List<Diary> diaries = diaryRepository.findByYearAndMonth(year, month);
         return DiaryMonthlyResponse.of(year, month, diaries);
     }
 }

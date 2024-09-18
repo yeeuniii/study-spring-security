@@ -11,7 +11,7 @@ import java.util.Optional;
 public record DiaryMonthlyResponse(
         int year,
         int month,
-        List<DiaryInfo> dayList
+        List<DiaryInfo> days
 ) {
     public static DiaryMonthlyResponse of(int year, int month, List<Diary> diaries) {
         List<DiaryInfo> diaryInfo = convertDiariesResponse(diaries);
@@ -19,7 +19,7 @@ public record DiaryMonthlyResponse(
         return DiaryMonthlyResponse.builder()
                 .year(year)
                 .month(month)
-                .dayList(dayList)
+                .days(dayList)
                 .build();
     }
 
@@ -37,7 +37,7 @@ public record DiaryMonthlyResponse(
     }
 
     @Builder
-    public record DiaryInfo(
+    private record DiaryInfo(
             LocalDate date,
             Long diaryId
     ) {
