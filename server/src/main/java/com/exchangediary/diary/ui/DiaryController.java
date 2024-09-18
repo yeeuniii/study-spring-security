@@ -3,7 +3,6 @@ package com.exchangediary.diary.ui;
 import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.service.DiaryCommandService;
 import com.exchangediary.diary.service.DiaryQueryService;
-import com.exchangediary.diary.service.MonthlyQueryService;
 import com.exchangediary.diary.service.StickerCommandService;
 import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.diary.ui.dto.request.StickerRequest;
@@ -32,7 +31,6 @@ public class DiaryController {
     private final DiaryCommandService diaryCommandService;
     private final StickerCommandService stickerCommandService;
     private final DiaryQueryService diaryQueryService;
-    private final MonthlyQueryService monthlyQueryService;
 
     @PostMapping
     public ResponseEntity<Long> createDiary(
@@ -70,7 +68,7 @@ public class DiaryController {
 
     @GetMapping("/monthly")
     public ResponseEntity<DiaryMonthlyResponse> viewMonthlyDiary(@RequestParam int year, @RequestParam int month) {
-        DiaryMonthlyResponse diaryMonthlyResponse = monthlyQueryService.viewMonthlyDiary(year, month);
+        DiaryMonthlyResponse diaryMonthlyResponse = diaryQueryService.viewMonthlyDiary(year, month);
 
         return ResponseEntity
                 .ok()
