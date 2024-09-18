@@ -12,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Service
@@ -29,10 +32,18 @@ public class DiaryQueryService {
     }
 
     public DiaryMonthlyResponse viewMonthlyDiary(int year, int month) {
-        if ((year < 2024 || year > 2100) || (month < 1 || month > 12) ) {
-            throw new GlobalException(ErrorCode.INVALID_YEAR_OR_MONTH);
-        }
+        isValidYearMonth(year + "-" + String.format("%02d", month));
         List<Diary> diaries = diaryRepository.findByAllYearAndMonth(year, month);
         return DiaryMonthlyResponse.of(year, month, diaries);
     }
+
+    public static void isValidYearMonth(String yearMonth) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        try {
+            LocalDate.parse(yearMonth + "-01", formatter);
+        } catch (DateTimeParseException e) {
+            throw new GlobalException(ErrorCode.INVALID_DATE_BAD_REQUEST);
+        }
+    }
+
 }
