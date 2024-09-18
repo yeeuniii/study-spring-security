@@ -32,7 +32,7 @@ public class DiaryQueryService {
     }
 
     public DiaryMonthlyResponse viewMonthlyDiary(int year, int month) {
-        isValidYearMonth(year + "-" + String.format("%02d", month));
+        isValidYearMonth(String.format("%d-%02d", year, month));
         List<Diary> diaries = diaryRepository.findByAllYearAndMonth(year, month);
         return DiaryMonthlyResponse.of(year, month, diaries);
     }
