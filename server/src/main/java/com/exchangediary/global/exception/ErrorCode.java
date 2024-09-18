@@ -12,7 +12,8 @@ public enum ErrorCode {
     DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "일기를 찾을 수 없습니다."),
     STICKER_IMAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "스티커 이미지를 찾을 수 없습니다."),
 
-    IMAGE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드 중 오류가 발생했습니다.");
+    IMAGE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드 중 오류가 발생했습니다."),
+    INVALID_YEAR_OR_MONTH(HttpStatus.INTERNAL_SERVER_ERROR, "유효하지 않은 날짜 범위입니다.");
 
     private final HttpStatus statusCode;
     private final String message;
