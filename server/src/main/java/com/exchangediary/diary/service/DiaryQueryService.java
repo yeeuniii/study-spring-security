@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -38,9 +38,9 @@ public class DiaryQueryService {
     }
 
     public static void isValidYearMonth(String yearMonth) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
         try {
-            LocalDate.parse(yearMonth + "-01", formatter);
+            YearMonth.parse(yearMonth, formatter);
         } catch (DateTimeParseException e) {
             throw new GlobalException(ErrorCode.INVALID_DATE_BAD_REQUEST);
         }
