@@ -8,6 +8,7 @@ import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.diary.ui.dto.request.StickerRequest;
 import com.exchangediary.diary.ui.dto.request.UploadImageRequest;
 import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
+import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -63,4 +65,14 @@ public class DiaryController {
                 .created(URI.create("/diary/" + diaryId))
                 .build();
     }
+
+    @GetMapping("/monthly")
+    public ResponseEntity<DiaryMonthlyResponse> viewMonthlyDiary(@RequestParam int year, @RequestParam int month) {
+        DiaryMonthlyResponse diaryMonthlyResponse = diaryQueryService.viewMonthlyDiary(year, month);
+
+        return ResponseEntity
+                .ok()
+                .body(diaryMonthlyResponse);
+    }
+
 }
