@@ -32,7 +32,7 @@ public class DiaryQueryService {
         if ((year < 2024 || year > 2100) || (month < 1 || month > 12) ) {
             throw new GlobalException(ErrorCode.INVALID_YEAR_OR_MONTH);
         }
-        List<Diary> diaries = diaryRepository.findByYearAndMonth(year, month);
+        List<Diary> diaries = diaryRepository.findByAllYearAndMonth(year, month);
         return DiaryMonthlyResponse.of(year, month, diaries);
     }
 }
