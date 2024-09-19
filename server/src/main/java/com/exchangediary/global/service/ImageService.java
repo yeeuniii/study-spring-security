@@ -19,8 +19,8 @@ import java.util.UUID;
 public class ImageService {
     private final StaticImageRepository staticImageRepository;
     private final UploadImageRepository uploadImageRepository;
-    private static final String STATICIMAGE_URL = "/api/images/static/";
-    private static final String UPLOADIMAGE_URL = "/api/images/upload/";
+    private static final String STATIC_IMAGE_URL = "/api/images/static/";
+    private static final String UPLOAD_IMAGE_URL = "/api/images/upload/";
 
     /**
      * 사용자가 올린 이미지 업로드
@@ -33,7 +33,7 @@ public class ImageService {
     public UploadImage saveUploadImage(MultipartFile file, PublicationStatus status) throws IOException {
         String extension = file.getOriginalFilename()
                 .substring(file.getOriginalFilename().lastIndexOf("."));
-        String newFilename = UPLOADIMAGE_URL + UUID.randomUUID().toString() + extension;
+        String newFilename = UPLOAD_IMAGE_URL + UUID.randomUUID().toString() + extension;
 
         UploadImage image = UploadImage.builder()
                 .contentType(file.getContentType())
@@ -43,7 +43,7 @@ public class ImageService {
                 .build();
 
         UploadImage save = uploadImageRepository.save(image);
-        save.generateImageUrl(UPLOADIMAGE_URL + save.getId());
+        save.generateImageUrl(UPLOAD_IMAGE_URL + save.getId());
         return uploadImageRepository.save(save);
     }
 
@@ -61,7 +61,7 @@ public class ImageService {
      */
     public StaticImage saveStaticImage(MultipartFile file, StaticImageType type) throws IOException {
         String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        String newFilename = STATICIMAGE_URL + UUID.randomUUID().toString() + extension;
+        String newFilename = STATIC_IMAGE_URL + UUID.randomUUID().toString() + extension;
 
         StaticImage image = StaticImage.builder()
                 .contentType(file.getContentType())
@@ -70,9 +70,9 @@ public class ImageService {
                 .type(type)
                 .build();
 
-        StaticImage save = staticImageRepository.save(image);
-        save.generateImageUrl(STATICIMAGE_URL + save.getId());
-        return staticImageRepository.save(save);
+        StaticImage saveImage = staticImageRepository.save(image);
+        saveImage.generateImageUrl(STATIC_IMAGE_URL + saveImage.getId());
+        return staticImageRepository.save(saveImage);
     }
 
     public Optional<StaticImage> getStaticImage(Long id) {
