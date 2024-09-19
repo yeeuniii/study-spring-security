@@ -31,7 +31,8 @@ public class ImageService {
      * @throws IOException
      */
     public UploadImage saveUploadImage(MultipartFile file, PublicationStatus status) throws IOException {
-        String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        String extension = file.getOriginalFilename()
+                .substring(file.getOriginalFilename().lastIndexOf("."));
         String newFilename = UPLOADIMAGE_URL + UUID.randomUUID().toString() + extension;
 
         UploadImage image = UploadImage.builder().contentType(file.getContentType()).filename(newFilename).image(file.getBytes()).status(status).build();
@@ -57,7 +58,12 @@ public class ImageService {
         String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
         String newFilename = STATICIMAGE_URL + UUID.randomUUID().toString() + extension;
 
-        StaticImage image = StaticImage.builder().contentType(file.getContentType()).filename(newFilename).image(file.getBytes()).type(type).build();
+        StaticImage image = StaticImage.builder()
+                .contentType(file.getContentType())
+                .filename(newFilename)
+                .image(file.getBytes())
+                .type(type)
+                .build();
 
         StaticImage save = staticImageRepository.save(image);
         save.generateImageUrl(STATICIMAGE_URL + save.getId());
