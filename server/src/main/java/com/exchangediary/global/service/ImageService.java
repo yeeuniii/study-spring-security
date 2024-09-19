@@ -70,9 +70,9 @@ public class ImageService {
                 .type(type)
                 .build();
 
-        StaticImage saveImage = staticImageRepository.save(image);
-        saveImage.generateImageUrl(STATIC_IMAGE_URL + saveImage.getId());
-        return staticImageRepository.save(saveImage);
+        StaticImage savedImage = staticImageRepository.save(image);
+        savedImage.generateImageUrl(STATIC_IMAGE_URL + savedImage.getId());
+        return staticImageRepository.save(savedImage);
     }
 
     public Optional<StaticImage> getStaticImage(Long id) {
