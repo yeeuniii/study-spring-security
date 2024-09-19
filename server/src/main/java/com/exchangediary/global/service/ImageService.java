@@ -35,7 +35,12 @@ public class ImageService {
                 .substring(file.getOriginalFilename().lastIndexOf("."));
         String newFilename = UPLOADIMAGE_URL + UUID.randomUUID().toString() + extension;
 
-        UploadImage image = UploadImage.builder().contentType(file.getContentType()).filename(newFilename).image(file.getBytes()).status(status).build();
+        UploadImage image = UploadImage.builder()
+                .contentType(file.getContentType())
+                .filename(newFilename)
+                .image(file.getBytes())
+                .status(status)
+                .build();
 
         UploadImage save = uploadImageRepository.save(image);
         save.generateImageUrl(UPLOADIMAGE_URL + save.getId());
