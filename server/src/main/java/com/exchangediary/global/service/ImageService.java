@@ -44,9 +44,9 @@ public class ImageService {
                 .status(status)
                 .build();
 
-        UploadImage save = uploadImageRepository.save(image);
-        save.generateImageUrl(UPLOAD_IMAGE_URL + save.getId());
-        return uploadImageRepository.save(save);
+        UploadImage savedImage = uploadImageRepository.save(image);
+        savedImage.generateImageUrl(UPLOAD_IMAGE_URL + savedImage.getId());
+        return uploadImageRepository.save(savedImage);
     }
 
     public Optional<UploadImage> getUploadImage(Long id) {
