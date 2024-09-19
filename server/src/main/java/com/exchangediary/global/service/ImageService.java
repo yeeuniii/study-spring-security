@@ -20,7 +20,9 @@ public class ImageService {
     private final StaticImageRepository staticImageRepository;
     private final UploadImageRepository uploadImageRepository;
     private static final String STATIC_IMAGE_URL = "/api/images/static/";
+    private static final String STATIC_IMAGE_NAME = "exchange-static-";
     private static final String UPLOAD_IMAGE_URL = "/api/images/upload/";
+    private static final String UPLOAD_IMAGE_NAME = "exchange-upload-";
 
     /**
      * 사용자가 올린 이미지 업로드
@@ -33,7 +35,7 @@ public class ImageService {
     public UploadImage saveUploadImage(MultipartFile file, PublicationStatus status) throws IOException {
         String extension = file.getOriginalFilename()
                 .substring(file.getOriginalFilename().lastIndexOf("."));
-        String newFilename = UPLOAD_IMAGE_URL + UUID.randomUUID().toString() + extension;
+        String newFilename = UPLOAD_IMAGE_NAME + UUID.randomUUID().toString() + extension;
 
         UploadImage image = UploadImage.builder()
                 .contentType(file.getContentType())
@@ -61,7 +63,7 @@ public class ImageService {
      */
     public StaticImage saveStaticImage(MultipartFile file, StaticImageType type) throws IOException {
         String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        String newFilename = STATIC_IMAGE_URL + UUID.randomUUID().toString() + extension;
+        String newFilename = STATIC_IMAGE_NAME + UUID.randomUUID().toString() + extension;
 
         StaticImage image = StaticImage.builder()
                 .contentType(file.getContentType())
