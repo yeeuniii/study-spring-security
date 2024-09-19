@@ -22,7 +22,8 @@ public class ImageService {
 
     /**
      * 사용자가 올린 이미지 업로드
-     * @param file 이미지 파일
+     *
+     * @param file   이미지 파일
      * @param status 발행 상태
      * @return
      * @throws IOException
@@ -45,12 +46,13 @@ public class ImageService {
         return save;
     }
 
-    public Optional<UploadImage> getUploadImage(Long id){
+    public Optional<UploadImage> getUploadImage(Long id) {
         return uploadImageRepository.findById(id);
     }
 
     /**
      * static 이미지 업로드
+     *
      * @param file 이미지 파일
      * @param type 이미지 종류
      * @return
@@ -60,7 +62,7 @@ public class ImageService {
             throws IOException {
         String extension = file.getOriginalFilename().substring(file.getOriginalFilename()
                 .lastIndexOf("."));
-        String newFilename = "/api/images/static/" + UUID.randomUUID().toString() + extension;;
+        String newFilename = "/api/images/static/" + UUID.randomUUID().toString() + extension;
 
         StaticImage image = StaticImage.builder()
                 .contentType(file.getContentType())
@@ -71,10 +73,10 @@ public class ImageService {
 
         StaticImage save = staticImageRepository.save(image);
         save.generateImageUrl("/api/images/static/" + save.getId());
-        return save;
+        return staticImageRepository.save(save);
     }
 
-    public Optional<StaticImage> getStaticImage(Long id){
+    public Optional<StaticImage> getStaticImage(Long id) {
         return staticImageRepository.findById(id);
     }
 }
