@@ -53,6 +53,7 @@ public class Sticker extends BaseEntity {
                 .coordZ(coordZ)
                 .width(stickerRequest.width())
                 .height(stickerRequest.height())
+                .rotation(stickerRequest.rotation())
                 .diary(diary)
                 .staticImage(staticImage)
                 .build();
