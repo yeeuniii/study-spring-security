@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>TEST</title>
+    <title>달력 페이지</title>
 
     <style>
     table{
@@ -33,6 +33,39 @@
         position: absolute;
         line-height: 10px;
     }
+
+    .left-arrow {
+        position: relative;
+    }
+
+    .left-arrow::after {
+        position: absolute;
+        right: 50px;
+        top: 93px;
+        content: '';
+        width: 24px; /* 사이즈 */
+        height: 24px; /* 사이즈 */
+        border-top: 5px solid #767676; /* 선 두께 */
+        border-right: 5px solid #767676; /* 선 두께 */
+        transform: rotate(225deg); /* 각도 */
+    }
+
+    .right-arrow {
+        position: relative;
+    }
+
+    .right-arrow::after {
+        position: absolute;
+        left: 50px;
+        top: 93px;
+        content: '';
+        width: 24px; /* 사이즈 */
+        height: 24px; /* 사이즈 */
+        border-top: 5px solid #767676; /* 선 두께 */
+        border-right: 5px solid #767676; /* 선 두께 */
+        transform: rotate(45deg); /* 각도 */
+    }
+
   </style>
 </head>
 <body>
@@ -40,15 +73,15 @@
     <table frame="void">
         <tr>
             <td style="position: relative;"><span class="group-name">사용자가 설정한 이름</span></td>
+            <td class="left-arrow"><a href></a></td>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
+            <td class="right-arrow"></td>
             <td></td>
         </tr>
         <tr>
-            <td style="position: relative;"><span class="year">2024</span></td>
+            <td style="position: relative;"><span class="year"></span></td>
             <td></td>
             <td></td>
             <td></td>
@@ -62,7 +95,7 @@
             <td></td>
             <td>
                 <div style="max-height: 50px;">
-                    <span style="font-size: 50px;">9</span>
+                    <span class="month" style="font-size: 50px;"></span>
                 </div>
             </td>
             <td></td>
@@ -125,9 +158,8 @@
         </tr>
     </table>
 </div>
-<input type="file" />
 </body>
 
-<script src="../static/js/draw-calendar.js"></script>
+<script src="/js/draw-calendar.js"></script>
 
 </html>
