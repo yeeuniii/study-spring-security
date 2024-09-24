@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>달력 페이지</title>
 
     <style>
@@ -21,11 +22,9 @@
     }
 
     .group-name {
-        width: 324px;
         font-size: 24px;
         font-weight: 600;
-        position: absolute;
-        line-height: 22px;
+        line-height: 50px;
     }
 
     .year {
@@ -37,8 +36,8 @@
     }
 
     .date {
-        width: 50px;
-        height: 50px;
+        width: 48px;
+        height: 48px;
         border: 1px solid;
         border-radius: 50%;
         font-size: 24px;
@@ -87,95 +86,101 @@
   </style>
 </head>
 <body>
-<div align="center">
-    <table class="drag-prevent" frame="void">
-        <tr>
-            <td style="position: relative;"><span class="group-name">사용자가 설정한 이름</span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><a class="arrow left-arrow" href="#"></a></td>
-            <td></td>
-            <td style="position: relative;"><span class="year"></span></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><a class="arrow right-arrow" href="#"></a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-                <div style="max-height: 50px;">
-                    <span class="month" style="font-size: 50px;"></span>
-                </div>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr style="font-size: 30px; color: rgba(118, 118, 118, 0.7)">
-            <td>S</td>
-            <td>M</td>
-            <td>T</td>
-            <td>W</td>
-            <td>T</td>
-            <td>F</td>
-            <td>S</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
+<div class="drag-prevent" align="center">
+    <div>
+        <span class="group-name">사용자가 설정한 이름</span>
+    </div>
+    <div>
+        <table frame="void">
+            <tr>
+                <td><a class="arrow left-arrow" href="#"></a></td>
+                <td></td>
+                <td style="position: relative;"><span class="year"></span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><a class="arrow right-arrow" href="#"></a></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <div style="max-height: 50px;">
+                        <span class="month" style="font-size: 50px;"></span>
+                    </div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr style="font-size: 30px; color: rgba(118, 118, 118, 0.7)">
+                <td>S</td>
+                <td>M</td>
+                <td>T</td>
+                <td>W</td>
+                <td>T</td>
+                <td>F</td>
+                <td>S</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
 </div>
+
 </body>
 
 <script src="/js/draw-calendar.js"></script>

@@ -1,7 +1,7 @@
 const table = document.querySelector("table");
 const year = document.querySelector(".year");
 const month = document.querySelector(".month");
-const trs = Array.from(table.children[0].children).slice(4);
+const trs = Array.from(table.children[0].children).slice(3);
 const today = new Date();
 
 function init() {
@@ -41,17 +41,7 @@ async function drawDateOfCalendar() {
 }
 
 function clearDate() {
-    let column = 0;
-    let row = 0;
-
-    while (column < 5) {
-        trs[column].children[row].innerText = "";
-        row++;
-        if (row === 7) {
-            column++;
-            row = 0;
-        }
-    }
+    trs.forEach(tr => Array.from(tr.children).forEach(td => td.innerText = ""));
 }
 
 function makeCircle(date, diaryDays) {
