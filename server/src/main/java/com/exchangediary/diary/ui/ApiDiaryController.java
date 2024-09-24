@@ -8,6 +8,7 @@ import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.diary.ui.dto.request.StickerRequest;
 import com.exchangediary.diary.ui.dto.request.UploadImageRequest;
 import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
+import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,18 @@ public class ApiDiaryController {
                 .body(diary.getId());
     }
 
+    @GetMapping
+    public ResponseEntity<DiaryIdResponse> findDiaryId(
+            @RequestParam int year,
+            @RequestParam int month,
+            @RequestParam int day
+    ) {
+        DiaryIdResponse diaryIdResponse = diaryQueryService.findDiaryIdByDate(year, month, day);
+        return ResponseEntity
+                .ok()
+                .body(diaryIdResponse);
+    }
+
     @GetMapping("/{diaryId}")
     public ResponseEntity<DiaryDetailResponse> viewDetail (@PathVariable Long diaryId) {
         DiaryDetailResponse diaryDetailResponse = diaryQueryService.viewDetail(diaryId);
@@ -74,5 +87,4 @@ public class ApiDiaryController {
                 .ok()
                 .body(diaryMonthlyResponse);
     }
-
 }
