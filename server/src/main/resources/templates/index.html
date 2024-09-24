@@ -5,15 +5,17 @@
     <title>달력 페이지</title>
 
     <style>
-    table{
+    table {
         border-collapse: collapse;
     }
-    th,td{
+
+    th,td {
         width: 50px;
         height: 50px;
         text-align: center;
         border: 2px solid #FFCC00;
     }
+
     a {
         text-decoration: none;
     }
@@ -25,12 +27,25 @@
         position: absolute;
         line-height: 22px;
     }
+
     .year {
         font-size: 50px;
         font-weight: 500;
         color: rgba(118, 118, 118, 0.7);
         position: absolute;
         line-height: 10px;
+    }
+
+    .date {
+        width: 50px;
+        height: 50px;
+        border: 1px solid;
+        border-radius: 50%;
+        font-size: 24px;
+        color: rgba(118, 118, 118, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .arrow {
@@ -58,6 +73,9 @@
         transform: rotate(45deg); /* 각도 */
     }
 
+    .diary {
+        background-color: #FFCC00;
+    }
   </style>
 </head>
 <body>
@@ -153,5 +171,6 @@
 </body>
 
 <script src="/js/draw-calendar.js"></script>
+<script src="/js/calendar-arrow.js"></script>
 
 </html>
