@@ -76,11 +76,19 @@
     .diary {
         background-color: #FFCC00;
     }
+
+    .drag-prevent{
+        -ms-user-select: none;
+        -moz-user-select: -moz-none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        user-select: none;
+    }
   </style>
 </head>
 <body>
 <div align="center">
-    <table frame="void">
+    <table class="drag-prevent" frame="void">
         <tr>
             <td style="position: relative;"><span class="group-name">사용자가 설정한 이름</span></td>
             <td></td>
