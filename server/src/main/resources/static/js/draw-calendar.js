@@ -55,13 +55,13 @@ function makeCircle(date, diaryDays) {
 }
 
 function isToday(date) {
-    if (today.getFullYear() !== year.innerText) {
+    if (today.getFullYear() != year.innerText) {
         return false
     }
-    if (today.getMonth() !== month.innerText - 1) {
+    if (today.getMonth() != month.innerText - 1) {
         return false
     }
-    return today.getDate() === date;
+    return today.getDate() == date;
 }
 
 
