@@ -26,7 +26,6 @@
         line-height: 22px;
     }
     .year {
-        width: 324px;
         font-size: 50px;
         font-weight: 500;
         color: rgba(118, 118, 118, 0.7);
@@ -34,35 +33,28 @@
         line-height: 10px;
     }
 
-    .left-arrow {
+    .arrow {
         position: relative;
+    }
+
+    .arrow::after {
+        position: absolute;
+        content: '';
+        width: 24px;
+        height: 24px;
+        border-top: 5px solid #767676;
+        border-right: 5px solid #767676;
     }
 
     .left-arrow::after {
-        position: absolute;
-        right: 50px;
-        top: 93px;
-        content: '';
-        width: 24px; /* 사이즈 */
-        height: 24px; /* 사이즈 */
-        border-top: 5px solid #767676; /* 선 두께 */
-        border-right: 5px solid #767676; /* 선 두께 */
+        top: 12px;
+        left: 2px;
         transform: rotate(225deg); /* 각도 */
     }
 
-    .right-arrow {
-        position: relative;
-    }
-
     .right-arrow::after {
-        position: absolute;
-        left: 50px;
-        top: 93px;
-        content: '';
-        width: 24px; /* 사이즈 */
-        height: 24px; /* 사이즈 */
-        border-top: 5px solid #767676; /* 선 두께 */
-        border-right: 5px solid #767676; /* 선 두께 */
+        top: 12px;
+        right: 2px;
         transform: rotate(45deg); /* 각도 */
     }
 
@@ -73,21 +65,21 @@
     <table frame="void">
         <tr>
             <td style="position: relative;"><span class="group-name">사용자가 설정한 이름</span></td>
-            <td class="left-arrow"><a href></a></td>
             <td></td>
             <td></td>
             <td></td>
-            <td class="right-arrow"></td>
+            <td></td>
+            <td></td>
             <td></td>
         </tr>
         <tr>
+            <td><a class="arrow left-arrow" href="#"></a></td>
+            <td></td>
             <td style="position: relative;"><span class="year"></span></td>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><a class="arrow right-arrow" href="#"></a></td>
         </tr>
         <tr>
             <td></td>
