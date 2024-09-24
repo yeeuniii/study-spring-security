@@ -58,10 +58,20 @@ function makeCircle(date, diaryDays) {
     if (diaryDays.includes(date)) {
         return `<a class="date day${date} diary" href="/api/diary">${date}</a>`;
     }
-    if (date === today.getDate()) {
+    if (isToday(date)) {
         return `<a class="date day${date}" href="/diary">${date}</a>`;
     }
     return `<span class="date day${date}">${date}</span>`;
+}
+
+function isToday(date) {
+    if (today.getFullYear() !== year.innerText) {
+        return false
+    }
+    if (today.getMonth() !== month.innerText - 1) {
+        return false
+    }
+    return today.getDate() === date;
 }
 
 
