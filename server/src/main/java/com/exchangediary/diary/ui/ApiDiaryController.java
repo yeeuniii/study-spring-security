@@ -26,8 +26,8 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/diary")
-public class DiaryController {
+@RequestMapping("/api/diary")
+public class ApiDiaryController {
     private final DiaryCommandService diaryCommandService;
     private final StickerCommandService stickerCommandService;
     private final DiaryQueryService diaryQueryService;
