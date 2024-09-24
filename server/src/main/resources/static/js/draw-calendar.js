@@ -22,7 +22,7 @@ function drawDateOfCalendar() {
         trs[column].children[day].innerHTML = makeCircle(date);
         date++;
         day++;
-        if (day == 7) {
+        if (day === 7) {
             day = 0;
             column++;
         }
@@ -36,7 +36,7 @@ function clearDate() {
     while (column < 5) {
         trs[column].children[row].innerText = "";
         row++;
-        if (row == 7) {
+        if (row === 7) {
             column++;
             row = 0;
         }
@@ -44,11 +44,11 @@ function clearDate() {
 }
 
 function makeCircle(date) {
-    return `<a class="day${date}" href="" style="width: 50px; height: 50px; border: 1px solid; border-radius: 50%; font-size: 24px; color: rgba(118, 118, 118, 0.7); display: flex; justify-content: center; align-items: center;">${date}</a>`;
+    return `<a class="date day${date}" href="" style="width: 50px; height: 50px; border: 1px solid; border-radius: 50%; font-size: 24px; color: rgba(118, 118, 118, 0.7); display: flex; justify-content: center; align-items: center;">${date}</a>`;
 }
 
 
-const days = document.querySelectorAll("a");
+const days = document.querySelectorAll("a.date");
 
 Array.from(days).forEach( date => {
     date.addEventListener("click", clickDayBtn);
@@ -68,7 +68,7 @@ rightArrow.addEventListener("click", clickRightArrowButton);
 function clickLeftArrowButton(event) {
     event.preventDefault();
     month.innerText -= 1;
-    if (month.innerText == 0) {
+    if (month.innerText === "0") {
         month.innerText = 12;
         year.innerText -= 1;
     }
@@ -79,7 +79,7 @@ function clickLeftArrowButton(event) {
 function clickRightArrowButton(event) {
     event.preventDefault();
     month.innerText = Number(month.innerText) + 1;
-    if (month.innerText == 13) {
+    if (month.innerText === "13") {
         month.innerText = 1;
         year.innerText = Number(year.innerText) + 1;
     }
