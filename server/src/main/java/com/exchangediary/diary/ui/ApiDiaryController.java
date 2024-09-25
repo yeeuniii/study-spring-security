@@ -58,7 +58,7 @@ public class ApiDiaryController {
     }
 
     @GetMapping("/{diaryId}")
-    public ResponseEntity<DiaryDetailResponse> viewDetail (@PathVariable Long diaryId) {
+    public ResponseEntity<DiaryDetailResponse> viewDetail(@PathVariable Long diaryId) {
         DiaryDetailResponse diaryDetailResponse = diaryQueryService.viewDetail(diaryId);
 
         return ResponseEntity
