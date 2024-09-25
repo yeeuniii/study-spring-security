@@ -3,16 +3,15 @@ const year = document.querySelector(".year");
 const month = document.querySelector(".month");
 const trs = Array.from(table.children[0].children).slice(3);
 const today = new Date();
+const bottomCalendar = document.querySelector(".bottom-calendar")
 
 function init() {
     year.innerText = today.getFullYear();
     month.innerText = today.getMonth() + 1;
-    console.log(year.innerText, month.innerText);
 
     drawDateOfCalendar();
+    drawBottom();
 }
-
-init();
 
 async function drawDateOfCalendar() {
     const firstDay = new Date(year.innerText, month.innerText - 1, 1).getDay();
@@ -36,8 +35,8 @@ async function drawDateOfCalendar() {
             column++;
         }
     }
-
     addEvents();
+    drawToday();
 }
 
 function clearDate() {
@@ -46,10 +45,10 @@ function clearDate() {
 
 function makeCircle(date, diaryDays) {
     if (diaryDays.includes(date)) {
-        return `<a class="date day${date} diary" href="/api/diary">${date}</a>`;
+        return `<a class="date day${date} diary highlight" href="/api/diary">${date}</a>`;
     }
     if (isToday(date)) {
-        return `<a class="date day${date}" href="/diary">${date}</a>`;
+        return `<a class="date day${date} today highlight" href="/diary">${date}</a>`;
     }
     return `<span class="date day${date}">${date}</span>`;
 }
@@ -78,5 +77,43 @@ function showDiary(event) {
     const url = event.target.href
     fetch(`${url}?year=${year.innerText}&month=${month.innerText}&day=${event.target.innerText}`)
         .then(response => response.json())
-        .then(data => window.location.href = `${url}/${data.diaryId}`);
+        .then(data => window.location.href = `/diary/${data.diaryId}`);
 }
+
+function drawBottom() {
+    fetch(`/api/diary?year=${today.getFullYear()}&month=${today.getMonth() + 1}&day=${today.getDate()}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("")
+            }
+            return response.json()
+        })
+        .then(data => {
+            bottomCalendar.innerHTML = `<a href="/diary/${data.diaryId}" style="color: #767676; font-size: 16px;">
+                                                        <span style="color: #000000;">오늘 일기가 업로드 되었어요.</span>
+                                                        <br>
+                                                        <span>날짜를 눌러 확인해보세요!</span>
+                                                    </a>`
+        })
+        .catch(() => {
+            bottomCalendar.innerHTML = `<a href="/diary" style="color: #767676; font-size: 16px;">
+                                            <span>내가 일기를 작성할 차례에요.</span>
+                                            <br>
+                                            <span>기다리는 친구들을 위해</span>
+                                            <br>
+                                            <span style="color: #000000;">일기를 작성해주세요!</span>
+                                        </a>`
+        })
+}
+
+function drawToday() {
+    if (isToday(today.getDate())) {
+        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay() - 1;
+        const todayDate = today.getDate();
+        const column = Math.floor((todayDate + firstDay) / 7);
+        const row = (todayDate + firstDay) % 7;
+        trs[column].children[row].querySelector("a").classList.add("today");
+    }
+}
+
+init();
