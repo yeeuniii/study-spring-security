@@ -36,13 +36,13 @@ public class ApiDiaryController {
     private final UploadImageService uploadImageService;
 
     @PostMapping
-    public ResponseEntity<Long> createDiary(
+    public ResponseEntity<Void> createDiary(
             @RequestPart(name = "data") @Valid DiaryRequest diaryRequest,
             @RequestPart(name = "file", required = false) MultipartFile file) {
         Diary diary = diaryCommandService.createDiary(diaryRequest, file);
         return ResponseEntity
-                .created(URI.create(String.format("/diary/%d/", diary.getId())))
-                .body(diary.getId());
+                .created(URI.create(String.format("/api/diary/%d", diary.getId())))
+                .build();
     }
 
     @GetMapping
