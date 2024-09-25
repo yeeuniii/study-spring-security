@@ -29,10 +29,10 @@ public class Diary extends BaseEntity {
     @Column(name = "diary_id")
     private Long id;
     private String content;
+    private String moodLocation;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "upload_image_id")
     private UploadImage uploadImage;
-    private String moodLocation;
 
     public static Diary of(DiaryRequest diaryRequest, UploadImage uploadImage) {
         return Diary.builder()
