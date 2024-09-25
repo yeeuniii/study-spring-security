@@ -5,6 +5,7 @@ import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.DiaryRepository;
 import com.exchangediary.diary.domain.entity.Sticker;
 import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
+import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.GlobalException;
@@ -37,7 +38,7 @@ public class DiaryQueryService {
         return DiaryMonthlyResponse.of(year, month, diaries);
     }
 
-    public static void isValidYearMonth(String yearMonth) {
+    private static void isValidYearMonth(String yearMonth) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
         try {
             YearMonth.parse(yearMonth, formatter);
@@ -46,4 +47,11 @@ public class DiaryQueryService {
         }
     }
 
+    public DiaryIdResponse findDiaryIdByDate(int year, int month, int day) {
+        Long diaryId = diaryRepository.findIdByDate(year, month, day)
+                .orElseThrow(() -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
+        return DiaryIdResponse.builder()
+                .diaryId(diaryId)
+                .build();
+    }
 }

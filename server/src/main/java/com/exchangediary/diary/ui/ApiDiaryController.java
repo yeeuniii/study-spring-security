@@ -8,6 +8,7 @@ import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.diary.ui.dto.request.StickerRequest;
 import com.exchangediary.diary.ui.dto.request.UploadImageRequest;
 import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
+import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,8 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/diary")
-public class DiaryController {
+@RequestMapping("/api/diary")
+public class ApiDiaryController {
     private final DiaryCommandService diaryCommandService;
     private final StickerCommandService stickerCommandService;
     private final DiaryQueryService diaryQueryService;
@@ -43,6 +44,18 @@ public class DiaryController {
         return ResponseEntity
                 .created(URI.create(String.format("/diary/%d/", diary.getId())))
                 .body(diary.getId());
+    }
+
+    @GetMapping
+    public ResponseEntity<DiaryIdResponse> findDiaryId(
+            @RequestParam int year,
+            @RequestParam int month,
+            @RequestParam int day
+    ) {
+        DiaryIdResponse diaryIdResponse = diaryQueryService.findDiaryIdByDate(year, month, day);
+        return ResponseEntity
+                .ok()
+                .body(diaryIdResponse);
     }
 
     @GetMapping("/{diaryId}")
@@ -74,5 +87,4 @@ public class DiaryController {
                 .ok()
                 .body(diaryMonthlyResponse);
     }
-
 }
