@@ -6,7 +6,6 @@ import com.exchangediary.diary.service.DiaryCommandService;
 import com.exchangediary.diary.service.DiaryQueryService;
 import com.exchangediary.diary.service.UploadImageService;
 import com.exchangediary.diary.ui.dto.request.DiaryRequest;
-import com.exchangediary.diary.ui.dto.request.UploadImageRequest;
 import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
@@ -40,10 +39,7 @@ public class ApiDiaryController {
     public ResponseEntity<Long> createDiary(
             @RequestPart(name = "data") @Valid DiaryRequest diaryRequest,
             @RequestPart(name = "file", required = false) MultipartFile file) {
-        UploadImageRequest uploadImageRequest = UploadImageRequest.builder()
-                .file(file)
-                .build();
-        Diary diary = diaryCommandService.createDiary(diaryRequest, uploadImageRequest);
+        Diary diary = diaryCommandService.createDiary(diaryRequest, file);
         return ResponseEntity
                 .created(URI.create(String.format("/diary/%d/", diary.getId())))
                 .body(diary.getId());

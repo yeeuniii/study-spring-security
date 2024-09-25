@@ -34,7 +34,7 @@ public class DiaryQueryService {
         return DiaryMonthlyResponse.of(year, month, diaries);
     }
 
-    private static void isValidYearMonth(String yearMonth) {
+    private void isValidYearMonth(String yearMonth) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
         try {
             YearMonth.parse(yearMonth, formatter);

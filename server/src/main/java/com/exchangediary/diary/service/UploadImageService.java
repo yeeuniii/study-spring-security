@@ -17,11 +17,17 @@ public class UploadImageService {
 
     @Transactional
     public UploadImage saveUploadImage(MultipartFile file) throws IOException {
+        if (isEmptyFile(file)) {
+            return null;
+        }
         UploadImage image = UploadImage.builder()
                 .image(file.getBytes())
                 .build();
-
         return uploadImageRepository.save(image);
+    }
+
+    private boolean isEmptyFile(MultipartFile file) {
+        return file == null || file.isEmpty();
     }
 
     @Transactional(readOnly = true)
