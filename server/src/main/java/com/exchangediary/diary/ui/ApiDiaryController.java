@@ -9,6 +9,8 @@ import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
+import com.exchangediary.global.exception.ErrorCode;
+import com.exchangediary.global.exception.GlobalException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -77,17 +79,12 @@ public class ApiDiaryController {
 
     @GetMapping("/upload-image/{imageId}")
     public ResponseEntity<byte[]> getUploadImage(@PathVariable Long imageId) {
-        Optional<UploadImage> imageOptional = uploadImageService.getUploadImage(imageId);
+        UploadImage image = uploadImageService.getUploadImage(imageId)
+                .orElseThrow(() -> new GlobalException(ErrorCode.UPLOAD_IMAGE_NOT_FOUND));
 
-        if (imageOptional.isPresent()) {
-            UploadImage image = imageOptional.get();
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.parseMediaType(MediaType.MULTIPART_FORM_DATA_VALUE));
-
-            return new ResponseEntity<>(image.getImage(), headers, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.parseMediaType(MediaType.MULTIPART_FORM_DATA_VALUE))
+                .body(image.getImage());
+   }
 }
