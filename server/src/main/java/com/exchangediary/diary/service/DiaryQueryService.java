@@ -6,7 +6,7 @@ import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import com.exchangediary.global.exception.ErrorCode;
-import com.exchangediary.global.exception.GlobalException;
+import com.exchangediary.global.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,7 @@ public class DiaryQueryService {
 
     public DiaryDetailResponse viewDetail(Long diaryId) {
         Diary diary = diaryRepository.findById(diaryId)
-                .orElseThrow(() -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
+                .orElseThrow(() -> new ServiceException(ErrorCode.DIARY_NOT_FOUND));
         return DiaryDetailResponse.of(diary);
     }
 
@@ -39,13 +39,13 @@ public class DiaryQueryService {
         try {
             YearMonth.parse(yearMonth, formatter);
         } catch (DateTimeParseException e) {
-            throw new GlobalException(ErrorCode.INVALID_DATE_BAD_REQUEST);
+            throw new ServiceException(yearMonth);
         }
     }
 
     public DiaryIdResponse findDiaryIdByDate(int year, int month, int day) {
         Long diaryId = diaryRepository.findIdByDate(year, month, day)
-                .orElseThrow(() -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
+                .orElseThrow(() -> new ServiceException(ErrorCode.DIARY_NOT_FOUND));
         return DiaryIdResponse.builder()
                 .diaryId(diaryId)
                 .build();
