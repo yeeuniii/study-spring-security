@@ -3,6 +3,7 @@ package com.exchangediary.global.exception;
 import lombok.Builder;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 @Builder
 public record ApiErrorResponse(
@@ -21,6 +22,13 @@ public record ApiErrorResponse(
     public static ApiErrorResponse from(HttpStatus status) {
         return ApiErrorResponse.builder()
                 .statusCode(status.value())
+                .build();
+    }
+
+    public static ApiErrorResponse from(MissingServletRequestParameterException exception) {
+        return ApiErrorResponse.builder()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(exception.getMessage())
                 .build();
     }
 
