@@ -9,10 +9,14 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     // Service Exception
     INVALID_RANGE(HttpStatus.BAD_REQUEST, "유효하지 않은 범위입니다."),
+    DUPLICATE(HttpStatus.BAD_REQUEST, "중복하는 데이터가 이미 존재합니다."),
     NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 자원입니다."),
 
     // Invalid Range
     INVALID_DATE_RANGE(HttpStatus.BAD_REQUEST, "유효하지 않은 날짜 범위입니다."),
+
+    // Duplicate
+    DIARY_DUPLICATED(HttpStatus.BAD_REQUEST, "오늘 일기는 작성 완료되었습니다."),
 
     // Not Found
     DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "일기를 찾을 수 없습니다."),

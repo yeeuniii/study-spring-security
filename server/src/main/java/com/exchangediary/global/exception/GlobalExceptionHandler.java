@@ -33,6 +33,12 @@ public class GlobalExceptionHandler {
         return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 
+    @ExceptionHandler(DuplicateException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ApiErrorResponse handleDuplicateException(DuplicateException exception) {
+        return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
+    }
+
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     public ApiErrorResponse handleNotFoundException(NotFoundException exception) {
