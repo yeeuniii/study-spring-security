@@ -1,9 +1,7 @@
 package com.exchangediary.diary.service;
 
-import com.exchangediary.diary.domain.StickerRepository;
 import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.DiaryRepository;
-import com.exchangediary.diary.domain.entity.Sticker;
 import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
@@ -23,13 +21,11 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class DiaryQueryService {
     private final DiaryRepository diaryRepository;
-    private final StickerRepository stickerRepository;
 
     public DiaryDetailResponse viewDetail(Long diaryId) {
         Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new GlobalException(ErrorCode.DIARY_NOT_FOUND));
-        List<Sticker> stickers = stickerRepository.findByDiary(diary);
-        return DiaryDetailResponse.of(diary, stickers);
+        return DiaryDetailResponse.of(diary);
     }
 
     public DiaryMonthlyResponse viewMonthlyDiary(int year, int month) {
@@ -38,7 +34,7 @@ public class DiaryQueryService {
         return DiaryMonthlyResponse.of(year, month, diaries);
     }
 
-    private static void isValidYearMonth(String yearMonth) {
+    private void isValidYearMonth(String yearMonth) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
         try {
             YearMonth.parse(yearMonth, formatter);
