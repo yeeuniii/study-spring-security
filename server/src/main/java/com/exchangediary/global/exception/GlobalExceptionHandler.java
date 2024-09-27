@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidRangeException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ApiErrorResponse handleInvalidRangeException(InvalidDateException exception) {
+    public ApiErrorResponse handleInvalidRangeException(DateRangeException exception) {
         return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 

@@ -6,7 +6,7 @@ import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import com.exchangediary.global.exception.DiaryNotFoundException;
-import com.exchangediary.global.exception.InvalidDateException;
+import com.exchangediary.global.exception.DateRangeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,7 +55,7 @@ public class DiaryQueryService {
             if (day != null) {
                 date += String.format("-%02d", day);
             }
-            throw new InvalidDateException(date);
+            throw new DateRangeException(date);
         }
     }
 }
