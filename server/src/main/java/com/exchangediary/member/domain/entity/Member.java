@@ -1,4 +1,4 @@
-package com.exchangediary.user.domain.entity;
+package com.exchangediary.member.domain.entity;
 
 import com.exchangediary.global.domain.entity.BaseEntity;
 import jakarta.persistence.Column;
@@ -19,10 +19,10 @@ import static lombok.AccessLevel.PROTECTED;
 @Builder
 @NoArgsConstructor(access = PROTECTED, force = true)
 @AllArgsConstructor(access = PRIVATE)
-public class User extends BaseEntity {
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
-    private String email;
+    private Long kakaoId;
 }
