@@ -30,12 +30,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidRangeException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ApiErrorResponse handleInvalidRangeException(InvalidDateException exception) {
-        return ApiErrorResponse.of(exception.getErrorCode(), exception.getValue());
+        return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     public ApiErrorResponse handleNotFoundException(NotFoundException exception) {
-        return ApiErrorResponse.of(exception.getErrorCode(), exception.getValue());
+        return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 }
