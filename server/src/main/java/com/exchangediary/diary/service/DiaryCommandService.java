@@ -4,7 +4,7 @@ import com.exchangediary.diary.domain.DiaryRepository;
 import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.entity.UploadImage;
 import com.exchangediary.diary.ui.dto.request.DiaryRequest;
-import com.exchangediary.global.exception.UploadImageException;
+import com.exchangediary.global.exception.FailedImageUploadException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +26,7 @@ public class DiaryCommandService {
             Diary diary = Diary.of(diaryRequest, uploadImage);
             return diaryRepository.save(diary);
         } catch (IOException e) {
-            throw new UploadImageException(file.getOriginalFilename());
+            throw new FailedImageUploadException(file.getOriginalFilename());
         }
     }
 }

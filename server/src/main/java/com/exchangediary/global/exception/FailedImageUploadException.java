@@ -1,14 +1,14 @@
 package com.exchangediary.global.exception;
 
-public class UploadImageException extends ServiceException {
+public class FailedImageUploadException extends ServiceException {
     private String value;
 
-    public UploadImageException(String value) {
+    public FailedImageUploadException(String value) {
         this(value, ErrorCode.FAILED_UPLOAD_IMAGE);
         this.value = value;
     }
 
-    public UploadImageException(String value, ErrorCode errorCode) {
+    public FailedImageUploadException(String value, ErrorCode errorCode) {
         super(errorCode);
         this.value = value;
     }
