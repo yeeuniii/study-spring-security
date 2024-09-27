@@ -3,7 +3,7 @@ const year = document.querySelector(".year");
 const month = document.querySelector(".month");
 const trs = Array.from(table.children[0].children).slice(3);
 const today = new Date();
-const bottomCalendar = document.querySelector(".bottom-calendar")
+const calendarBottom = document.querySelector(".calendar-bottom")
 
 function init() {
     year.innerText = today.getFullYear();
@@ -63,8 +63,6 @@ function isToday(date) {
     return today.getDate() == date;
 }
 
-
-
 function addEvents() {
     const diaryDays = document.querySelectorAll("a.diary");
     Array.from(diaryDays).forEach( date => {
@@ -89,19 +87,19 @@ function drawBottom() {
             return response.json()
         })
         .then(data => {
-            bottomCalendar.innerHTML = `<a href="/diary/${data.diaryId}" style="color: #767676; font-size: 16px;">
-                                                        <span style="color: #000000;">오늘 일기가 업로드 되었어요.</span>
+            calendarBottom.innerHTML = `<a href="/diary/${data.diaryId}" class="bottom-font">
+                                                        <span class="font-bold">오늘 일기가 업로드 되었어요.</span>
                                                         <br>
                                                         <span>날짜를 눌러 확인해보세요!</span>
                                                     </a>`
         })
         .catch(() => {
-            bottomCalendar.innerHTML = `<a href="/diary" style="color: #767676; font-size: 16px;">
+            calendarBottom.innerHTML = `<a href="/diary" class="bottom-font">
                                             <span>내가 일기를 작성할 차례에요.</span>
                                             <br>
                                             <span>기다리는 친구들을 위해</span>
                                             <br>
-                                            <span style="color: #000000;">일기를 작성해주세요!</span>
+                                            <span class="font-bold">일기를 작성해주세요!</span>
                                         </a>`
         })
 }
