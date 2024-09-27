@@ -6,8 +6,8 @@ import lombok.Getter;
 public class ServiceException extends RuntimeException {
     private final ErrorCode errorCode;
 
-    public ServiceException(ErrorCode errorCode) {
-        super(errorCode.getMessage());
+    public ServiceException(String message, ErrorCode errorCode) {
+        super(message);
         this.errorCode = errorCode;
     }
 

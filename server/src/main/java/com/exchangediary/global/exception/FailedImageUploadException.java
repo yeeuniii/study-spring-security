@@ -9,7 +9,7 @@ public class FailedImageUploadException extends ServiceException {
     }
 
     public FailedImageUploadException(String value, ErrorCode errorCode) {
-        super(errorCode);
+        super(errorCode.getMessage(), errorCode);
         this.value = value;
     }
 }
