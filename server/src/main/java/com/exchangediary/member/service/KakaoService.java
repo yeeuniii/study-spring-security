@@ -1,5 +1,6 @@
 package com.exchangediary.member.service;
 
+import com.exchangediary.global.exception.KakaoLoginFailureException;
 import com.exchangediary.member.ui.dto.request.KakaoTokenRequest;
 import com.exchangediary.member.ui.dto.response.KakaoIdResponse;
 import com.exchangediary.member.ui.dto.response.KakaoTokenResponse;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 
 @Service
@@ -20,7 +22,17 @@ public class KakaoService {
     @Value("${kakao.redirect_uri}")
     private String redirect_uri;
 
-    public String getToken(String code) {
+    public Long loginKakao(String code) {
+        try {
+            String token = getToken(code);
+            KakaoIdResponse kakaoIdResponse = getKakaoUserInfo(token);
+            return kakaoIdResponse.id();
+        } catch (HttpClientErrorException exception) {
+            throw new KakaoLoginFailureException(exception.getResponseBodyAsString());
+        }
+    }
+
+    private String getToken(String code) {
         KakaoTokenRequest kakaoTokenRequest = KakaoTokenRequest.from(client_id + "123", redirect_uri, code);
         System.out.println(kakaoTokenRequest);
         KakaoTokenResponse kakaoTokenResponse = requestToken(kakaoTokenRequest);
@@ -36,12 +48,11 @@ public class KakaoService {
                 .body(KakaoTokenResponse.class);
     }
 
-    public Long getKakaoUserInfo(String token) {
+    private KakaoIdResponse getKakaoUserInfo(String token) {
         return restClient.get()
                 .uri(KAKAO_USER_INFO_URL)
                 .header("Authorization", "Bearer " + token)
                 .retrieve()
-                .body(KakaoIdResponse.class)
-                .id();
+                .body(KakaoIdResponse.class);
     }
 }

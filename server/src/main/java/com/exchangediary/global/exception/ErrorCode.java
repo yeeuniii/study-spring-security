@@ -10,7 +10,7 @@ public enum ErrorCode {
     // Service Exception
     INVALID_RANGE(HttpStatus.BAD_REQUEST, "유효하지 않은 범위입니다."),
     NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 자원입니다."),
-    FAILED_TO_LOGIN_KAKAO(HttpStatus.INTERNAL_SERVER_ERROR, "kakao 로그인 과정에 실패했습니다."),
+    FAILED_TO_LOGIN_KAKAO(HttpStatus.INTERNAL_SERVER_ERROR, "kakao 로그인에 실패했습니다."),
 
     // Invalid Range
     INVALID_DATE_RANGE(HttpStatus.BAD_REQUEST, "유효하지 않은 날짜 범위입니다."),
@@ -21,6 +21,7 @@ public enum ErrorCode {
 
     // Kakao Login
     FAILED_TO_ISSUE_TOKEN(HttpStatus.INTERNAL_SERVER_ERROR, "kakao 토큰 발급에 실패했습니다."),
+    FAILED_TO_GET_KAKAO_USER_INFO(HttpStatus.INTERNAL_SERVER_ERROR, "kakao 사용자 정보 조회에 실패했습니다."),
 
     // etc
     FAILED_UPLOAD_IMAGE(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드 중 오류가 발생했습니다.");

@@ -42,6 +42,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(KakaoLoginFailureException.class)
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiErrorResponse handleKakaoLoginException(KakaoLoginFailureException exception) {
-        return ApiErrorResponse.of(exception.getErrorCode(), exception.getValue());
+        return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 }
