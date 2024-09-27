@@ -12,12 +12,18 @@ public class GlobalExceptionHandler {
 //    @ExceptionHandler(MethodArgumentNotValidException.class)
 //    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
 //    public ResponseEntity<ErrorResponse> handleInvalidArgumentException(MethodArgumentNotValidException exception) {
-//        return makeErrorResponse(ErrorCode.INVALID_INPUT_BAD_REQUEST);
+//        return ;
 //    }
 
     @ExceptionHandler(InvalidRangeException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErrorResponse handleInvalidRangeException(InvalidDateException exception) {
+        return ErrorResponse.from(exception.getErrorCode(), exception.getValue());
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNotFoundException(NotFoundException exception) {
         return ErrorResponse.from(exception.getErrorCode(), exception.getValue());
     }
 }
