@@ -9,8 +9,6 @@ import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
-import com.exchangediary.global.exception.ErrorCode;
-import com.exchangediary.global.exception.ServiceException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -76,9 +74,7 @@ public class ApiDiaryController {
 
     @GetMapping("/upload-image/{imageId}")
     public ResponseEntity<byte[]> getUploadImage(@PathVariable Long imageId) {
-        UploadImage image = uploadImageService.getUploadImage(imageId)
-                .orElseThrow(() -> new ServiceException(ErrorCode.UPLOAD_IMAGE_NOT_FOUND));
-
+        UploadImage image = uploadImageService.getUploadImage(imageId);
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.parseMediaType(MediaType.MULTIPART_FORM_DATA_VALUE))
