@@ -45,7 +45,7 @@ public class DiaryQueryService {
 
     public DiaryIdResponse findDiaryIdByDate(int year, int month, int day) {
         Long diaryId = diaryRepository.findIdByDate(year, month, day)
-                .orElseThrow(() -> new InvalidDateException(String.valueOf(year + month + day)));
+                .orElseThrow(() -> new InvalidDateException(String.format("%d-%02d-%02d", year, month, day)));
         return DiaryIdResponse.builder()
                 .diaryId(diaryId)
                 .build();
