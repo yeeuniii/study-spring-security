@@ -4,6 +4,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record DiaryRequest (
         @NotNull String content,
-        @NotNull Long todayMoodId
+        @NotNull String moodLocation
 ) {
 }
