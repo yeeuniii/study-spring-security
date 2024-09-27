@@ -35,7 +35,8 @@ public class ApiDiaryController {
     @PostMapping
     public ResponseEntity<Void> createDiary(
             @RequestPart(name = "data") @Valid DiaryRequest diaryRequest,
-            @RequestPart(name = "file", required = false) MultipartFile file) {
+            @RequestPart(name = "file", required = false) MultipartFile file
+    ) {
         Diary diary = diaryCommandService.createDiary(diaryRequest, file);
         return ResponseEntity
                 .created(URI.create(String.format("/api/diary/%d", diary.getId())))
@@ -57,16 +58,17 @@ public class ApiDiaryController {
     @GetMapping("/{diaryId}")
     public ResponseEntity<DiaryDetailResponse> viewDetail(@PathVariable Long diaryId) {
         DiaryDetailResponse diaryDetailResponse = diaryQueryService.viewDetail(diaryId);
-
         return ResponseEntity
                 .ok()
                 .body(diaryDetailResponse);
     }
 
     @GetMapping("/monthly")
-    public ResponseEntity<DiaryMonthlyResponse> viewMonthlyDiary(@RequestParam int year, @RequestParam int month) {
+    public ResponseEntity<DiaryMonthlyResponse> viewMonthlyDiary(
+            @RequestParam int year,
+            @RequestParam int month
+    ) {
         DiaryMonthlyResponse diaryMonthlyResponse = diaryQueryService.viewMonthlyDiary(year, month);
-
         return ResponseEntity
                 .ok()
                 .body(diaryMonthlyResponse);
