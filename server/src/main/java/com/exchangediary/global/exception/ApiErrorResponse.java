@@ -32,10 +32,10 @@ public record ApiErrorResponse(
                 .build();
     }
 
-    public static ApiErrorResponse of(ErrorCode errorCode, String value) {
+    public static ApiErrorResponse from(ErrorCode errorCode, String message, String value) {
         return ApiErrorResponse.builder()
                 .statusCode(errorCode.getStatusCode().value())
-                .message(errorCode.getMessage())
+                .message(message)
                 .value(value)
                 .build();
     }
