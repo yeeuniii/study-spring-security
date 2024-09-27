@@ -12,7 +12,7 @@ public class NotFoundException extends ServiceException {
     }
 
     public NotFoundException(String value, ErrorCode errorCode) {
-        super(errorCode.getMessage(), errorCode);
+        super(errorCode);
         this.value = value;
     }
 }

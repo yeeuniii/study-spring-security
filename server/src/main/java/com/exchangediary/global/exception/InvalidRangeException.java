@@ -12,7 +12,7 @@ public class InvalidRangeException extends ServiceException {
     }
 
     public InvalidRangeException(String value, ErrorCode errorCode) {
-        super(errorCode.getMessage(), errorCode);
+        super(errorCode);
         this.value = value;
     }
 }
