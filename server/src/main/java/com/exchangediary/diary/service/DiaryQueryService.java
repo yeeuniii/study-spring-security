@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Service
@@ -29,25 +29,33 @@ public class DiaryQueryService {
     }
 
     public DiaryMonthlyResponse viewMonthlyDiary(int year, int month) {
-        isValidYearMonth(String.format("%d-%02d", year, month));
+        checkValidDate(year, month, null);
         List<Diary> diaries = diaryRepository.findByAllYearAndMonth(year, month);
         return DiaryMonthlyResponse.of(year, month, diaries);
     }
 
-    private void isValidYearMonth(String yearMonth) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
-        try {
-            YearMonth.parse(yearMonth, formatter);
-        } catch (DateTimeParseException e) {
-            throw new InvalidDateException(yearMonth);
-        }
-    }
-
     public DiaryIdResponse findDiaryIdByDate(int year, int month, int day) {
+        checkValidDate(year, month, day);
         Long diaryId = diaryRepository.findIdByDate(year, month, day)
-                .orElseThrow(() -> new InvalidDateException(String.format("%d-%02d-%02d", year, month, day)));
+                .orElseThrow(() -> new DiaryNotFoundException(String.format("%d-%02d-%02d", year, month, day)));
         return DiaryIdResponse.builder()
                 .diaryId(diaryId)
                 .build();
+    }
+
+    private void checkValidDate(int year, int month, Integer day) {
+        try {
+            if (day == null) {
+                YearMonth.of(year, month);
+            } else {
+                LocalDate.of(year, month, day);
+            }
+        } catch (DateTimeException exception) {
+            String date = String.format("%d-%02d", year, month);
+            if (day != null) {
+                date += String.format("-%02d", day);
+            }
+            throw new InvalidDateException(date);
+        }
     }
 }
