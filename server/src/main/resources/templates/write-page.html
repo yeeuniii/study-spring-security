@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>일기 작성 페이지</title>
+
+    <style>
+        html, body {
+            margin: 0px;
+            overflow-x: hidden;
+        }
+
+        .back-btn {
+            width: 38px; 
+            height: 38px; 
+            flex-shrink: 0; 
+            border-radius: 20px; 
+            border: 0.5px solid #767676;
+
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+        }
+
+        .date {
+            color: var(--kakao-logo, #000);
+            font-variant-numeric: lining-nums proportional-nums;
+            font-feature-settings: 'dlig' on;
+            font-family: Futura;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 15.636px; /* 97.727% */
+            letter-spacing: 0.16px;
+
+            position: absolute;
+            top: 11px;
+            left: 24px;
+        }
+
+        .mood-btn {
+            width: 22px;
+            height: 21px;
+            flex-shrink: 0;
+
+            position: absolute;
+            top: 8px;
+            left: 134px;
+        }
+
+        .tool-box {
+            width: 38px; 
+            height: 107px; 
+            flex-shrink: 0; 
+            border-radius: 20px; 
+            border: 0.5px solid #767676;
+            background-color: #FFF;
+        }
+
+        .text-btn {
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .photo-btn {
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+
+            position: relative;
+            top: 31px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .write-btn {
+            width: 38px; 
+            height: 38px; 
+            flex-shrink: 0; 
+            border-radius: 50%;
+            border: 0.5px solid #767676;
+            background-color: #FFF;
+
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="drag-prevent" align="center">
+        <div style="width: 100%; height: 100vh; position:relative;">
+            <div style="position:absolute; bottom:0; width: 100%; height: calc(100vw * 1.778); bottom: 0;">
+                <div style="background-image: url('/images/write-page/background.svg'); background-repeat: no-repeat; background-size: contain; height:100%;">
+                    <div style="width: 100%; height: 52px; position: relative; top: 23px;">
+                        <div style="position:absolute; left: 26px;">
+                            <div style="width: 38px; height: 38px; margin: 7px 10px 7px 10px; float: left; display: flex; justify-content: center; align-items: center;">
+                                <a href="/" class="back-btn"><img src="/images/write-page/back_icon.svg" style="width: 24px; height: 24px; flex-shrink: 0; position: relative; left: 5px"/></a>
+                            </div>
+                            <div style="width: 184px; height: 38px; flex-shrink: 0; border-radius: 100px; border: 0.5px solid #767676; float: left; margin: 7px 10px 7px 10px; position: relative;">
+                                <span class="date">2024.09.28</span>
+                                <a href="#" class="mood-btn"><img src="/images/write-page/mood_icon.svg"/></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 100%; height: 500px; position: relative; top: 23px;">
+                        <div style="width: 38px; height: 145px; flex-shrink: 0; position: absolute; top: 9px; left: 304px; color: #767676">
+                            <div class="tool-box">
+                                <a href="#" class="text-btn"><img src="/images/write-page/text_icon.svg" style="width: 38px; height: 38px; flex-shrink: 0;"/></a>
+                                <a href="#" class="photo-btn"><img src="/images/write-page/photo_icon.svg" style="width: 38px; height: 38px; flex-shrink: 0;"/></a>
+                            </div>
+                            <div style="width: 38px; height: 38px;">
+                                <a href="#" class="write-btn"><img src="/images/write-page/write_icon.svg" style="width: 24px; height: 24px; flex-shrink: 0;"/></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
