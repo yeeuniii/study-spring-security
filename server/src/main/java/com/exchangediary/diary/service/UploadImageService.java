@@ -2,7 +2,7 @@ package com.exchangediary.diary.service;
 
 import com.exchangediary.diary.domain.UploadImageRepository;
 import com.exchangediary.diary.domain.entity.UploadImage;
-import com.exchangediary.global.exception.UploadImageNotFoundException;
+import com.exchangediary.global.exception.serviceexception.notfound.UploadImageNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
