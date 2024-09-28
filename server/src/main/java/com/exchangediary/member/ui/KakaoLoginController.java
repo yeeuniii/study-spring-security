@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/kakao")
 public class KakaoLoginController {
     private final KakaoService kakaoService;
-    private final MemberRegistrationService memberRegistrationService;
 
+    private final MemberRegistrationService memberRegistrationService;
+ 
     @GetMapping("/callback")
     public ResponseEntity<MemberIdResponse> callback(@RequestParam String code) {
         Long kakaoId = kakaoService.loginKakao(code);
