@@ -1,6 +1,8 @@
 package com.exchangediary.member.ui;
 
 import com.exchangediary.member.service.KakaoService;
+import com.exchangediary.member.service.MemberRegistrationService;
+import com.exchangediary.member.ui.dto.response.MemberIdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class KakaoLoginController {
     private final KakaoService kakaoService;
 
+    private final MemberRegistrationService memberRegistrationService;
+ 
     @GetMapping("/callback")
-    public ResponseEntity<?> callback(@RequestParam String code) {
+    public ResponseEntity<MemberIdResponse> callback(@RequestParam String code) {
         Long kakaoId = kakaoService.loginKakao(code);
-        return ResponseEntity.ok(kakaoId);
+        MemberIdResponse memberIdResponse = memberRegistrationService.getOrCreateMember(kakaoId);
+        return ResponseEntity
+                .ok()
+                .body(memberIdResponse);
     }
 }
