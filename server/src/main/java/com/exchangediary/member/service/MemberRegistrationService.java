@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class MemberLoginService {
+public class MemberRegistrationService {
     private final MemberRepository memberRepository;
 
-    public MemberIdResponse loadMember(Long kakaoId) {
+    public MemberIdResponse getOrCreateMember(Long kakaoId) {
         Member member = memberRepository.findBykakaoId(kakaoId)
                 .orElseGet(() -> saveUser(kakaoId));
         return MemberIdResponse.builder()
