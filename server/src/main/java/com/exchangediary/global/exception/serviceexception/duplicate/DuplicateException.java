@@ -1,5 +1,7 @@
-package com.exchangediary.global.exception;
+package com.exchangediary.global.exception.serviceexception.duplicate;
 
+import com.exchangediary.global.exception.ErrorCode;
+import com.exchangediary.global.exception.serviceexception.ServiceException;
 import lombok.Getter;
 
 @Getter

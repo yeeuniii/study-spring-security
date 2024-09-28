@@ -1,4 +1,6 @@
-package com.exchangediary.global.exception;
+package com.exchangediary.global.exception.serviceexception.duplicate;
+
+import com.exchangediary.global.exception.ErrorCode;
 
 public class DiaryDuplicateException extends DuplicateException {
     public DiaryDuplicateException(String value) {

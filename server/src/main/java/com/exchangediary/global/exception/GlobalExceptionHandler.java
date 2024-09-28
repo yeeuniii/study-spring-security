@@ -1,5 +1,6 @@
 package com.exchangediary.global.exception;
 
+import com.exchangediary.global.exception.serviceexception.duplicate.DuplicateException;
 import com.exchangediary.global.exception.serviceexception.invliadrange.DateRangeException;
 import com.exchangediary.global.exception.serviceexception.invliadrange.InvalidRangeException;
 import com.exchangediary.global.exception.serviceexception.notfound.NotFoundException;
