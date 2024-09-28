@@ -2,13 +2,13 @@ package com.exchangediary.diary.service;
 
 import com.exchangediary.diary.domain.UploadImageRepository;
 import com.exchangediary.diary.domain.entity.UploadImage;
+import com.exchangediary.global.exception.UploadImageNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +31,8 @@ public class UploadImageService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<UploadImage> getUploadImage(Long id) {
-        return uploadImageRepository.findById(id);
+    public UploadImage getUploadImage(Long id) {
+        return uploadImageRepository.findById(id)
+                .orElseThrow(() -> new UploadImageNotFoundException(String.valueOf(id)));
     }
 }
