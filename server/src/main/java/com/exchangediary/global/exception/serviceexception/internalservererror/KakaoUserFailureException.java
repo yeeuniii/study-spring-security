@@ -1,4 +1,6 @@
-package com.exchangediary.global.exception;
+package com.exchangediary.global.exception.serviceexception.internalservererror;
+
+import com.exchangediary.global.exception.ErrorCode;
 
 public class KakaoUserFailureException extends KakaoLoginFailureException {
     public KakaoUserFailureException(String value) {

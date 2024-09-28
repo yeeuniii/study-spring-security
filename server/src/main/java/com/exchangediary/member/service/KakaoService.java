@@ -1,6 +1,6 @@
 package com.exchangediary.member.service;
 
-import com.exchangediary.global.exception.KakaoLoginFailureException;
+import com.exchangediary.global.exception.serviceexception.internalservererror.KakaoLoginFailureException;
 import com.exchangediary.member.ui.dto.request.KakaoTokenRequest;
 import com.exchangediary.member.ui.dto.response.KakaoIdResponse;
 import com.exchangediary.member.ui.dto.response.KakaoTokenResponse;
