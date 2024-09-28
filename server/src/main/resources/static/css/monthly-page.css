@@ -16,6 +16,8 @@ th,td {
     text-align: center;
     border: 2px solid #FFCC00;
     padding: 0px;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 a {
@@ -55,12 +57,12 @@ a {
 
 .month {
     position: absolute;
-    top: 45%;
+    top: 63%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: var(--kakao-logo, #000);
     font-variant-numeric: lining-nums proportional-nums;
-    font-feature-settings: 'dlig' on;rf
+    font-feature-settings: 'dlig' on;
     font-family: Vibur;
     font-size: 44px;
     font-style: normal;
@@ -80,6 +82,12 @@ a {
     font-weight: 400;
     line-height: 20px; /* 83.333% */
     letter-spacing: 0.24px;
+}
+
+.day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .date {
