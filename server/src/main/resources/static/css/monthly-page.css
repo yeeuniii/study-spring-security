@@ -1,0 +1,191 @@
+@charset "utf-8";
+
+html, body {
+    margin: 0px;
+    overflow-x: hidden;
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+th,td {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    border: 2px solid #FFCC00;
+    padding: 0px;
+}
+
+a {
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.group-name {
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-variant-numeric: lining-nums proportional-nums;
+    font-feature-settings: 'dlig' on;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px; /* 91.667% */
+    letter-spacing: -0.6px;
+}
+
+.year {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(118, 118, 118, 0.70);
+    text-align: center;
+    font-variant-numeric: lining-nums proportional-nums;
+    font-feature-settings: 'dlig' on;
+    font-family: Vibur;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 50% */
+    letter-spacing: 0.4px;
+}
+
+.month {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--kakao-logo, #000);
+    font-variant-numeric: lining-nums proportional-nums;
+    font-feature-settings: 'dlig' on;rf
+    font-family: Vibur;
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 45.455% */
+    letter-spacing: 0.44px;
+}
+
+.days {
+    color: #767676;
+    text-align: center;
+    font-variant-numeric: lining-nums proportional-nums;
+    font-feature-settings: 'dlig' on;
+    font-family: Vibur;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 83.333% */
+    letter-spacing: 0.24px;
+}
+
+.date {
+    width: 34px;
+    height: 34px;
+    border: 1px solid;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #767676;
+    text-align: center;
+    font-variant-numeric: lining-nums proportional-nums;
+    font-feature-settings: 'dlig' on;
+    font-family: Vibur;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.14px;
+}
+
+.arrow {
+    position: relative;
+}
+
+.arrow::after {
+    position: absolute;
+    content: '';
+    width: 11px;
+    height: 11px;
+    border-top: 3px solid #767676;
+    border-right: 3px solid #767676;
+}
+
+.left-arrow::after {
+    top: 12px;
+    left: 2px;
+    transform: rotate(225deg); /* 각도 */
+}
+
+.right-arrow::after {
+    top: 12px;
+    right: 2px;
+    transform: rotate(45deg); /* 각도 */
+}
+
+.diary {
+    background-color: #FFCC00;
+}
+
+.drag-prevent{
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+
+.today {
+    color: rgba(0, 0, 0, 1);
+    border-width: 2px;
+}
+
+.highlight {
+    color: rgba(0, 0, 0, 1);
+    width: 36px;
+    height: 36px;
+}
+
+.calendar-main {
+    position: relative;
+    top: 88px;
+}
+
+.calendar-bottom {
+    width: 100%;
+    height: 170px;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottom-font {
+    color: var(--kakao-logo, #767676);
+    text-align: center;
+    font-variant-numeric: lining-nums proportional-nums;
+    font-feature-settings: 'dlig' on;
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px; /* 110% */
+    letter-spacing: -0.5px;
+}
+
+.font-bold {
+     color: var(--kakao-logo, #000);
+     font-variant-numeric: lining-nums proportional-nums;
+     font-feature-settings: 'dlig' on;
+     font-family: Pretendard;
+     font-size: 20px;
+     font-style: normal;
+     font-weight: 600;
+     line-height: 22px;
+     letter-spacing: -0.5px;
+}
