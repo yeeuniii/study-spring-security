@@ -1,5 +1,8 @@
 package com.exchangediary.global.exception;
 
+import com.exchangediary.global.exception.serviceexception.invliadrange.DateRangeException;
+import com.exchangediary.global.exception.serviceexception.invliadrange.InvalidRangeException;
+import com.exchangediary.global.exception.serviceexception.notfound.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -29,7 +32,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidRangeException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ApiErrorResponse handleInvalidRangeException(InvalidDateException exception) {
+    public ApiErrorResponse handleInvalidRangeException(DateRangeException exception) {
         return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 
