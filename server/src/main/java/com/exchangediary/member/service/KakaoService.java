@@ -34,7 +34,6 @@ public class KakaoService {
 
     private String getToken(String code) {
         KakaoTokenRequest kakaoTokenRequest = KakaoTokenRequest.from(client_id, redirect_uri, code);
-        System.out.println(kakaoTokenRequest);
         KakaoTokenResponse kakaoTokenResponse = requestToken(kakaoTokenRequest);
         return kakaoTokenResponse.access_token();
     }
