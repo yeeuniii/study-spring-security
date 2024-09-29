@@ -29,7 +29,7 @@ public class KakaoLoginTest {
     @BeforeEach
     public void setup() {
         RestAssured.port = port;
-        memberRepository.deleteAll();
+        memberRepository.deleteAllInBatch();
     }
 
     @Test
