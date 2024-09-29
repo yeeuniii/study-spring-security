@@ -27,19 +27,19 @@ function closeModal() {
     setTimeout(() => modal.style.display = "none", 300);
 }
 
-function openModal(htmlString="") {
+function openModal(htmlString = "") {
     modal.style.display = "block";
     setTimeout(() => modal.style.transform = "translateY(0)", 10);
 
     drawBody(htmlString);
-    selectMood();
+    selectMood(htmlString);
 }
 
 function drawBody(htmlString) {
     modalBody.innerHTML = htmlString;
 }
 
-function selectMood() {
+function selectMood(htmlString) {
     if (htmlString.indexOf("table") !== -1) {
         const moods = Array.from(document.querySelector("table").children[0].children);
 
