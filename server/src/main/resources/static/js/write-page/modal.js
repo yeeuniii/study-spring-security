@@ -12,7 +12,7 @@ function clickModalBtn(event, htmlString) {
     if (modal.style.display === "block") {
         closeModal();
 
-        if (event.target != currentModal && currentModal != null) {
+        if (event.target !== currentModal && currentModal != null) {
             setTimeout(() => openModal(htmlString), 300);
             currentModal = event.target;
         }
@@ -32,10 +32,27 @@ function openModal(htmlString="") {
     setTimeout(() => modal.style.transform = "translateY(0)", 10);
 
     drawBody(htmlString);
+    selectMood();
 }
 
 function drawBody(htmlString) {
     modalBody.innerHTML = htmlString;
+}
+
+function selectMood() {
+    if (htmlString.indexOf("table") !== -1) {
+        const moods = Array.from(document.querySelector("table").children[0].children);
+
+        moods.forEach(line => Array.from(line.children).forEach(mood => {
+            mood.addEventListener("click", changeMood);
+        }))
+    }
+}
+
+function changeMood(event) {
+    const moodBtn = document.querySelector(".mood-btn");
+    moodBtn.children[0].src = event.target.src;
+    closeModal();
 }
 
 function makeEmojiHtml() {
