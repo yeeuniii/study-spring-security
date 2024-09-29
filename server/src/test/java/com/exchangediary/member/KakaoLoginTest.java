@@ -1,47 +1,67 @@
 package com.exchangediary.member;
 
 import com.exchangediary.member.domain.MemberRepository;
+import com.exchangediary.member.domain.entity.Member;
 import com.exchangediary.member.service.KakaoService;
-import com.exchangediary.member.service.MemberRegistrationService;
+import com.exchangediary.member.ui.dto.response.MemberIdResponse;
+import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class KakaoLoginTest {
-    @Autowired
-    MockMvc mockMvc;
+    @LocalServerPort
+    private int port;
     @MockBean
-    KakaoService kakaoService;
+    private KakaoService kakaoService;
     @Autowired
-    MemberRegistrationService memberRegistrationService;
-    @Autowired
-    MemberRepository memberRepository;
+    private MemberRepository memberRepository;
 
     @BeforeEach
     public void setup() {
+        RestAssured.port = port;
         memberRepository.deleteAll();
     }
 
     @Test
-    void 카카오_로그인_성공() throws Exception {
-        Long kakaoId = 1L;
-        String code = "randomCode";
+    void 새로운_회원_카카오_로그인_성공() {
+        String mockCode = "randomCode";
+        Long mockKakaoId = 1L;
 
-        when(kakaoService.loginKakao(any(String.class))).thenReturn(kakaoId);
+        when(kakaoService.loginKakao(any(String.class))).thenReturn(mockKakaoId);
 
-        mockMvc.perform(get("/api/kakao/callback")
-                        .param("code", code))
-                .andExpect(status().isOk());
+        RestAssured
+                .given().log().all()
+                .when().get("/api/kakao/callback?code="+mockCode)
+                .then().log().all()
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    void 기존_회원_카카오_로그인_성공() {
+        String mockCode = "randomCode";
+        Long mockKakaoId = 1L;
+        Member member = Member.builder().kakaoId(mockKakaoId).build();
+        memberRepository.save(member);
+
+        when(kakaoService.loginKakao(any(String.class))).thenReturn(mockKakaoId);
+
+        MemberIdResponse response = RestAssured
+                .given().log().all()
+                .when().get("/api/kakao/callback?code="+mockCode)
+                .then().log().all()
+                .statusCode(HttpStatus.OK.value())
+                .extract().as(MemberIdResponse.class);
+
+        assertThat(response.memberId()).isEqualTo(member.getId());
     }
 }
