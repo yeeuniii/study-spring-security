@@ -68,11 +68,23 @@ function makeEmojiHtml() {
 }
 
 function makePhotoHtml() {
-    return `<div style="width: 50px; height: 50px; position: relative; top: 17px; left: 44px; float: left;">
-                <a href="#"><img src="/images/write-page/modal/camera_icon.svg" style="width: 50px; height: 50px; flex-shrink: 0;"/></a>
-            </div>
-            <div style="width: 2px; height: 100px; position: relative; top: 17px; left: 103px; background-color: #767676; float: left;"></div>
-            <div style="width: 48px; height: 48px; position: relative; top: 17px; left: 164px; float: left;">
-                <a href="#"><img src="/images/write-page/modal/photo_icon.svg" style="width: 48px; height: 48px; flex-shrink: 0;"/></a>
-            </div>`
+    return `<div>
+                <div style="position: relative; top: 17px; left: 44px; float: left; width: 60px; height: 100px;">
+                    <div style="width: 60px; height: 55px;">
+                        <a href="#"><img src="/images/write-page/modal/camera_icon.svg" style="width: 50px; height: 50px; flex-shrink: 0;"/></a>
+                    </div>
+                    <div style="width: 60px; height: 34px;">
+                        <span style="color: #767676; text-align: center; font-size: 19px; font-style: normal; font-weight: 500; line-height: 170%; letter-spacing: -0.5px;">카메라</span>
+                    </div>
+                </div>
+                <div style="width: 2px; height: 100px; position: relative; top: 17px; left: 93px; background-color: #767676; float: left;"></div>
+                <div style="position: relative; top: 17px; left: 144px; float: left; width: 60px; height: 100px;">
+                    <div style="width: 60px; height: 55px;">
+                        <a href="#"><img src="/images/write-page/modal/photo_icon.svg" style="width: 48px; height: 48px; flex-shrink: 0;"/></a>
+                    </div>
+                    <div style="width: 60px; height: 34px; float: left;">
+                        <span style="color: #767676; text-align: center; font-size: 19px; font-style: normal; font-weight: 500; line-height: 170%; letter-spacing: -0.5px;">갤러리</span>
+                   </div>
+                </div>
+            </div>`;
 }
