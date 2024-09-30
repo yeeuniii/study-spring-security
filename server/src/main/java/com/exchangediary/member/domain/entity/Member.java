@@ -25,4 +25,7 @@ public class Member extends BaseEntity {
     @Column(name = "member_id")
     private Long id;
     private final Long kakaoId;
+    private String nickname;
+    private String profileLocation;
+    private Integer orderInGroup;
 }
