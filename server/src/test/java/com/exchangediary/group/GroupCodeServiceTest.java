@@ -18,10 +18,10 @@ public class GroupCodeServiceTest {
     @Test
     void 그룹_코드_생성() {
         String groupName = "버디즈";
-
         String encodedCode = groupCodeService.generateCode(groupName);
 
         String code = new String(Base64.getDecoder().decode(encodedCode));
+
         assertThat(code.substring(0, 3)).isEqualTo(groupName);
     }
 }
