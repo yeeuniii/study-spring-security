@@ -23,7 +23,7 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
     private Long id;
-    private String groupName;
+    private String name;
     private Integer numberOfMembers;
     private Integer currentOrder;
     private String code;
