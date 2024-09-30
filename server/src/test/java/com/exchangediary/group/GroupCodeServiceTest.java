@@ -2,17 +2,17 @@ package com.exchangediary.group;
 
 import com.exchangediary.group.service.GroupCodeService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.Base64;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class GroupCodeServiceTest {
-    @InjectMocks
+    private static final String GROUP_NAME = "버니즈";
+    @SpyBean
     private GroupCodeService groupCodeService;
 
     @Test
