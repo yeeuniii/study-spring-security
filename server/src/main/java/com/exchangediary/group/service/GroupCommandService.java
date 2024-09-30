@@ -11,12 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class GroupCommandService {
     private final GroupRepository groupRepository;
+    private final GroupCodeService groupCodeService;
 
     public Group createGroup(String groupName) {
         Group group = Group.builder()
-                .groupName(groupName)
+                .name(groupName)
                 .numberOfMembers(0)
                 .currentOrder(0)
+                .code(groupCodeService.generateCode(groupName))
                 .build();
         return groupRepository.save(group);
     }
