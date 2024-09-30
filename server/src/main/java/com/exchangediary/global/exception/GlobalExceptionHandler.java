@@ -1,5 +1,6 @@
 package com.exchangediary.global.exception;
 
+import com.exchangediary.global.exception.serviceexception.internalservererror.KakaoLoginFailureException;
 import com.exchangediary.global.exception.serviceexception.duplicate.DuplicateException;
 import com.exchangediary.global.exception.serviceexception.invliadrange.DateRangeException;
 import com.exchangediary.global.exception.serviceexception.invliadrange.InvalidRangeException;
@@ -46,6 +47,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     public ApiErrorResponse handleNotFoundException(NotFoundException exception) {
+        return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
+    }
+
+    @ExceptionHandler(KakaoLoginFailureException.class)
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiErrorResponse handleKakaoLoginException(KakaoLoginFailureException exception) {
         return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 }
