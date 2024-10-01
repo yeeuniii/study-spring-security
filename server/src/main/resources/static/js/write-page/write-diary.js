@@ -27,6 +27,6 @@ function writeDiary() {
         method: "post",
         body: formData
     })
-        .then(response => response.headers.get("location"))
+        .then(response => response.headers.get("Content-location"))
         .then(location => window.location.href = location);
 }
