@@ -1,5 +1,5 @@
 async function drawDiary() {
-    const moodBtn = document.querySelector(".mood-btn");
+    const mood = document.querySelector(".mood");
     const date = document.querySelector(".date");
     const content = document.querySelector(".diary-content");
 
@@ -11,7 +11,7 @@ async function drawDiary() {
     console.log(diary);
 
     date.innerText = diary.createdAt;
-    moodBtn.children[0].src = diary.moodLocation;
+    mood.children[0].src = diary.moodLocation;
     content.value = diary.content;
 
     if (diary.imageApiPath) {
