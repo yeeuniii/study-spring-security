@@ -2,8 +2,9 @@ package com.exchangediary.diary.ui.dto.response;
 
 import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.entity.UploadImage;
-import com.exchangediary.global.util.DateTimeUtil;
 import lombok.Builder;
+
+import java.time.format.DateTimeFormatter;
 
 @Builder
 public record DiaryDetailResponse(
@@ -16,7 +17,7 @@ public record DiaryDetailResponse(
     public static DiaryDetailResponse of (Diary diary) {
        return DiaryDetailResponse.builder()
                 .diaryId(diary.getId())
-                .createdAt(DateTimeUtil.KOREAN_DATE_FORMAT.format(diary.getCreatedAt()))
+                .createdAt(diary.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy.M.dd")))
                 .content(diary.getContent())
                 .moodLocation(diary.getMoodLocation())
                 .imageApiPath(getImageApiPath(diary.getUploadImage()))
