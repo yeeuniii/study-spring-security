@@ -40,6 +40,7 @@ public class ApiDiaryController {
         Diary diary = diaryCommandService.createDiary(diaryRequest, file);
         return ResponseEntity
                 .created(URI.create(String.format("/api/diary/%d", diary.getId())))
+                .header("Content-Location", "/diary/" + diary.getId())
                 .build();
     }
 
