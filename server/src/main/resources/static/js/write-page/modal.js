@@ -14,40 +14,42 @@ backgroundImage.addEventListener("load", () => modal.style.backgroundImage = `ur
 backgroundImage.src = "/images/write-page/modal/background.svg";
 
 moodBtn.addEventListener("click", (event) => {
-    clickModalBtn(event);
-    setTimeout(() => changeDisplay(emojiDiv, photoDiv), 300);
+    clickModalBtn(event, emojiDiv);
 });
 
 photoBtn.addEventListener("click", (event) => {
-    clickModalBtn(event);
-    setTimeout(() => changeDisplay(photoDiv, emojiDiv), 300);
+    clickModalBtn(event, photoDiv);
 });
 
 Array.from(emojiDiv.querySelectorAll("a")).forEach(mood => {
     mood.addEventListener("click", changeMood);
 });
 
-function clickModalBtn(event) {
+function clickModalBtn(event, displayElement) {
     if (modal.style.display === "block") {
         closeModal();
 
         if (event.target !== currentModal && currentModal != null) {
-            setTimeout(() => openModal(), 300);
+            setTimeout(() => openModal(displayElement), 300);
             currentModal = event.target;
         }
     } else {
-        openModal();
+        openModal(displayElement);
         currentModal = event.target;
     }
 }
 
 function closeModal() {
     modal.style.transform = "translateY(100%)";
-    setTimeout(() => modal.style.display = "none", 300);
+    setTimeout(() => {
+        modal.style.display = "none";
+        undisplayModalBody();
+    }, 300);
 }
 
-function openModal() {
+function openModal(displayElement) {
     modal.style.display = "block";
+    displayElement.style.display = "block";
     setTimeout(() => modal.style.transform = "translateY(0)", 10);
 }
 
@@ -57,7 +59,7 @@ function changeMood(event) {
     closeModal();
 }
 
-function changeDisplay(element1, element2) {
-    element1.style.display = "block";
-    element2.style.display = "none";
+function undisplayModalBody() {
+    emojiDiv.style.display = "none";
+    photoDiv.style.display = "none";
 }
