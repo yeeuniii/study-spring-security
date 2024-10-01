@@ -90,7 +90,7 @@
                                 <a href="/" class="back-btn"><img src="/images/write-page/back_icon.svg" style="width: 24px; height: 24px; flex-shrink: 0; position: relative; left: 5px"/></a>
                             </div>
                             <div style="width: 184px; height: 38px; flex-shrink: 0; border-radius: 100px; border: 0.5px solid #767676; float: left; margin: 7px 10px 7px 10px; position: relative;">
-                                <span class="date"></span>
+                                <span class="date">[[${diary.createdAt}]]</span>
                                 <div class="mood"><img src=""></div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                             <img src="" style="width:200px; height: 200px;" />
                         </div>
                         <div style="position: relative; top: 125px;">
-                            <textarea class="diary-content"></textarea>
+                            <textarea class="diary-content">[[${diary.content}]]</textarea>
                         </div>
                     </div>
                 </div>
@@ -110,7 +110,8 @@
 </body>
 
 <script th:inline="javascript">
-    window.diaryId = [[${diaryId}]];
+    window.moodLocation = [[${diary.moodLocation}]];
+    window.uploadImage = [[${diary.uploadImage}]];
 </script>
 <script src="/js/view-diary/draw-diary.js"></script>
 

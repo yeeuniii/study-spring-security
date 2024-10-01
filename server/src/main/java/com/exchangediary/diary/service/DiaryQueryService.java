@@ -5,6 +5,7 @@ import com.exchangediary.diary.domain.DiaryRepository;
 import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
+import com.exchangediary.diary.ui.dto.response.DiaryResponse;
 import com.exchangediary.global.exception.serviceexception.notfound.DiaryNotFoundException;
 import com.exchangediary.global.exception.serviceexception.invliadrange.DateRangeException;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,12 @@ public class DiaryQueryService {
         Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new DiaryNotFoundException(String.valueOf(diaryId)));
         return DiaryDetailResponse.of(diary);
+    }
+
+    public DiaryResponse viewDiary(Long diaryId) {
+        Diary diary = diaryRepository.findById(diaryId)
+                .orElseThrow(() -> new DiaryNotFoundException(String.valueOf(diaryId)));
+        return DiaryResponse.of(diary);
     }
 
     public DiaryMonthlyResponse viewMonthlyDiary(int year, int month) {
