@@ -2,7 +2,9 @@ const date = document.querySelector(".date")
 const writeBtn = document.querySelector(".write-btn")
 const today = new Date();
 
-date.innerText = `${today.getFullYear()}.${today.getMonth() + 1}.${today.getDate()}`;
+date.innerText = `${today.getFullYear()}.` +
+    `${today.getMonth() + 1 < 10 ? "0" + today.getMonth() + 1 : today.getMonth() + 1}.` +
+    `${today.getDate() < 10 ? "0" + today.getDate(): today.getDate()}`;
 
 console.log(writeBtn);
 writeBtn.addEventListener("click", writeDiary);
