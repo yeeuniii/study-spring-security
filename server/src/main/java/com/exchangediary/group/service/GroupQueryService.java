@@ -5,25 +5,31 @@ import com.exchangediary.global.exception.serviceexception.invliadrange.InvalidR
 import com.exchangediary.global.exception.serviceexception.notfound.GroupNotFoundException;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
+import com.exchangediary.group.ui.dto.response.GroupProfileImageResponse;
+import com.exchangediary.member.domain.MemberRepository;
+import com.exchangediary.member.domain.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class GroupQueryService {
     private final GroupRepository groupRepository;
+    private final MemberRepository memberRepository;
 
     public GroupProfileImageResponse viewSelectableProfileImage(Long groupId) {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new GroupNotFoundException(String.valueOf(groupId)));
-        checkNumberOfMembers(group);
-        return GroupProfileImageResponse.of(group);
+        checkNumberOfMembers(group.getNumberOfMembers());
+        List<Member> members = memberRepository.findByGroupId(groupId);
+        return GroupProfileImageResponse.from(members);
     }
 
-    private void checkNumberOfMembers(Group group) {
-        int numberOfMembers = group.getNumberOfMembers();
+    private void checkNumberOfMembers(int numberOfMembers) {
         if (numberOfMembers >= 7) {
             throw new InvalidRangeException(String.valueOf(numberOfMembers),
                     ErrorCode.INVALID_MEMBERS_RANGE);
