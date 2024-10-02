@@ -42,10 +42,10 @@ function writeDiary() {
         method: "post",
         body: formData
     })
-        .then(response => response.headers.get("location"))
-        .then(location => {
+        .then(response => response.headers.get("content-location"))
+        .then(contentLocation => {
             closeModal(); // TODO: 약간의 딜레이 문제
-            showSuccess(location.substring(4));
+            showSuccess(contentLocation);
         })
         .catch(() => {
             // ToDo: 예외 처리 로직 추가
