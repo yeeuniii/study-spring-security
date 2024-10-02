@@ -1,5 +1,6 @@
 package com.exchangediary.member.service;
 
+import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.KakaoLoginFailureException;
 import com.exchangediary.member.ui.dto.request.KakaoTokenRequest;
 import com.exchangediary.member.ui.dto.response.KakaoIdResponse;
@@ -18,9 +19,9 @@ public class KakaoService {
     private final static String KAKAO_USER_INFO_URL = "https://kapi.kakao.com/v2/user/me";
     private final RestClient restClient = RestClient.create();
     @Value("${kakao.client_id}")
-    private String client_id;
+    private String clientId;
     @Value("${kakao.redirect_uri}")
-    private String redirect_uri;
+    private String redirectUri;
 
     public Long loginKakao(String code) {
         try {
@@ -28,12 +29,16 @@ public class KakaoService {
             KakaoIdResponse kakaoIdResponse = getKakaoUserInfo(token);
             return kakaoIdResponse.id();
         } catch (HttpClientErrorException exception) {
-            throw new KakaoLoginFailureException(exception.getResponseBodyAsString());
+            throw new KakaoLoginFailureException(
+                    ErrorCode.FAILED_TO_LOGIN_KAKAO,
+                    "",
+                    exception.getResponseBodyAsString()
+            );
         }
     }
 
     private String getToken(String code) {
-        KakaoTokenRequest kakaoTokenRequest = KakaoTokenRequest.from(client_id, redirect_uri, code);
+        KakaoTokenRequest kakaoTokenRequest = KakaoTokenRequest.from(clientId, redirectUri, code);
         KakaoTokenResponse kakaoTokenResponse = requestToken(kakaoTokenRequest);
         return kakaoTokenResponse.access_token();
     }
