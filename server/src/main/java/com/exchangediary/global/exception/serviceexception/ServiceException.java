@@ -9,7 +9,7 @@ public class ServiceException extends RuntimeException {
     private final ErrorCode errorCode;
 
     public ServiceException(String message, String value, ErrorCode errorCode) {
-        super(message);
+        super(message == null ? errorCode.getMessage() : message);
         this.value = value;
         this.errorCode = errorCode;
     }
