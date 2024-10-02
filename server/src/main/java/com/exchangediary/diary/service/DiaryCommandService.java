@@ -34,7 +34,8 @@ public class DiaryCommandService {
             throw new FailedImageUploadException(
                     ErrorCode.FAILED_UPLOAD_IMAGE,
                     "",
-                    file.getOriginalFilename());
+                    file.getOriginalFilename()
+            );
         }
     }
 
@@ -46,7 +47,8 @@ public class DiaryCommandService {
             throw new DuplicateException(
                     ErrorCode.DIARY_DUPLICATED,
                     "",
-                    today.toString());
+                    today.toString()
+            );
         }
     }
 }

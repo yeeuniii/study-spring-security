@@ -37,6 +37,7 @@ public class UploadImageService {
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.UPLOAD_IMAGE_NOT_FOUND,
                         "",
-                        String.valueOf(id)));
+                        String.valueOf(id))
+                );
     }
 }

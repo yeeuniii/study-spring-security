@@ -28,7 +28,8 @@ public class DiaryQueryService {
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.DIARY_NOT_FOUND,
                         "",
-                        String.valueOf(diaryId)));
+                        String.valueOf(diaryId))
+                );
         return DiaryDetailResponse.of(diary);
     }
 
@@ -44,7 +45,8 @@ public class DiaryQueryService {
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.DIARY_NOT_FOUND,
                         "",
-                        String.format("%d-%02d-%02d", year, month, day)));
+                        String.format("%d-%02d-%02d", year, month, day))
+                );
         return DiaryIdResponse.builder()
                 .diaryId(diaryId)
                 .build();
@@ -65,7 +67,8 @@ public class DiaryQueryService {
             throw new InvalidDateException(
                     ErrorCode.INVALID_DATE,
                     "",
-                    date);
+                    date
+            );
         }
     }
 }
