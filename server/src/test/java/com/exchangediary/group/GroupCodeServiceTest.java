@@ -1,7 +1,6 @@
 package com.exchangediary.group;
 
 import com.exchangediary.global.exception.serviceexception.NotFoundException;
-import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.service.GroupCodeService;
 import com.exchangediary.group.service.GroupCommandService;
 import org.junit.jupiter.api.Test;
@@ -37,11 +36,11 @@ public class GroupCodeServiceTest {
     void 그룹_코드_검증_성공() {
         String code = "valid-code";
         when(groupCodeService.generateCode(any(String.class))).thenReturn(code);
-        Group group = groupCommandService.createGroup(GROUP_NAME);
+        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
 
-        Long groupId = groupCodeService.verifyCode(code);
+        Long result = groupCodeService.verifyCode(code);
 
-        assertThat(groupId).isEqualTo(group.getId());
+        assertThat(result).isEqualTo(groupId);
     }
 
     @Test

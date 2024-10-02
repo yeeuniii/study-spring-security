@@ -1,6 +1,5 @@
 package com.exchangediary.group;
 
-import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.service.GroupCodeService;
 import com.exchangediary.group.service.GroupCommandService;
 import org.junit.jupiter.api.Test;
@@ -28,12 +27,9 @@ class GroupCommandServiceTest {
         when(groupCodeService.generateCode(groupName)).thenReturn(code);
 
         //when
-        Group createdGroup = groupCommandService.createGroup(groupName);
+        Long groupId = groupCommandService.createGroup(groupName).groupId();
 
         //then
-        assertThat(createdGroup.getName()).isEqualTo(groupName);
-        assertThat(createdGroup.getCode()).isEqualTo(code);
-        assertThat(createdGroup.getNumberOfMembers()).isEqualTo(0);
-        assertThat(createdGroup.getCurrentOrder()).isEqualTo(0);
+        assertThat(groupId).isEqualTo(1L);
     }
 }
