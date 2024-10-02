@@ -1,8 +1,8 @@
 package com.exchangediary.group.service;
 
 import com.exchangediary.global.exception.ErrorCode;
-import com.exchangediary.global.exception.serviceexception.invliadrange.InvalidRangeException;
-import com.exchangediary.global.exception.serviceexception.notfound.GroupNotFoundException;
+import com.exchangediary.global.exception.serviceexception.ConfilctException;
+import com.exchangediary.global.exception.serviceexception.NotFoundException;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.ui.dto.response.GroupProfileResponse;
@@ -23,7 +23,11 @@ public class GroupQueryService {
 
     public GroupProfileResponse viewSelectableProfileImage(Long groupId) {
         Group group = groupRepository.findById(groupId)
-                .orElseThrow(() -> new GroupNotFoundException(String.valueOf(groupId)));
+                .orElseThrow(() -> new NotFoundException(
+                        ErrorCode.DIARY_NOT_FOUND,
+                        "",
+                        String.valueOf(groupId))
+                );
         checkNumberOfMembers(group.getNumberOfMembers());
         List<Member> members = memberRepository.findByGroupId(groupId);
         return GroupProfileResponse.from(members);
@@ -31,8 +35,11 @@ public class GroupQueryService {
 
     private void checkNumberOfMembers(int numberOfMembers) {
         if (numberOfMembers >= 7) {
-            throw new InvalidRangeException(String.valueOf(numberOfMembers),
-                    ErrorCode.INVALID_MEMBERS_RANGE);
+            throw new ConfilctException(
+                    ErrorCode.FULL_MEMBERS_OF_GROUP,
+                    "",
+                    String.valueOf(numberOfMembers)
+                    );
         }
     }
 }
