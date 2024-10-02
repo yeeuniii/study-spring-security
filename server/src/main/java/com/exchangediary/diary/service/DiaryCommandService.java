@@ -4,8 +4,9 @@ import com.exchangediary.diary.domain.DiaryRepository;
 import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.entity.UploadImage;
 import com.exchangediary.diary.ui.dto.request.DiaryRequest;
-import com.exchangediary.global.exception.serviceexception.duplicate.DiaryDuplicateException;
-import com.exchangediary.global.exception.serviceexception.internalservererror.FailedImageUploadException;
+import com.exchangediary.global.exception.ErrorCode;
+import com.exchangediary.global.exception.serviceexception.DuplicateException;
+import com.exchangediary.global.exception.serviceexception.FailedImageUploadException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,11 @@ public class DiaryCommandService {
             Diary diary = Diary.of(diaryRequest, uploadImage);
             return diaryRepository.save(diary);
         } catch (IOException e) {
-            throw new FailedImageUploadException(file.getOriginalFilename());
+            throw new FailedImageUploadException(
+                    ErrorCode.FAILED_UPLOAD_IMAGE,
+                    "",
+                    file.getOriginalFilename()
+            );
         }
     }
 
@@ -39,7 +44,11 @@ public class DiaryCommandService {
         Optional<Long> todayDiary = diaryRepository.findIdByDate(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
 
         if (todayDiary.isPresent()) {
-            throw new DiaryDuplicateException(today.toString());
+            throw new DuplicateException(
+                    ErrorCode.DIARY_DUPLICATED,
+                    "",
+                    today.toString()
+            );
         }
     }
 }
