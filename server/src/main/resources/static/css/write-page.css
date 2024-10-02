@@ -1,0 +1,82 @@
+@charset "utf-8";
+
+td {
+    width: 26px;
+    height: 26px;
+
+    padding: 0px 26px 22px 0px;
+}
+
+.mood-btn {
+    width: 22px;
+    height: 21px;
+    flex-shrink: 0;
+
+    position: absolute;
+    top: 8px;
+    left: 134px;
+}
+
+.tool-box {
+    width: 38px;
+    height: 107px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    border: 0.5px solid #767676;
+    background-color: #FFF;
+}
+
+.text-btn {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-btn {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+
+    position: relative;
+    top: 31px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.write-btn {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 0.5px solid #767676;
+    background-color: #FFF;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    bottom: 24px;
+    width: 375px;
+    height: 265px;
+    transition: transform 0.3s ease-out;
+    transform: translateY(100%);
+}
+
+.modal-body {
+    position: relative;
+    left: 35px;
+    top: 90px;
+    width: 289px;
+    height: 132px;
+}

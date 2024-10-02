@@ -4,47 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>일기 조회 페이지</title>
-
+    <link rel="stylesheet" href="/css/fonts.css" type="text/css">
+    <link rel="stylesheet" href="/css/diary-common.css" type="text/css">
     <style>
-        html, body {
-            margin: 0px;
-            overflow-x: hidden;
-        }
-
-        a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .back-btn {
-            width: 38px;
-            height: 38px;
-            flex-shrink: 0;
-            border-radius: 20px;
-            border: 0.5px solid #767676;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .date {
-            color: var(--kakao-logo, #000);
-            font-variant-numeric: lining-nums proportional-nums;
-            font-feature-settings: 'dlig' on;
-            font-family: Futura;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 15.636px; /* 97.727% */
-            letter-spacing: 0.16px;
-
-            position: absolute;
-            top: 11px;
-            left: 24px;
-        }
-
         .mood {
             width: 27px;
             height: 28px;
@@ -53,25 +15,6 @@
             position: absolute;
             top: 5px;
             left: 132px;
-        }
-
-        .diary-content {
-            width: 190px;
-            height: 50px;
-            background-color: transparent;
-            border: none;
-            outline: none;
-
-            color: var(--kakao-logo, #000);
-            text-align: center;
-            font-variant-numeric: lining-nums proportional-nums;
-            font-feature-settings: 'dlig' on;
-            font-family: Pretendard;
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 22px; /* 157.143% */
-            letter-spacing: -0.35px;
         }
 
         .no-image {
