@@ -5,10 +5,12 @@ import lombok.Getter;
 
 @Getter
 public class ServiceException extends RuntimeException {
+    private final String value;
     private final ErrorCode errorCode;
 
-    public ServiceException(String message, ErrorCode errorCode) {
+    public ServiceException(String message, String value, ErrorCode errorCode) {
         super(message);
+        this.value = value;
         this.errorCode = errorCode;
     }
 

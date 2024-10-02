@@ -1,10 +1,11 @@
 package com.exchangediary.global.exception;
 
-import com.exchangediary.global.exception.serviceexception.internalservererror.KakaoLoginFailureException;
-import com.exchangediary.global.exception.serviceexception.duplicate.DuplicateException;
-import com.exchangediary.global.exception.serviceexception.invliadrange.DateRangeException;
-import com.exchangediary.global.exception.serviceexception.invliadrange.InvalidRangeException;
-import com.exchangediary.global.exception.serviceexception.notfound.NotFoundException;
+import com.exchangediary.global.exception.serviceexception.FailedImageUploadException;
+import com.exchangediary.global.exception.serviceexception.KakaoLoginFailureException;
+import com.exchangediary.global.exception.serviceexception.DuplicateException;
+import com.exchangediary.global.exception.serviceexception.ServiceException;
+import com.exchangediary.global.exception.serviceexception.InvalidDateException;
+import com.exchangediary.global.exception.serviceexception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -32,27 +33,21 @@ public class GlobalExceptionHandler {
         return ApiErrorResponse.from(exception);
     }
 
-    @ExceptionHandler(InvalidRangeException.class)
+    @ExceptionHandler({InvalidDateException.class, DuplicateException.class})
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ApiErrorResponse handleInvalidRangeException(DateRangeException exception) {
-        return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
-    }
-
-    @ExceptionHandler(DuplicateException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ApiErrorResponse handleDuplicateException(DuplicateException exception) {
+    public ApiErrorResponse handleInvalidRangeException(ServiceException exception) {
         return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
-    public ApiErrorResponse handleNotFoundException(NotFoundException exception) {
+    public ApiErrorResponse handleNotFoundException(ServiceException exception) {
         return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 
-    @ExceptionHandler(KakaoLoginFailureException.class)
+    @ExceptionHandler({KakaoLoginFailureException.class, FailedImageUploadException.class})
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiErrorResponse handleKakaoLoginException(KakaoLoginFailureException exception) {
+    public ApiErrorResponse handleKakaoLoginException(ServiceException exception) {
         return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 }
