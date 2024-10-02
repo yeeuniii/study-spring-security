@@ -22,14 +22,17 @@ async function writeDiary() {
     formData.append("data", new Blob([json], {type: "application/json"}));
     formData.append("file", uploadImage);
 
-    const location = await fetch("/api/diary", {
+    const response = await fetch("/api/diary", {
         method: "post",
         body: formData
-    })
-    .then(response => response.headers.get("location"))
-    .then(location => location.substring(4));
+    });
 
-    showSuccess(location);
+    if (response.status === 201) {
+        const location = response.headers.get("location").substring(4);
+
+        showSuccess(location);
+    }
+    // ToDo: 예외 처리 로직 추가
 }
 
 function showSuccess(location) {
