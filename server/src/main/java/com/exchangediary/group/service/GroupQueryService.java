@@ -34,7 +34,7 @@ public class GroupQueryService {
     }
 
     private void checkNumberOfMembers(int numberOfMembers) {
-        if (numberOfMembers >= 7) {
+        if (numberOfMembers > 7) {
             throw new ConfilctException(
                     ErrorCode.FULL_MEMBERS_OF_GROUP,
                     "",

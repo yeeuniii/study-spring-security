@@ -1,5 +1,6 @@
 package com.exchangediary.global.exception;
 
+import com.exchangediary.global.exception.serviceexception.ConfilctException;
 import com.exchangediary.global.exception.serviceexception.FailedImageUploadException;
 import com.exchangediary.global.exception.serviceexception.KakaoLoginFailureException;
 import com.exchangediary.global.exception.serviceexception.DuplicateException;
@@ -48,6 +49,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({KakaoLoginFailureException.class, FailedImageUploadException.class})
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiErrorResponse handleKakaoLoginException(ServiceException exception) {
+        return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
+    }
+
+    @ExceptionHandler({ConfilctException.class})
+    @ResponseStatus(code = HttpStatus.CONFLICT)
+    public ApiErrorResponse handleConfilctException(ServiceException exception) {
         return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 }
