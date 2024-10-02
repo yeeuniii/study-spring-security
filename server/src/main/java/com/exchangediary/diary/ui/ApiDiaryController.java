@@ -1,20 +1,16 @@
 package com.exchangediary.diary.ui;
 
 import com.exchangediary.diary.domain.entity.Diary;
-import com.exchangediary.diary.domain.entity.UploadImage;
 import com.exchangediary.diary.service.DiaryCommandService;
 import com.exchangediary.diary.service.DiaryQueryService;
 import com.exchangediary.diary.service.UploadImageService;
 import com.exchangediary.diary.ui.dto.request.DiaryRequest;
-import com.exchangediary.diary.ui.dto.response.DiaryDetailResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -56,14 +52,6 @@ public class ApiDiaryController {
                 .body(diaryIdResponse);
     }
 
-    @GetMapping("/{diaryId}")
-    public ResponseEntity<DiaryDetailResponse> viewDetail(@PathVariable Long diaryId) {
-        DiaryDetailResponse diaryDetailResponse = diaryQueryService.viewDetail(diaryId);
-        return ResponseEntity
-                .ok()
-                .body(diaryDetailResponse);
-    }
-
     @GetMapping("/monthly")
     public ResponseEntity<DiaryMonthlyResponse> viewMonthlyDiary(
             @RequestParam int year,
@@ -74,13 +62,4 @@ public class ApiDiaryController {
                 .ok()
                 .body(diaryMonthlyResponse);
     }
-
-    @GetMapping("/upload-image/{imageId}")
-    public ResponseEntity<byte[]> getUploadImage(@PathVariable Long imageId) {
-        UploadImage image = uploadImageService.getUploadImage(imageId);
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.parseMediaType(MediaType.MULTIPART_FORM_DATA_VALUE))
-                .body(image.getImage());
-   }
 }
