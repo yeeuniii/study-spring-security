@@ -5,6 +5,11 @@ html, body {
     overflow-x: hidden;
 }
 
+a {
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
 table {
     border-collapse: collapse;
     table-layout: fixed;
@@ -20,9 +25,12 @@ th,td {
     vertical-align: middle;
 }
 
-a {
-    text-decoration: none;
-    box-sizing: border-box;
+.drag-prevent{
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
 }
 
 .group-name {
@@ -137,14 +145,6 @@ a {
 
 .diary {
     background-color: #FFCC00;
-}
-
-.drag-prevent{
-    -ms-user-select: none;
-    -moz-user-select: -moz-none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    user-select: none;
 }
 
 .today {
