@@ -3,7 +3,14 @@ init();
 function init() {
     drawTodayDate();
 
+    addEventToTextArea();
     addEventToWriteBtn();
+}
+
+function addEventToTextArea() {
+    const textArea = document.querySelector("textarea");
+
+    textArea.addEventListener("click", closeModal);
 }
 
 function addEventToWriteBtn() {
