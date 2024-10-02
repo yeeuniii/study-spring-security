@@ -27,15 +27,15 @@ a {
     color: var(--kakao-logo, #000);
     font-variant-numeric: lining-nums proportional-nums;
     font-feature-settings: 'dlig' on;
-    font-family: Futura;
+    font-family: Vibur;
     font-size: 16px;
     font-style: normal;
-    font-weight: 500;
-    line-height: 15.636px; /* 97.727% */
+    font-weight: 400;
+    line-height: 10px; /* 62.5% */
     letter-spacing: 0.16px;
 
     position: absolute;
-    top: 11px;
+    top: 14px;
     left: 24px;
 }
 

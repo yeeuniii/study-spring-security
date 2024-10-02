@@ -8,17 +8,6 @@
     <link rel="stylesheet" href="/css/diary-common.css" type="text/css">
     <link rel="stylesheet" href="/css/write-page.css" type="text/css">
     <style>
-        .modal-text {
-            color: #767676;
-            text-align: center;
-            font-family: "SOYOMaple";
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 34px; /* 170% */
-            letter-spacing: 0.2px;
-        }
-
         .no-image {
             display: none;
         }
@@ -37,7 +26,7 @@
         <div style="width: 100%; height: 100vh; position:relative;">
             <div style="position:absolute; bottom:0; width: 100%; height: calc(100vw * 1.778); bottom: 0;">
                 <div class="background" style="background-image: url('/images/write-page/background.svg'); background-repeat: no-repeat; background-size: contain; height:100%;">
-                    <div style="width: 100%; height: 52px; position: relative; top: 23px;">
+                    <div style="width: 100%; height: 52px; position: relative; top: 22px;">
                         <div style="position:absolute; left: 26px;">
                             <div style="width: 38px; height: 38px; margin: 7px 10px 7px 10px; float: left; display: flex; justify-content: center; align-items: center;">
                                 <a href="/" class="back-btn"><img src="/images/write-page/back_icon.svg" style="width: 24px; height: 24px; flex-shrink: 0; position: relative; left: 5px"/></a>
@@ -46,16 +35,16 @@
                                 <span class="date"></span>
                                 <a href="#" class="mood-btn"><img src="/images/write-page/mood_icon.svg"/></a>
                             </div>
+                            <div style="width: 38px; height: 38px; margin: 7px 10px 7px 15px; float: left; display: flex; justify-content: center; align-items: center;">
+                                <a href="#" class="write-btn"><img src="/images/write-page/write_icon.svg" style="width: 24px; height: 24px; flex-shrink: 0;"/></a>
+                            </div>
                         </div>
                     </div>
                     <div style="width: 100%; height: 500px; position: relative; top: 23px;">
-                        <div style="width: 38px; height: 145px; flex-shrink: 0; position: absolute; top: 9px; left: 304px; color: #767676">
+                        <div style="width: 38px; height: 108px; flex-shrink: 0; position: absolute; top: 9px; left: 304px; color: #767676">
                             <div class="tool-box">
                                 <a href="#" class="text-btn"><img src="/images/write-page/text_icon.svg" style="width: 38px; height: 38px; flex-shrink: 0;"/></a>
                                 <a href="#" class="photo-btn"><img src="/images/write-page/photo_icon.svg" style="width: 38px; height: 38px; flex-shrink: 0;"/></a>
-                            </div>
-                            <div style="width: 38px; height: 38px;">
-                                <a href="#" class="write-btn" style="position: absolute; z-index: 1"><img src="/images/write-page/write_icon.svg" style="width: 24px; height: 24px; flex-shrink: 0;"/></a>
                             </div>
                         </div>
                         <div class="no-image" style="width: 200px; height: 200px; position: relative; top: 117px;">
@@ -113,7 +102,7 @@
                             <a href="#"><img src="/images/write-page/modal/camera_icon.svg" style="width: 50px; height: 50px; flex-shrink: 0;"/></a>
                         </div>
                         <div style="width: 60px; height: 34px;">
-                            <span class="modal-text">카메라</span>
+                            <span class="photo-text">카메라</span>
                         </div>
                     </div>
                     <div style="width: 2px; height: 100px; position: relative; top: 10px; left: 83px; background-color: #767676; float: left;"></div>
@@ -122,7 +111,7 @@
                             <a href="#"><img src="/images/write-page/modal/photo_icon.svg" style="width: 48px; height: 48px; flex-shrink: 0;"/></a>
                         </div>
                         <div style="width: 60px; height: 34px; float: left;">
-                            <span class="modal-text">갤러리</span>
+                            <span class="photo-text">갤러리</span>
                         </div>
                     </div>
                 </div>
