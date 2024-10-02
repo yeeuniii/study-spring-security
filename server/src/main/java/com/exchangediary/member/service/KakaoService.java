@@ -6,6 +6,7 @@ import com.exchangediary.member.ui.dto.request.KakaoTokenRequest;
 import com.exchangediary.member.ui.dto.response.KakaoIdResponse;
 import com.exchangediary.member.ui.dto.response.KakaoTokenResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +50,13 @@ public class KakaoService {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .body(kakaoTokenRequest.convertMap())
                 .retrieve()
+                .onStatus(HttpStatusCode::isError, (request, response) -> {
+                    throw new KakaoLoginFailureException(
+                            ErrorCode.FAILED_TO_ISSUE_TOKEN,
+                            "",
+                            response.getBody().toString()
+                    );
+                })
                 .body(KakaoTokenResponse.class);
     }
 
@@ -57,6 +65,13 @@ public class KakaoService {
                 .uri(KAKAO_USER_INFO_URL)
                 .header("Authorization", "Bearer " + token)
                 .retrieve()
+                .onStatus(HttpStatusCode::isError, (request, response) -> {
+                    throw new KakaoLoginFailureException(
+                            ErrorCode.FAILED_TO_GET_KAKAO_USER_INFO,
+                            "",
+                            response.getBody().toString()
+                    );
+                })
                 .body(KakaoIdResponse.class);
     }
 }
