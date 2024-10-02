@@ -8,6 +8,17 @@
     <link rel="stylesheet" href="/css/diary-common.css" type="text/css">
     <link rel="stylesheet" href="/css/write-page.css" type="text/css">
     <style>
+        .modal-text {
+            color: #767676;
+            text-align: center;
+            font-family: "SOYOMaple";
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 34px; /* 170% */
+            letter-spacing: 0.2px;
+        }
+
         .no-image {
             display: none;
         }
@@ -63,6 +74,9 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="emojies">
+                    <div style="position: relative; width: 100%; height:59px; justify-content: center; align-items: center; flex-shrink: 0;">
+                        <p class="modal-text">오늘 기분을 골라보세요.</p>
+                    </div>
                     <table>
                         <tr>
                             <td><a href="#"><img src="/images/write-page/emoji/hilarious.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
@@ -91,23 +105,24 @@
                     </table>
                 </div>
                 <div class="photo">
-                    <div>
-                        <div style="position: relative; top: 17px; left: 44px; float: left; width: 60px; height: 100px;">
-                            <div style="width: 60px; height: 55px;">
-                                <a href="#"><img src="/images/write-page/modal/camera_icon.svg" style="width: 50px; height: 50px; flex-shrink: 0;"/></a>
-                            </div>
-                            <div style="width: 60px; height: 34px;">
-                                <span style="color: #767676; text-align: center; font-size: 19px; font-style: normal; font-weight: 500; line-height: 170%; letter-spacing: -0.5px;">카메라</span>
-                            </div>
+                    <div style="position: relative; top: 5px; width: 100%; height:59px; justify-content: center; align-items: center; flex-shrink: 0;">
+                        <p class="modal-text">입력할 방법을 선택해 주세요.</p>
+                    </div>
+                    <div style="position: relative; top: 10px; left: 31px; float: left; width: 60px; height: 100px;">
+                        <div style="width: 60px; height: 65px;">
+                            <a href="#"><img src="/images/write-page/modal/camera_icon.svg" style="width: 50px; height: 50px; flex-shrink: 0;"/></a>
                         </div>
-                        <div style="width: 2px; height: 100px; position: relative; top: 17px; left: 93px; background-color: #767676; float: left;"></div>
-                        <div style="position: relative; top: 17px; left: 144px; float: left; width: 60px; height: 100px;">
-                            <div style="width: 60px; height: 55px;">
-                                <a href="#"><img src="/images/write-page/modal/photo_icon.svg" style="width: 48px; height: 48px; flex-shrink: 0;"/></a>
-                            </div>
-                            <div style="width: 60px; height: 34px; float: left;">
-                                <span style="color: #767676; text-align: center; font-size: 19px; font-style: normal; font-weight: 500; line-height: 170%; letter-spacing: -0.5px;">갤러리</span>
-                           </div>
+                        <div style="width: 60px; height: 34px;">
+                            <span class="modal-text">카메라</span>
+                        </div>
+                    </div>
+                    <div style="width: 2px; height: 100px; position: relative; top: 10px; left: 83px; background-color: #767676; float: left;"></div>
+                    <div style="position: relative; top: 10px; left: 133px; float: left; width: 60px; height: 100px;">
+                        <div style="width: 60px; height: 65px;">
+                            <a href="#"><img src="/images/write-page/modal/photo_icon.svg" style="width: 48px; height: 48px; flex-shrink: 0;"/></a>
+                        </div>
+                        <div style="width: 60px; height: 34px; float: left;">
+                            <span class="modal-text">갤러리</span>
                         </div>
                     </div>
                 </div>
