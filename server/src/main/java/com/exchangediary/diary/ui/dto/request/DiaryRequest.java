@@ -1,9 +1,9 @@
 package com.exchangediary.diary.ui.dto.request;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 public record DiaryRequest (
-        @NotNull String content,
-        @NotNull String moodLocation
+        @NotBlank String content,
+        @NotBlank String moodLocation
 ) {
 }
