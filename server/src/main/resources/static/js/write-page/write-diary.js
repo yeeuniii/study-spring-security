@@ -36,7 +36,10 @@ function writeDiary() {
         body: formData
     })
         .then(response => response.headers.get("location"))
-        .then(location => showSuccess(location.substring(4)))
+        .then(location => {
+            closeModal(); // TODO: 약간의 딜레이 문제
+            showSuccess(location.substring(4));
+        })
         .catch(() => {
             // ToDo: 예외 처리 로직 추가
         })
