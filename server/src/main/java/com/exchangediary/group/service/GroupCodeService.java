@@ -1,6 +1,7 @@
 package com.exchangediary.group.service;
 
-import com.exchangediary.global.exception.serviceexception.notfound.GroupNotFoundException;
+import com.exchangediary.global.exception.ErrorCode;
+import com.exchangediary.global.exception.serviceexception.NotFoundException;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,11 @@ public class GroupCodeService {
 
     public Long verifyCode(String code) {
         Group group = groupRepository.findByCode(code)
-                .orElseThrow(() -> new GroupNotFoundException(code));
+                .orElseThrow(() -> new NotFoundException(
+                        ErrorCode.GROUP_NOT_FOUND,
+                        "",
+                        code
+                ));
 
         return group.getId();
     }
