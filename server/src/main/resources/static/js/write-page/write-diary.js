@@ -9,6 +9,7 @@ date.innerText = `${today.getFullYear()}.` +
 writeBtn.addEventListener("click", writeDiary);
 
 async function writeDiary() {
+    const moodIconImage = "/images/write-page/mood_icon.svg";
     const content = document.querySelector(".diary-content").value;
     const mood = document.querySelector(".mood-btn").children[0];
     const moodLocation = mood.src.substring(mood.src.indexOf("/images"));
@@ -17,7 +18,7 @@ async function writeDiary() {
     var formData = new FormData();
     const json = JSON.stringify({
         content: content,
-        moodLocation: moodLocation
+        moodLocation: moodLocation === moodIconImage ? null : moodLocation
     });
     formData.append("data", new Blob([json], {type: "application/json"}));
     formData.append("file", uploadImage);
