@@ -1,39 +1,64 @@
-const date = document.querySelector(".date")
-const writeBtn = document.querySelector(".write-btn")
-const today = new Date();
+init();
 
-date.innerText = `${today.getFullYear()}.` +
-    `${today.getMonth() + 1 < 10 ? "0" + today.getMonth() + 1 : today.getMonth() + 1}.` +
-    `${today.getDate() < 10 ? "0" + today.getDate(): today.getDate()}`;
+function init() {
+    drawTodayDate();
 
-writeBtn.addEventListener("click", writeDiary);
+    addEventToWriteBtn();
+}
 
-async function writeDiary() {
-    const moodIconImage = "/images/write-page/mood_icon.svg";
-    const content = document.querySelector(".diary-content").value;
-    const mood = document.querySelector(".mood-btn").children[0];
-    const moodLocation = mood.src.substring(mood.src.indexOf("/images"));
-    const uploadImage = null;
+function addEventToWriteBtn() {
+    const writeBtn = document.querySelector(".write-btn")
 
+    writeBtn.addEventListener("click", writeDiary);
+}
+
+function drawTodayDate() {
+    const date = document.querySelector(".date")
+    const today = new Date();
+
+    date.innerText = `${today.getFullYear()}.` +
+        `${today.getMonth() + 1 < 10 ? "0" + today.getMonth() + 1 : today.getMonth() + 1}.` +
+        `${today.getDate() < 10 ? "0" + today.getDate(): today.getDate()}`;
+}
+
+function writeDiary() {
     var formData = new FormData();
     const json = JSON.stringify({
-        content: content,
-        moodLocation: moodLocation === moodIconImage ? null : moodLocation
+        content: document.querySelector(".diary-content").value,
+        moodLocation: getMoodLocation()
     });
-    formData.append("data", new Blob([json], {type: "application/json"}));
-    formData.append("file", uploadImage);
 
-    const response = await fetch("/api/diary", {
+    formData.append("data", new Blob([json], {type: "application/json"}));
+    formData.append("file", getUploadImage());
+
+    fetch("/api/diary", {
         method: "post",
         body: formData
-    });
+    })
+        .then(response => response.headers.get("location"))
+        .then(location => showSuccess(location.substring(4)))
+        .catch(() => {
+            // ToDo: 예외 처리 로직 추가
+        })
+}
 
-    if (response.status === 201) {
-        const location = response.headers.get("location").substring(4);
+function getMoodLocation() {
+    const moodIconLocation = "/images/write-page/mood_icon.svg";
+    const mood = document.querySelector(".mood-btn").children[0];
+    const moodLocation = mood.src.substring(mood.src.indexOf("/images"));
 
-        showSuccess(location);
+    if (moodLocation === moodIconLocation) {
+        return null;
     }
-    // ToDo: 예외 처리 로직 추가
+    return moodLocation;
+}
+
+function getUploadImage() {
+    const uploadImage = null;
+
+    // TODO: 업로드 이미지 설정
+
+    return uploadImage;
 }
 
 function showSuccess(location) {
