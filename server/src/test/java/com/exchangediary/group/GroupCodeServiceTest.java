@@ -1,6 +1,6 @@
 package com.exchangediary.group;
 
-import com.exchangediary.global.exception.serviceexception.notfound.GroupNotFoundException;
+import com.exchangediary.global.exception.serviceexception.NotFoundException;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.service.GroupCodeService;
 import com.exchangediary.group.service.GroupCommandService;
@@ -49,7 +49,7 @@ public class GroupCodeServiceTest {
         groupCommandService.createGroup(GROUP_NAME);
         String code = "invalid-code";
 
-        GroupNotFoundException exception = assertThrows(GroupNotFoundException.class, () ->
+        NotFoundException exception = assertThrows(NotFoundException.class, () ->
             groupCodeService.verifyCode(code)
         );
 
