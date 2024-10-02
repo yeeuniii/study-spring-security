@@ -34,7 +34,7 @@ public class ApiGroupController {
                 .ok(response);
     }
 
-    @GetMapping("/{groupId}/profileImage")
+    @GetMapping("/{groupId}/profile-Image")
     public ResponseEntity<GroupProfileResponse> viewSelectableProfileImage(
             @PathVariable Long groupId) {
         GroupProfileResponse groupProfileResponse = groupQueryService.viewSelectableProfileImage(groupId);
