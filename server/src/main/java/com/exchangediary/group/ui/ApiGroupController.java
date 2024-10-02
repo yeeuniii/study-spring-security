@@ -4,7 +4,7 @@ import com.exchangediary.group.service.GroupCodeService;
 import com.exchangediary.group.service.GroupQueryService;
 import com.exchangediary.group.ui.dto.request.GroupCodeRequest;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
-import com.exchangediary.group.ui.dto.response.GroupProfileImageResponse;
+import com.exchangediary.group.ui.dto.response.GroupProfileResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,11 +35,11 @@ public class ApiGroupController {
     }
 
     @GetMapping("/{groupId}/profileImage")
-    public ResponseEntity<GroupProfileImageResponse> viewSelectableProfileImage(
+    public ResponseEntity<GroupProfileResponse> viewSelectableProfileImage(
             @PathVariable Long groupId) {
-        GroupProfileImageResponse groupProfileImageResponse = groupQueryService.viewSelectableProfileImage(groupId);
+        GroupProfileResponse groupProfileResponse = groupQueryService.viewSelectableProfileImage(groupId);
         return ResponseEntity
                 .ok()
-                .body(groupProfileImageResponse);
+                .body(groupProfileResponse);
     }
 }

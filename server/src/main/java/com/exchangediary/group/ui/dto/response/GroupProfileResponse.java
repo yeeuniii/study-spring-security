@@ -6,14 +6,14 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public record GroupProfileImageResponse(
+public record GroupProfileResponse(
         List<ImageResponse> Images
 ) {
-    public static GroupProfileImageResponse from(List<Member> members) {
+    public static GroupProfileResponse from(List<Member> members) {
         List<ImageResponse> imageResponses = members.stream()
                 .map(member -> ImageResponse.from(member.getProfileLocation()))
                 .toList();
-        return GroupProfileImageResponse.builder()
+        return GroupProfileResponse.builder()
                 .Images(imageResponses)
                 .build();
     }

@@ -5,7 +5,7 @@ import com.exchangediary.global.exception.serviceexception.invliadrange.InvalidR
 import com.exchangediary.global.exception.serviceexception.notfound.GroupNotFoundException;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
-import com.exchangediary.group.ui.dto.response.GroupProfileImageResponse;
+import com.exchangediary.group.ui.dto.response.GroupProfileResponse;
 import com.exchangediary.member.domain.MemberRepository;
 import com.exchangediary.member.domain.entity.Member;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +21,12 @@ public class GroupQueryService {
     private final GroupRepository groupRepository;
     private final MemberRepository memberRepository;
 
-    public GroupProfileImageResponse viewSelectableProfileImage(Long groupId) {
+    public GroupProfileResponse viewSelectableProfileImage(Long groupId) {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new GroupNotFoundException(String.valueOf(groupId)));
         checkNumberOfMembers(group.getNumberOfMembers());
         List<Member> members = memberRepository.findByGroupId(groupId);
-        return GroupProfileImageResponse.from(members);
+        return GroupProfileResponse.from(members);
     }
 
     private void checkNumberOfMembers(int numberOfMembers) {
