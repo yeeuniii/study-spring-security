@@ -15,13 +15,8 @@ public class GroupCommandService {
     private final GroupCodeService groupCodeService;
 
     public GroupIdResponse createGroup(String groupName) {
-        Group group = Group.builder()
-                .name(groupName)
-                .numberOfMembers(0)
-                .currentOrder(0)
-                .code(groupCodeService.generateCode(groupName))
-                .build();
+        Group group = Group.of(groupName, groupCodeService.generateCode(groupName));
         groupRepository.save(group);
-        return GroupIdResponse.of(group);
+        return GroupIdResponse.from(group.getId());
     }
 }

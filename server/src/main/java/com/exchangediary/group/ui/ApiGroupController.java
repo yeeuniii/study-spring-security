@@ -37,10 +37,7 @@ public class ApiGroupController {
             @RequestBody @Valid GroupCodeRequest request
     ) {
         Long groupId = groupCodeService.verifyCode(request.code());
-        GroupIdResponse response = GroupIdResponse.builder()
-                .groupId(groupId)
-                .build();
         return ResponseEntity
-                .ok(response);
+                .ok(GroupIdResponse.from(groupId));
     }
 }

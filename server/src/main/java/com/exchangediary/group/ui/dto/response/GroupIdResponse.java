@@ -7,9 +7,9 @@ import lombok.Builder;
 public record GroupIdResponse(
     Long groupId
 ) {
-    public static GroupIdResponse of(Group group) {
+    public static GroupIdResponse from(Long groupId) {
         return GroupIdResponse.builder()
-                .groupId(group.getId())
+                .groupId(groupId)
                 .build();
     }
 }

@@ -27,4 +27,13 @@ public class Group {
     private Integer numberOfMembers;
     private Integer currentOrder;
     private String code;
+
+    public static Group of(String groupName, String code) {
+        return Group.builder()
+                .name(groupName)
+                .numberOfMembers(0)
+                .currentOrder(0)
+                .code(code)
+                .build();
+    }
 }
