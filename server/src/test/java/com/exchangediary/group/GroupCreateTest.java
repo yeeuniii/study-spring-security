@@ -45,6 +45,8 @@ public class GroupCreateTest {
                 .extract().as(GroupIdResponse.class)
                 .groupId();
 
-        assertThat(groupId).isEqualTo(1L);
+        // ToDo: 아래 부분 location으로 확인하도록 수정
+        String result = groupRepository.findById(groupId).get().getName();
+        assertThat(result).isEqualTo(groupName);
     }
 }

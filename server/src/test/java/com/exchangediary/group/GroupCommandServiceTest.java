@@ -1,5 +1,7 @@
 package com.exchangediary.group;
 
+import com.exchangediary.group.domain.GroupRepository;
+import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.service.GroupCodeService;
 import com.exchangediary.group.service.GroupCommandService;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,8 @@ class GroupCommandServiceTest {
     private GroupCommandService groupCommandService;
     @MockBean
     private GroupCodeService groupCodeService;
+    @Autowired
+    private GroupRepository groupRepository;
 
     @Test
     void 그룹_생성() {
@@ -30,6 +34,10 @@ class GroupCommandServiceTest {
         Long groupId = groupCommandService.createGroup(groupName).groupId();
 
         //then
-        assertThat(groupId).isEqualTo(1L);
+        Group group = groupRepository.findById(groupId).get();
+        assertThat(group.getName()).isEqualTo(groupName);
+        assertThat(group.getCode()).isEqualTo(code);
+        assertThat(group.getCurrentOrder()).isEqualTo(0);
+        assertThat(group.getNumberOfMembers()).isEqualTo(0);
     }
 }
