@@ -15,6 +15,8 @@ public enum ErrorCode {
 
     // Invalid Range
     INVALID_DATE_RANGE(HttpStatus.BAD_REQUEST, "유효하지 않은 날짜 범위입니다."),
+    INVALID_MEMBERS_RANGE(HttpStatus.CONFLICT, "그룹의 인원수가 초과되었습니다."),
+
 
     // Duplicate
     DIARY_DUPLICATED(HttpStatus.BAD_REQUEST, "오늘 일기는 작성 완료되었습니다."),
