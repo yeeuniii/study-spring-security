@@ -16,6 +16,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.type.descriptor.jdbc.LongVarcharJdbcType;
 
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
@@ -31,6 +33,8 @@ public class Diary extends BaseEntity {
     @Column(name = "diary_id")
     private Long id;
     @Lob
+    @Column(columnDefinition="text")
+    @JdbcType(LongVarcharJdbcType.class)
     @NotNull
     private String content;
     @NotNull
