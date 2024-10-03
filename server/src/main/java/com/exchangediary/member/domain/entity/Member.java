@@ -2,6 +2,7 @@ package com.exchangediary.member.domain.entity;
 
 import com.exchangediary.global.domain.entity.BaseEntity;
 import com.exchangediary.group.domain.entity.Group;
+import com.exchangediary.group.ui.dto.request.GroupJoinRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -35,4 +36,11 @@ public class Member extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;
+
+    public void joinGroupUpdate(GroupJoinRequest request, Group group, int orderInGroup) {
+        this.nickname = request.nickname();
+        this.profileLocation = request.profileLocation();
+        this.orderInGroup = orderInGroup;
+        this.group = group;
+    }
 }
