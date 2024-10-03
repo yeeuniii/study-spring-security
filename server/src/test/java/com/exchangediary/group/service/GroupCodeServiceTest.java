@@ -1,6 +1,7 @@
 package com.exchangediary.group.service;
 
 import com.exchangediary.global.exception.serviceexception.NotFoundException;
+import com.exchangediary.group.domain.GroupRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -20,6 +21,8 @@ public class GroupCodeServiceTest {
     private GroupCodeService groupCodeService;
     @Autowired
     private GroupCommandService groupCommandService;
+    @Autowired
+    private GroupRepository groupRepository;
 
     @Test
     void 그룹_코드_생성() {
@@ -51,5 +54,15 @@ public class GroupCodeServiceTest {
         );
 
         assertThat(exception.getValue()).isEqualTo(code);
+    }
+
+    @Test
+    void 그룹_코드_반환() {
+        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
+        String code = groupRepository.findById(groupId).get().getCode();
+
+        String result = groupCodeService.findByGroupId(groupId);
+
+        assertThat(result).isEqualTo(code);
     }
 }
