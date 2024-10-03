@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,25 +35,18 @@ class GroupProfileTest {
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
-        groupRepository.deleteAllInBatch();
         memberRepository.deleteAllInBatch();
+        groupRepository.deleteAllInBatch();
     }
 
     @Test
     void 프로필_이미지_선택_목록_조회_성공() {
         //Todo: 사용자 수정 api 구현 되면, 그룹 생성 api 와 같이 사용해서 테스트
         Group group = Group.builder()
-                .numberOfMembers(5)
                 .build();
         groupRepository.save(group);
-        Member member1 = Member.builder()
-                .profileLocation("resource/profile-Image1")
-                .group(group)
-                .build();
-        Member member2 = Member.builder()
-                .profileLocation("resource/profile-Image2")
-                .group(group)
-                .build();
+        Member member1 = createMember(group, 1);
+        Member member2 = createMember(group, 2);
         memberRepository.saveAll(List.of(member1, member2));
 
         GroupProfileResponse groupProfileResponse =
@@ -84,9 +78,13 @@ class GroupProfileTest {
     @Test
     void 프로필_이미지_선택_목록_조회_멤버_초과() {
         Group group = Group.builder()
-                .numberOfMembers(7)
                 .build();
         groupRepository.save(group);
+        List<Member> members = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
+            members.add(createMember(group, i));
+        }
+        memberRepository.saveAll(members);
 
         RestAssured
                 .given().log().all()
@@ -94,5 +92,12 @@ class GroupProfileTest {
                 .when().get(API_PATH + "/" + group.getId() + "/profile-image")
                 .then().log().all()
                 .statusCode(HttpStatus.CONFLICT.value());
+    }
+
+    private Member createMember(Group group, int index) {
+        return Member.builder()
+                .profileLocation("resource/profile-Image" + index)
+                .group(group)
+                .build();
     }
 }
