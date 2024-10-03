@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class GroupCodeServiceTest {
     private static final String GROUP_NAME = "버니즈";
-    @SpyBean
+    @Autowired
     private GroupCodeService groupCodeService;
     @Autowired
     private GroupCommandService groupCommandService;
@@ -35,9 +35,8 @@ public class GroupCodeServiceTest {
 
     @Test
     void 그룹_코드_검증_성공() {
-        String code = "valid-code";
-        when(groupCodeService.generateCode(any(String.class))).thenReturn(code);
         Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
+        String code = groupRepository.findById(groupId).get().getCode();
 
         Long result = groupCodeService.verifyCode(code);
 
