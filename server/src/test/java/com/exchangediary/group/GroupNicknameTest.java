@@ -24,8 +24,6 @@ class GroupNicknameTest {
     private GroupRepository groupRepository;
     @Autowired
     private MemberRepository memberRepository;
-    @Autowired
-    private GroupQueryService groupQueryService;
 
     @BeforeEach
     void setUp() {
