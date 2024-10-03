@@ -50,8 +50,8 @@ public class GroupCommandService {
             status = "그룹 생성";
         }
         else {
-            //혹시 모르는 인원수 체크??
             isProfileDuplicate(members, request.profileLocation());
+            GroupQueryService.checkNumberOfMembers(members.size());
             status = "그룹 가입";
         }
         member.joinGroupUpdate(request, group, member.getOrderInGroup() + 1);
