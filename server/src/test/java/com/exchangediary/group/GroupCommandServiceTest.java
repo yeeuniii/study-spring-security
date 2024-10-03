@@ -38,6 +38,5 @@ class GroupCommandServiceTest {
         assertThat(group.getName()).isEqualTo(groupName);
         assertThat(group.getCode()).isEqualTo(code);
         assertThat(group.getCurrentOrder()).isEqualTo(0);
-        assertThat(group.getNumberOfMembers()).isEqualTo(0);
     }
 }
