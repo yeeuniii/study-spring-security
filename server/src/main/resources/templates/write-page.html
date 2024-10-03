@@ -8,10 +8,6 @@
     <link rel="stylesheet" href="/css/diary-common.css" type="text/css">
     <link rel="stylesheet" href="/css/write-page.css" type="text/css">
     <style>
-        .no-image {
-            display: none;
-        }
-
         .photo {
             display: none;
         }
@@ -26,7 +22,7 @@
         <div style="width: 100%; height: 100vh; position:relative;">
             <div style="position:absolute; bottom:0; width: 100%; height: calc(100vw * 1.778); bottom: 0;">
                 <div class="background" style="background-image: url('/images/write-page/background.svg'); background-repeat: no-repeat; background-size: contain; height:100%;">
-                    <div style="width: 100%; height: 52px; position: relative; top: 27px; left: 17px;">
+                    <div id="top-bar" style="width: 100%; height: 52px; position: relative; top: 27px; left: 17px;">
                         <div style="width: 38px; height: 38px; margin: 7px 10px 7px 10px; float: left; display: flex; justify-content: center; align-items: center;">
                             <a href="/" class="back-btn"><img src="/images/write-page/back_icon.svg" style="width: 24px; height: 24px; flex-shrink: 0; position: relative;"/></a>
                         </div>
@@ -38,13 +34,13 @@
                             <a href="#" class="write-btn"><img src="/images/write-page/write_icon.svg" style="width: 24px; height: 24px; flex-shrink: 0;"/></a>
                         </div>
                     </div>
-                    <div style="width: 100%; height: 500px; position: relative; top: 23px;">
+                    <div id="content" style="width: 100%; height: 500px; position: relative; top: 23px;">
                         <div class="photo-btn">
                             <img src="" >
                         <!-- TODO: 업로드 버튼 이미지 추가 -->
                         </div>
                         <div style="position: relative; top: 42px;">
-                            <textarea class="diary-content"></textarea>
+                            <textarea class="diary-content" placeholder="여기에 일기를 작성해주세요〰️"></textarea>
                         </div>
                     </div>
                 </div>
@@ -88,7 +84,7 @@
                 </div>
                 <div class="photo">
                     <div style="position: relative; top: 5px; width: 100%; height:59px; justify-content: center; align-items: center; flex-shrink: 0;">
-                        <p class="modal-text">입력할 방법을 선택해 주세요.</p>
+                        <p class="modal-text">사진을 추가할 방법을 선택해주세요.</p>
                     </div>
                     <div style="position: relative; top: 10px; left: 31px; float: left; width: 60px; height: 100px;">
                         <div style="width: 60px; height: 65px;">

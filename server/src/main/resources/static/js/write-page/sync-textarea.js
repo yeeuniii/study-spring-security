@@ -1,4 +1,4 @@
-const DEFAULT_HEIGHT = 50;
+const DEFAULT_HEIGHT = 200;
 const textarea = document.querySelector(".diary-content");
 
 textarea.addEventListener("input", syncHeight);
