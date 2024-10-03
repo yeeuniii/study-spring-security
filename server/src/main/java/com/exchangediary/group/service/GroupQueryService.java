@@ -28,8 +28,8 @@ public class GroupQueryService {
                         "",
                         String.valueOf(groupId))
                 );
-        checkNumberOfMembers(group.getNumberOfMembers());
         List<Member> members = memberRepository.findAllByGroupId(groupId);
+        checkNumberOfMembers(members.size());
         return GroupProfileResponse.from(members);
     }
 
