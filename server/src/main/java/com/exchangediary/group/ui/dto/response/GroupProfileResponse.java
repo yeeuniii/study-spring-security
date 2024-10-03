@@ -7,14 +7,14 @@ import java.util.List;
 
 @Builder
 public record GroupProfileResponse(
-        List<ImageResponse> Images
+        List<ImageResponse> SelectedImages
 ) {
     public static GroupProfileResponse from(List<Member> members) {
         List<ImageResponse> imageResponses = members.stream()
                 .map(member -> ImageResponse.from(member.getProfileLocation()))
                 .toList();
         return GroupProfileResponse.builder()
-                .Images(imageResponses)
+                .SelectedImages(imageResponses)
                 .build();
     }
 

@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findBykakaoId(Long kakaoId);
-    List<Member> findByGroupId(Long groupId);
+    List<Member> findAllByGroupId(Long groupId);
 }

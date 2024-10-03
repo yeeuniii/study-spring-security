@@ -29,12 +29,12 @@ public class GroupQueryService {
                         String.valueOf(groupId))
                 );
         checkNumberOfMembers(group.getNumberOfMembers());
-        List<Member> members = memberRepository.findByGroupId(groupId);
+        List<Member> members = memberRepository.findAllByGroupId(groupId);
         return GroupProfileResponse.from(members);
     }
 
     private void checkNumberOfMembers(int numberOfMembers) {
-        if (numberOfMembers > 7) {
+        if (numberOfMembers == 7) {
             throw new ConfilctException(
                     ErrorCode.FULL_MEMBERS_OF_GROUP,
                     "",

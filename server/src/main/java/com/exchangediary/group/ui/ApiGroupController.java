@@ -49,7 +49,7 @@ public class ApiGroupController {
                 .ok(response);
     }
 
-    @GetMapping("/{groupId}/profile-Image")
+    @GetMapping("/{groupId}/profile-image")
     public ResponseEntity<GroupProfileResponse> viewSelectableProfileImage(
             @PathVariable Long groupId) {
         GroupProfileResponse groupProfileResponse = groupQueryService.viewSelectableProfileImage(groupId);
