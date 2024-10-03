@@ -45,18 +45,23 @@ public class GroupCommandService {
                         "",
                         String.valueOf(memberId))
                 );
-        List<Member> members = memberRepository.findAllByGroupId(groupId);
-        if (members == null || members.isEmpty()) {
-            status = "그룹 생성";
-        }
-        else {
-            isProfileDuplicate(members, request.profileLocation());
-            GroupQueryService.checkNumberOfMembers(members.size());
-            status = "그룹 가입";
-        }
+        status = processGroupJoinOrCreate(groupId, request.profileLocation());
         member.joinGroupUpdate(request, group, member.getOrderInGroup() + 1);
         memberRepository.save(member);
         return GroupJoinResponse.from(status);
+    }
+
+    private String processGroupJoinOrCreate(Long groupId, String profileLocation)
+    {
+        List<Member> members = memberRepository.findAllByGroupId(groupId);
+        if (members.isEmpty()) {
+            return "그룹 생성";
+        }
+        else {
+            isProfileDuplicate(members, profileLocation);
+            GroupQueryService.checkNumberOfMembers(members.size());
+            return "그룹 가입";
+        }
     }
 
     private void isProfileDuplicate(List<Member> members, String profileLocation) {
