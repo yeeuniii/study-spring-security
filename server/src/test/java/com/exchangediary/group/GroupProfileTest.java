@@ -40,6 +40,7 @@ class GroupProfileTest {
 
     @Test
     void 프로필_이미지_선택_목록_조회_성공() {
+        //Todo: 사용자 수정 api 구현 되면, 그룹 생성 api 와 같이 사용해서 테스트
         Group group = Group.builder()
                 .numberOfMembers(5)
                 .build();
