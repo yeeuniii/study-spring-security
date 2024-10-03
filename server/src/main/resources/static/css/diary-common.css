@@ -15,8 +15,6 @@ a {
     width: 38px;
     height: 38px;
     flex-shrink: 0;
-    border-radius: 20px;
-    border: 0.5px solid #767676;
 
     display: flex;
     justify-content: center;
@@ -25,18 +23,19 @@ a {
 
 .date {
     color: var(--kakao-logo, #000);
+    text-align: center;
     font-variant-numeric: lining-nums proportional-nums;
     font-feature-settings: 'dlig' on;
     font-family: Vibur;
-    font-size: 16px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 400;
-    line-height: 10px; /* 62.5% */
-    letter-spacing: 0.16px;
+    line-height: 38px; /* 190% */
+    letter-spacing: 0.2px;
 
     position: absolute;
-    top: 14px;
-    left: 24px;
+    top: 2px;
+    left: 20px;
 }
 
 .diary-content {

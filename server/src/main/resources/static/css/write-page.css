@@ -14,7 +14,7 @@ td {
 
     position: absolute;
     top: 8px;
-    left: 134px;
+    left: 140px;
 }
 
 .tool-box {
@@ -55,7 +55,6 @@ td {
     flex-shrink: 0;
     border-radius: 50%;
     border: 0.5px solid #767676;
-    background-color: #FFF;
 
     display: flex;
     justify-content: center;
