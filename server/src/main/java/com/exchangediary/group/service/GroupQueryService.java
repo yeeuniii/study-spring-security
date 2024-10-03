@@ -17,8 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class GroupQueryService {
-    private GroupRepository groupRepository;
-    private MemberRepository memberRepository;
+    private final GroupRepository groupRepository;
+    private final MemberRepository memberRepository;
 
     public GroupMembersResponse listGroupMembersInfo(Long groupId) {
         Group group = groupRepository.findById(groupId)
