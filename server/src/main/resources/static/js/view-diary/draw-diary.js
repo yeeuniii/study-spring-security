@@ -5,5 +5,5 @@ mood.children[0].src = window.moodLocation;
 
 if (window.uploadImage) {
     image.className = "image";
-    image.children[0].src = URL.createObjectURL(window.uploadImage);
+    image.children[0].src = `data:image/png;base64,${window.uploadImage}`;
 }
