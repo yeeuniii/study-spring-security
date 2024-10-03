@@ -40,26 +40,27 @@ public class GroupCodeTest {
     @Test
     void 그룹_코드_유효성_검증_성공() {
         String groupName = "버니즈";
-        Group group = groupCommandService.createGroup(groupName);
+        Long groupId = groupCommandService.createGroup(groupName).groupId();
+        Group group = groupRepository.findById(groupId).get();
         GroupCodeRequest groupCodeRequest = new GroupCodeRequest(group.getCode());
 
-        Long groupId = RestAssured
+        GroupIdResponse response = RestAssured
                 .given().log().all()
                 .body(groupCodeRequest)
                 .contentType(ContentType.JSON)
                 .when().post(API_PATH)
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(GroupIdResponse.class)
-                .groupId();
+                .extract().as(GroupIdResponse.class);
 
-        assertThat(groupId).isEqualTo(group.getId());
+        assertThat(response.groupId()).isEqualTo(group.getId());
     }
 
     @Test
     void 그룹_코드_유효성_검증_실패() {
         String groupName = "버니즈";
-        Group group = groupCommandService.createGroup(groupName);
+        Long groupId = groupCommandService.createGroup(groupName).groupId();
+        Group group = groupRepository.findById(groupId).get();
         GroupCodeRequest groupCodeRequest = new GroupCodeRequest(group.getCode() + "invalid");
 
         RestAssured
