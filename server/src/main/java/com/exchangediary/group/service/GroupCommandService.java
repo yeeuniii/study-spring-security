@@ -32,6 +32,7 @@ public class GroupCommandService {
 
     public GroupJoinResponse joinGroup(Long groupId, GroupJoinRequest request, Long memberId) {
         String status;
+        int maxOrderInGroup;
 
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new NotFoundException(
@@ -45,15 +46,23 @@ public class GroupCommandService {
                         "",
                         String.valueOf(memberId))
                 );
-        status = processGroupJoinOrCreate(groupId, request.profileLocation());
-        member.joinGroupUpdate(request, group, member.getOrderInGroup() + 1);
+        List<Member> members = memberRepository.findAllByGroupId(groupId);
+        maxOrderInGroup = findMaxOrderInGroup(members);
+        status = processGroupJoinOrCreate(members, groupId, request.profileLocation());
+        member.joinGroupUpdate(request, group, maxOrderInGroup + 1);
         memberRepository.save(member);
         return GroupJoinResponse.from(status);
     }
 
-    private String processGroupJoinOrCreate(Long groupId, String profileLocation)
+    private int findMaxOrderInGroup(List<Member> members) {
+        return members.stream()
+                .mapToInt(member -> member.getOrderInGroup() != null ? member.getOrderInGroup() : 0)
+                .max()
+                .orElse(0);
+    }
+
+    private String processGroupJoinOrCreate(List<Member> members, Long groupId, String profileLocation)
     {
-        List<Member> members = memberRepository.findAllByGroupId(groupId);
         if (members.isEmpty()) {
             return "그룹 생성";
         }
