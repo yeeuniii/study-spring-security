@@ -2,20 +2,19 @@ package com.exchangediary.group.service;
 
 import com.exchangediary.global.exception.serviceexception.NotFoundException;
 import com.exchangediary.group.domain.GroupRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Base64;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(scripts = {"classpath:truncate.sql"}, executionPhase = BEFORE_TEST_METHOD)
 public class GroupCodeServiceTest {
     private static final String GROUP_NAME = "버니즈";
     @Autowired
@@ -24,11 +23,6 @@ public class GroupCodeServiceTest {
     private GroupCommandService groupCommandService;
     @Autowired
     private GroupRepository groupRepository;
-
-    @BeforeEach
-    void setUp() {
-        groupRepository.deleteAllInBatch();
-    }
 
     @Test
     void 그룹_코드_생성() {
