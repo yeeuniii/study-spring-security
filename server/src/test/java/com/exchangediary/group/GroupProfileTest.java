@@ -34,12 +34,13 @@ class GroupProfileTest {
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
+        groupRepository.deleteAllInBatch();
+        memberRepository.deleteAllInBatch();
     }
 
     @Test
     void 프로필_이미지_선택_목록_조회_성공() {
         Group group = Group.builder()
-                .id(1L)
                 .numberOfMembers(5)
                 .build();
         groupRepository.save(group);
@@ -59,7 +60,7 @@ class GroupProfileTest {
         GroupProfileResponse Response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get(API_PATH + "/" + group.getId() + "/profile-Image")
+                .when().get(API_PATH + "/" + group.getId() + "/profile-image")
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
                 .extract().as(GroupProfileResponse.class);
@@ -74,7 +75,7 @@ class GroupProfileTest {
         RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get(API_PATH + "/" + groupId + "/profile-Image")
+                .when().get(API_PATH + "/" + groupId + "/profile-image")
                 .then().log().all()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
@@ -82,15 +83,14 @@ class GroupProfileTest {
     @Test
     void 프로필_이미지_선택_목록_조회_멤버_초과() {
         Group group = Group.builder()
-                .id(1L)
-                .numberOfMembers(8)
+                .numberOfMembers(7)
                 .build();
         groupRepository.save(group);
 
         RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get(API_PATH + "/" + group.getId() + "/profile-Image")
+                .when().get(API_PATH + "/" + group.getId() + "/profile-image")
                 .then().log().all()
                 .statusCode(HttpStatus.CONFLICT.value());
     }
