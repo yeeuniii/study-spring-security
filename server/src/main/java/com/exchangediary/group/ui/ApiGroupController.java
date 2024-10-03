@@ -7,9 +7,11 @@ import com.exchangediary.group.ui.dto.request.GroupCodeRequest;
 import com.exchangediary.group.ui.dto.request.GroupJoinRequest;
 import com.exchangediary.group.ui.dto.request.GroupNameRequest;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
+import com.exchangediary.group.ui.dto.response.GroupJoinResponse;
 import com.exchangediary.group.ui.dto.response.GroupProfileResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -61,12 +63,14 @@ public class ApiGroupController {
     }
 
     @PatchMapping("/{groupId}/join")
-    public ResponseEntity<Void> joinGroup(
+    public ResponseEntity<GroupJoinResponse> joinGroup(
             @PathVariable Long groupId,
             @RequestBody @Valid GroupJoinRequest request
     ) {
         Long memberId = 1L;
-        groupCommandService.joinGroup(groupId, request, memberId);
-        return ResponseEntity.noContent().build();
+        GroupJoinResponse response = groupCommandService.joinGroup(groupId, request, memberId);
+        return ResponseEntity
+                .ok()
+                .body(response);
     }
 }
