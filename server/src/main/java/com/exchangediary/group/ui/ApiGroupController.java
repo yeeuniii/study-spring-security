@@ -5,12 +5,15 @@ import com.exchangediary.group.service.GroupQueryService;
 import com.exchangediary.group.service.GroupCommandService;
 import com.exchangediary.group.ui.dto.request.GroupCodeRequest;
 import com.exchangediary.group.ui.dto.request.GroupNameRequest;
+import com.exchangediary.group.ui.dto.request.GroupNicknameRequest;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
+import com.exchangediary.group.ui.dto.response.GroupNicknameResponse;
 import com.exchangediary.group.ui.dto.response.GroupProfileResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,5 +59,16 @@ public class ApiGroupController {
         return ResponseEntity
                 .ok()
                 .body(groupProfileResponse);
+    }
+
+    @GetMapping("/{groupId}/nickname/verify")
+    public ResponseEntity<GroupNicknameResponse> verifyNickname(
+            @PathVariable Long groupId,
+            @Valid @ModelAttribute GroupNicknameRequest request
+    ) {
+        GroupNicknameResponse response = groupQueryService.verifyNickname(groupId, request.nickname());
+        return ResponseEntity
+                .ok()
+                .body(response);
     }
 }
