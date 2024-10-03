@@ -1,5 +1,6 @@
 package com.exchangediary.group;
 
+import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.service.GroupCodeService;
 import com.exchangediary.group.service.GroupCommandService;
@@ -18,6 +19,8 @@ class GroupCommandServiceTest {
     private GroupCommandService groupCommandService;
     @MockBean
     private GroupCodeService groupCodeService;
+    @Autowired
+    private GroupRepository groupRepository;
 
     @Test
     void 그룹_생성() {
@@ -28,12 +31,13 @@ class GroupCommandServiceTest {
         when(groupCodeService.generateCode(groupName)).thenReturn(code);
 
         //when
-        Group createdGroup = groupCommandService.createGroup(groupName);
+        Long groupId = groupCommandService.createGroup(groupName).groupId();
 
         //then
-        assertThat(createdGroup.getName()).isEqualTo(groupName);
-        assertThat(createdGroup.getCode()).isEqualTo(code);
-        assertThat(createdGroup.getNumberOfMembers()).isEqualTo(0);
-        assertThat(createdGroup.getCurrentOrder()).isEqualTo(0);
+        Group group = groupRepository.findById(groupId).get();
+        assertThat(group.getName()).isEqualTo(groupName);
+        assertThat(group.getCode()).isEqualTo(code);
+        assertThat(group.getCurrentOrder()).isEqualTo(0);
+        assertThat(group.getNumberOfMembers()).isEqualTo(0);
     }
 }
