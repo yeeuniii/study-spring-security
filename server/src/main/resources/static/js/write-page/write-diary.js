@@ -42,7 +42,12 @@ function writeDiary() {
         method: "post",
         body: formData
     })
-        .then(response => response.headers.get("content-location"))
+        .then(response => {
+            if (response.status !== 201) {
+                throw new Error();
+            }
+            return response.headers.get("content-location");
+        })
         .then(contentLocation => {
             closeModal(); // TODO: 약간의 딜레이 문제
             showSuccess(contentLocation);
