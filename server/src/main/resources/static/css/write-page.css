@@ -37,16 +37,16 @@ td {
 }
 
 .photo-btn {
-    width: 38px;
-    height: 38px;
+    width: 215px;
+    height: 215px;
     flex-shrink: 0;
 
-    position: relative;
-    top: 31px;
+    border-radius: 20px;
+    border: 1px dashed #767676;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.00) 0%, #FFF 100%);
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
+    top: 18px;
 }
 
 .write-btn {
