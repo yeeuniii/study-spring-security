@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,6 +30,6 @@ public class UploadImage extends BaseEntity {
     private Long id;
     @Lob
     @JdbcType(VarbinaryJdbcType.class)
-    @Column(name = "image", columnDefinition = "bytea")
+    @NotNull
     private final byte[] image;
 }

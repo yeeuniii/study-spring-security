@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,7 +31,9 @@ public class Diary extends BaseEntity {
     @Column(name = "diary_id")
     private Long id;
     @Lob
+    @NotNull
     private String content;
+    @NotNull
     private String moodLocation;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "upload_image_id")
