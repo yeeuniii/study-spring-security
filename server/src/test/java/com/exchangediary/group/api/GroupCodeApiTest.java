@@ -1,4 +1,4 @@
-package com.exchangediary.group;
+package com.exchangediary.group.api;
 
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GroupCodeTest {
+public class GroupCodeApiTest {
     private static final String API_PATH = "/api/groups/code/verify";
     @LocalServerPort
     private int port;

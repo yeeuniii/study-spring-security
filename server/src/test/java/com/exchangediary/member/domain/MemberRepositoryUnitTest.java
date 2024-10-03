@@ -15,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class MemberRepositoryTest {
+public class MemberRepositoryUnitTest {
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired

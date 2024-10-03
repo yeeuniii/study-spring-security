@@ -1,9 +1,7 @@
-package com.exchangediary.group;
+package com.exchangediary.group.service;
 
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
-import com.exchangediary.group.service.GroupCommandService;
-import com.exchangediary.group.service.GroupQueryService;
 import com.exchangediary.group.ui.dto.response.GroupMembersResponse;
 import com.exchangediary.member.domain.MemberRepository;
 import com.exchangediary.member.domain.entity.Member;

@@ -1,9 +1,7 @@
-package com.exchangediary.group;
+package com.exchangediary.group.service;
 
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
-import com.exchangediary.group.service.GroupCodeService;
-import com.exchangediary.group.service.GroupCommandService;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;

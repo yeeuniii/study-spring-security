@@ -1,7 +1,6 @@
-package com.exchangediary.group;
+package com.exchangediary.group.api;
 
 import com.exchangediary.group.domain.GroupRepository;
-import com.exchangediary.group.service.GroupCommandService;
 import com.exchangediary.group.ui.dto.request.GroupNameRequest;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
 import io.restassured.RestAssured;
@@ -16,19 +15,17 @@ import org.springframework.http.HttpStatus;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GroupCreateTest {
+public class GroupCreateApiTest {
     private static final String API_PATH = "/api/groups";
     @LocalServerPort
     private int port;
     @Autowired
     private GroupRepository groupRepository;
-    @Autowired
-    private GroupCommandService groupCommandService;
 
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
-        groupRepository.deleteAllInBatch();;
+        groupRepository.deleteAllInBatch();
     }
 
     @Test

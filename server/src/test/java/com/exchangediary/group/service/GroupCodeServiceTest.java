@@ -1,8 +1,6 @@
-package com.exchangediary.group;
+package com.exchangediary.group.service;
 
 import com.exchangediary.global.exception.serviceexception.NotFoundException;
-import com.exchangediary.group.service.GroupCodeService;
-import com.exchangediary.group.service.GroupCommandService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
