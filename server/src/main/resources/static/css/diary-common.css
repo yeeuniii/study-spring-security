@@ -44,13 +44,14 @@ a {
     background-color: transparent;
     border: none;
     outline: none;
+    white-space: pre-line;
 
-    ccolor: var(--kakao-logo, #000);
+    color: var(--kakao-logo, #000);
     font-variant-numeric: lining-nums proportional-nums;
     font-feature-settings: 'dlig' on;
     font-family: "SOYOMaple";
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 14px; /* 100% */
+    line-height: 16.65px; /* 100% */
 }
