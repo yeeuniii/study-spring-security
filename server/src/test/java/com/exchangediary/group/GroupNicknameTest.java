@@ -17,7 +17,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class GroupNicknameTest {
-    private static final String API_PATH = "/api/groups";
+    private static final String API_PATH = "/api/groups/%d/nickname/verify";
     @LocalServerPort
     private int port;
     @Autowired
@@ -39,11 +39,11 @@ class GroupNicknameTest {
         groupRepository.save(group);
 
         RestAssured
-                .given()
+                .given().log().all()
                 .queryParam("nickname", "jisunggi")
-                .when().get(API_PATH + "/" + group.getId() + "/nickname/verify")
-                .then()
-                .statusCode(200)
+                .when().get(String.format(API_PATH, group.getId()))
+                .then().log().all()
+                .statusCode(HttpStatus.OK.value())
                 .body("verification", equalTo(true));
     }
 
@@ -59,11 +59,10 @@ class GroupNicknameTest {
         memberRepository.save(member);
 
         RestAssured
-                .given()
+                .given().log().all()
                 .queryParam("nickname", "jisunggi")
-                .when().get(API_PATH + "/" + group.getId() + "/nickname/verify")
-                .then()
+                .when().get(String.format(API_PATH, group.getId()))
+                .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
     }
-
 }
