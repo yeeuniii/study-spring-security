@@ -34,8 +34,6 @@ public class UploadImage extends BaseEntity {
     @Column(name = "upload_image_id")
     private Long id;
     @Lob
-    @Column(columnDefinition = "bytea")
-    @JdbcType(VarbinaryJdbcType.class)
     @NotNull
     private final byte[] image;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

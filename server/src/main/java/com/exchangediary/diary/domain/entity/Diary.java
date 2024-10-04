@@ -31,8 +31,6 @@ public class Diary extends BaseEntity {
     @Column(name = "diary_id")
     private Long id;
     @Lob
-    @Column(columnDefinition="text")
-    @JdbcType(LongVarcharJdbcType.class)
     @NotNull
     private String content;
     @NotNull
