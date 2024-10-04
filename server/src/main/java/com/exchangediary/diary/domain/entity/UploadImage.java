@@ -1,12 +1,16 @@
 package com.exchangediary.diary.domain.entity;
 
 import com.exchangediary.global.domain.entity.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,4 +37,7 @@ public class UploadImage extends BaseEntity {
     @JdbcType(VarbinaryJdbcType.class)
     @NotNull
     private final byte[] image;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "diary_id")
+    private final Diary diary;
 }
