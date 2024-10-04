@@ -2,6 +2,7 @@ package com.exchangediary.diary.domain.entity;
 
 import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.global.domain.entity.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class Diary extends BaseEntity {
     private String content;
     @NotNull
     private String moodLocation;
-    @OneToOne(mappedBy = "diary")
+    @OneToOne(mappedBy = "diary", cascade = CascadeType.ALL)
     private UploadImage uploadImage;
 
     public static Diary of(DiaryRequest diaryRequest, UploadImage uploadImage) {
