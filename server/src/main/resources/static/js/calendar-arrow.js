@@ -1,6 +1,7 @@
 const leftArrow = document.querySelector(".left-arrow");
 const rightArrow = document.querySelector(".right-arrow");
 
+
 leftArrow.addEventListener("click", clickLeftArrowButton);
 rightArrow.addEventListener("click", clickRightArrowButton);
 
@@ -17,6 +18,9 @@ function clickLeftArrowButton(event) {
 
 function clickRightArrowButton(event) {
     event.preventDefault();
+    if (isSameYearAndMonthWithToday()) {
+        return ;
+    }
     month.innerText = Number(month.innerText) + 1;
     if (month.innerText === "13") {
         month.innerText = 1;
@@ -24,4 +28,12 @@ function clickRightArrowButton(event) {
     }
     clearDate();
     drawDateOfCalendar()
+}
+
+
+function isSameYearAndMonthWithToday() {
+    const today = new Date();
+
+    return Number(year.innerText) === today.getFullYear()
+        && Number(month.innerText - 1) === today.getMonth();
 }
