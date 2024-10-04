@@ -27,7 +27,6 @@ public class DiaryRepositoryUnitTest {
         UploadImage uploadImage = UploadImage.builder()
                 .image(Files.readAllBytes(Paths.get(imageFilePath)))
                 .build();
-        entityManager.persist(uploadImage);
         Diary diary = Diary.builder()
                 .content("하이하이")
                 .moodLocation("/images/write-page/emoji/sleepy.svg")
