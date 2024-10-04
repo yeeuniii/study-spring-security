@@ -33,4 +33,14 @@ public class GroupCodeService {
 
         return group.getId();
     }
+
+    public String findByGroupId(Long groupId) {
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new NotFoundException(
+                        ErrorCode.GROUP_NOT_FOUND,
+                        "",
+                        String.valueOf(groupId)
+                ));
+        return group.getCode();
+    }
 }
