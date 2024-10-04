@@ -41,7 +41,7 @@ th,td {
     font-family: "SOYOMapleBold";
     font-size: 24px;
     font-style: normal;
-    font-weight: 709;
+    font-weight: 700;
     line-height: 22px; /* 91.667% */
     letter-spacing: -0.6px;
 }
@@ -51,11 +51,16 @@ th,td {
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+
     color: rgba(118, 118, 118, 0.70);
     text-align: center;
     font-variant-numeric: lining-nums proportional-nums;
     font-feature-settings: 'dlig' on;
-    font-family: "Vibur", system-ui;
+    font-family: Vibur;
     font-size: 40px;
     font-style: normal;
     font-weight: 400;
@@ -68,10 +73,11 @@ th,td {
     top: 63%;
     left: 50%;
     transform: translate(-50%, -50%);
+
     color: var(--kakao-logo, #000);
     font-variant-numeric: lining-nums proportional-nums;
     font-feature-settings: 'dlig' on;
-    font-family: "Vibur", system-ui;
+    font-family: Vibur;
     font-size: 44px;
     font-style: normal;
     font-weight: 400;
@@ -160,12 +166,12 @@ th,td {
 
 .calendar-main {
     position: relative;
-    top: 70px;
+    top: 38px;
 }
 
 .calendar-bottom {
     width: 100%;
-    height: 170px;
+    height: 187px;
     position: absolute;
     bottom: 0;
     display: flex;
@@ -178,7 +184,7 @@ th,td {
     font-variant-numeric: lining-nums proportional-nums;
     font-feature-settings: 'dlig' on;
     font-family: "SOYOMaple";
-    font-size: 20px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 400;
     line-height: 28px;
@@ -191,7 +197,7 @@ th,td {
     font-variant-numeric: lining-nums proportional-nums;
     font-feature-settings: 'dlig' on;
     font-family: "SOYOMapleBold";
-    font-size: 20px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 700;
     line-height: 28px; /* 140% */
