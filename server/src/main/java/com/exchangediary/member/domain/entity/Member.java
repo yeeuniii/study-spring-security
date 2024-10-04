@@ -37,7 +37,7 @@ public class Member extends BaseEntity {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    public void joinGroupUpdate(GroupJoinRequest request, Group group, int orderInGroup) {
+    public void updateMemberForGroupJoin(GroupJoinRequest request, Group group, int orderInGroup) {
         this.nickname = request.nickname();
         this.profileLocation = request.profileLocation();
         this.orderInGroup = orderInGroup;

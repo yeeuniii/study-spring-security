@@ -45,7 +45,7 @@ public class GroupCommandService {
                 );
         String status = processGroupJoinOrCreate(groupId, request.profileLocation());
         int maxOrderInGroup = memberRepository.findMaxOrderInGroupByGroupId(groupId);
-        member.joinGroupUpdate(request, group, maxOrderInGroup + 1);
+        member.updateMemberForGroupJoin(request, group, maxOrderInGroup + 1);
         memberRepository.save(member);
         return GroupJoinResponse.from(status);
     }
