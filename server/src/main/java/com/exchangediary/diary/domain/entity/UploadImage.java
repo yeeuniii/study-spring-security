@@ -1,7 +1,6 @@
 package com.exchangediary.diary.domain.entity;
 
 import com.exchangediary.global.domain.entity.BaseEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,8 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcType;
-import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
 
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
@@ -38,5 +35,9 @@ public class UploadImage extends BaseEntity {
     private final byte[] image;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id", foreignKey = @ForeignKey(name = "upload_image_diary_id_fkey"))
-    private final Diary diary;
+    private Diary diary;
+
+    public void uploadToDiary(Diary diary) {
+        this.diary = diary;
+    }
 }
