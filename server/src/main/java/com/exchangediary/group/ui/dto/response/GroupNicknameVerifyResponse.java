@@ -3,11 +3,11 @@ package com.exchangediary.group.ui.dto.response;
 import lombok.Builder;
 
 @Builder
-public record GroupNicknameResponse(
+public record GroupNicknameVerifyResponse(
         boolean verification
 ) {
-    public static GroupNicknameResponse from(boolean verification) {
-        return GroupNicknameResponse.builder()
+    public static GroupNicknameVerifyResponse from(boolean verification) {
+        return GroupNicknameVerifyResponse.builder()
                 .verification(verification)
                 .build();
     }

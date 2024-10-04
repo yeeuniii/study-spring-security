@@ -7,7 +7,7 @@ import com.exchangediary.group.ui.dto.request.GroupCodeRequest;
 import com.exchangediary.group.ui.dto.request.GroupNameRequest;
 import com.exchangediary.group.ui.dto.request.GroupNicknameRequest;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
-import com.exchangediary.group.ui.dto.response.GroupNicknameResponse;
+import com.exchangediary.group.ui.dto.response.GroupNicknameVerifyResponse;
 import com.exchangediary.group.ui.dto.response.GroupProfileResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -62,11 +62,12 @@ public class ApiGroupController {
     }
 
     @GetMapping("/{groupId}/nickname/verify")
-    public ResponseEntity<GroupNicknameResponse> verifyNickname(
+    public ResponseEntity<GroupNicknameVerifyResponse> verifyNickname(
             @PathVariable Long groupId,
-            @Valid @ModelAttribute GroupNicknameRequest request
+            @ModelAttribute @Valid GroupNicknameRequest request
     ) {
-        GroupNicknameResponse response = groupQueryService.verifyNickname(groupId, request.nickname());
+        GroupNicknameVerifyResponse response =
+                groupQueryService.verifyNickname(groupId, request.nickname());
         return ResponseEntity
                 .ok()
                 .body(response);
