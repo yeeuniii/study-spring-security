@@ -26,7 +26,7 @@ public class GroupQueryService {
     public GroupProfileResponse viewSelectableProfileImage(Long groupId) {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new NotFoundException(
-                        ErrorCode.DIARY_NOT_FOUND,
+                        ErrorCode.GROUP_NOT_FOUND,
                         "",
                         String.valueOf(groupId))
                 );
