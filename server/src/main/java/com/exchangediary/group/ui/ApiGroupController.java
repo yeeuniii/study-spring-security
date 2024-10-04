@@ -61,12 +61,12 @@ public class ApiGroupController {
                 .body(groupProfileResponse);
     }
 
-    @PatchMapping("/{groupId}/join")
+    @PatchMapping("/{groupId}/join/{memberId}")
     public ResponseEntity<GroupJoinResponse> joinGroup(
             @PathVariable Long groupId,
+            @PathVariable Long memberId, //Todo: 쿠키 도입 후 빠질 값
             @RequestBody @Valid GroupJoinRequest request
     ) {
-        Long memberId = 1L;
         GroupJoinResponse response = groupCommandService.joinGroup(groupId, request, memberId);
         return ResponseEntity
                 .ok()

@@ -54,7 +54,7 @@ public class GroupCommandService {
     {
         List<Member> members = memberRepository.findAllByGroupId(groupId);
         if (members.isEmpty()) {
-            return "그룹 생성";
+            return "그룹 생성 후 가입";
         }
         else {
             isProfileDuplicate(groupId, profileLocation);
