@@ -6,6 +6,47 @@ a {
     align-items: center;
 }
 
+.top-bar {
+    width: 375px; 
+    height: 52px; 
+    position: relative; 
+    top: 27px; 
+}
+
+.bar-back {
+    width: 38px; 
+    height: 38px;
+    margin: 7px 10px 7px 27px; 
+    float: left; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.bar-main {
+    width: 184px; 
+    height: 38px; 
+    flex-shrink: 0; 
+    border-radius: 100px; 
+    border: 0.5px solid #767676; 
+    float: left; 
+    margin: 7px 10px 7px 10px; 
+    position: relative; 
+    left: 9px;
+}
+
+.bar-write {
+    width: 38px; 
+    height: 38px;
+    margin: 7px 10px 7px 10px; 
+    float: left; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    position: relative; 
+    left:17px;
+}
+
 .back-btn {
     width: 38px;
     height: 38px;
