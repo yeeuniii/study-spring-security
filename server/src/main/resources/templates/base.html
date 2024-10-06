@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>스프링</title>
+    <link rel="stylesheet" href="/css/fonts.css" type="text/css">
+    <link rel="stylesheet" href="/css/base.css" type="text/css">
+
+    <th:block layout:fragment="header"></th:block>
+</head>
+<body>
+    <div class="drag-prevent" align="center">
+        <div class="full-screen">
+            <div class="main-screen">
+                <th:block layout:fragment="content">
+
+                </th:block>
+            </div>
+        </div>
+    </div>
+</body>
+
+<th:block layout:fragment="script"></th:block>
+
+</html>

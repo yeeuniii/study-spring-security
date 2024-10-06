@@ -1,10 +1,5 @@
 @charset "utf-8";
 
-html, body {
-    margin: 0px;
-    overflow-x: hidden;
-}
-
 a {
     display: flex;
     justify-content: center;
