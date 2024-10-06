@@ -1,0 +1,47 @@
+.modal-title {
+    position: relative; 
+    top: 5px;
+    width: 100%; 
+    height:59px; 
+    justify-content: center; 
+    align-items: center; 
+    flex-shrink: 0;
+}
+
+.emoji {
+    width: 26px; 
+    height: 26px; 
+    flex-shrink: 0;
+}
+
+.modal-btn {
+    position: relative; 
+    top: 10px; 
+    float: left;
+    width: 60px; 
+    height: 100px;
+} .camera {
+    left: 31px; 
+} .gallery {
+    left: 133px; 
+}
+
+.modal-icon {
+    width: 60px; 
+    height: 65px;
+}
+
+.modal-btn-text {
+    width: 60px; 
+    height: 34px;
+}
+
+.stick {
+    width: 2px; 
+    height: 100px; 
+    position: relative;
+    top: 10px; 
+    left: 83px; 
+    background-color: #767676; 
+    float: left;
+}

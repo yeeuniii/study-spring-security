@@ -95,3 +95,11 @@ td {
     line-height: 34px;
     letter-spacing: -0.4px;
 }
+
+.photo {
+    display: none;
+}
+
+.emojies {
+    display: none;
+}
