@@ -1,0 +1,97 @@
+@charset "utf-8";
+
+td {
+    width: 26px;
+    height: 26px;
+
+    padding: 0px 26px 22px 0px;
+}
+
+.mood-btn {
+    width: 22px;
+    height: 21px;
+    flex-shrink: 0;
+
+    position: absolute;
+    top: 8px;
+    left: 140px;
+}
+
+.photo-btn {
+    width: 215px;
+    height: 215px;
+    flex-shrink: 0;
+
+    border-radius: 20px;
+    border: 1px dashed #767676;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.00) 0%, #FFF 100%);
+
+    position: relative;
+    top: 18px;
+}
+
+.write-btn {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 0.5px solid #767676;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 1;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    bottom: 24px;
+    width: 375px;
+    height: 265px;
+    transition: transform 0.3s ease-out;
+    transform: translateY(100%);
+}
+
+.modal-body {
+    position: relative;
+    left: 43px;
+    top: 25px;
+    width: 289px;
+    height: 132px;
+}
+
+.modal-text {
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-family: "SOYOMaple";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 34px; /* 170% */
+    letter-spacing: 0.2px;
+}
+
+.photo-text {
+    color: #767676;
+    text-align: center;
+    font-family: "SOYOMaple";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 34px; /* 170% */
+    letter-spacing: 0.2px;
+}
+
+.check-btn {
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-family: "SOYOMaple";
+    font-size: 16px;
+    font-style:normal;
+    font-weight: 600;
+    line-height: 34px;
+    letter-spacing: -0.4px;
+}
