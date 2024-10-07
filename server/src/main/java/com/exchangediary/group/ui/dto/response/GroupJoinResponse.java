@@ -4,11 +4,11 @@ import lombok.Builder;
 
 @Builder
 public record GroupJoinResponse(
-        String message
+        String code
 ) {
-    public static GroupJoinResponse from(String message) {
+    public static GroupJoinResponse from(String code) {
         return GroupJoinResponse.builder()
-                .message(message)
+                .code(code)
                 .build();
     }
 }

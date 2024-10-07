@@ -13,8 +13,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findBykakaoId(Long kakaoId);
     List<Member> findAllByGroupOrderByOrderInGroup(Group group);
     List<Member> findAllByGroupId(Long groupId);
-    @Query("SELECT COALESCE(MAX(m.orderInGroup), 0) FROM Member m WHERE m.group.id = :groupId")
-    int findMaxOrderInGroupByGroupId(@Param("groupId") Long groupId);
-    boolean existsByGroupIdAndProfileLocation(Long groupId, String profileLocation);
     Boolean existsByGroupIdAndNickname(Long groupId, String nickname);
 }

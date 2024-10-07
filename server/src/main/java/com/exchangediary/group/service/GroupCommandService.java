@@ -41,35 +41,43 @@ public class GroupCommandService {
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.MEMBER_NOT_FOUND,
                         "",
-                        String.valueOf(memberId))
+                        String.valueOf(groupId))
                 );
-        String status = processGroupJoinOrCreate(groupId, request.profileLocation());
-        int maxOrderInGroup = memberRepository.findMaxOrderInGroupByGroupId(groupId);
+        String code = processGroupJoinOrCreate(group, request.profileLocation());
+        int maxOrderInGroup = findMaxOrderInGroup(group.getMembers());
         member.updateMemberForGroupJoin(request, group, maxOrderInGroup + 1);
         memberRepository.save(member);
-        return GroupJoinResponse.from(status);
+        return GroupJoinResponse.from(code);
     }
 
-    private String processGroupJoinOrCreate(Long groupId, String profileLocation)
+    private int findMaxOrderInGroup(List<Member> members) {
+        return members.stream()
+                .mapToInt(Member::getOrderInGroup)
+                .max()
+                .orElse(0);
+    }
+
+    private String processGroupJoinOrCreate(Group group, String profileLocation)
     {
-        List<Member> members = memberRepository.findAllByGroupId(groupId);
+        List<Member> members = group.getMembers();
         if (members.isEmpty()) {
-            return "그룹 생성 후 가입";
+            return group.getCode();
         }
         else {
-            isProfileDuplicate(groupId, profileLocation);
+            isProfileDuplicate(members, profileLocation);
             GroupQueryService.checkNumberOfMembers(members.size());
-            return "그룹 가입";
+            return null;
         }
     }
 
-    private void isProfileDuplicate(Long groupId, String profileLocation) {
-        if (memberRepository.existsByGroupIdAndProfileLocation(groupId, profileLocation)) {
-            throw new DuplicateException(
-                    ErrorCode.PROFILE_DUPLICATED,
-                    "",
-                    profileLocation
-            );
-        }
+    private void isProfileDuplicate(List<Member> members, String profileLocation) {
+        members.stream()
+                .filter(member -> member.getProfileLocation().equals(profileLocation))
+                .findAny()
+                .orElseThrow(() -> new DuplicateException(
+                        ErrorCode.PROFILE_DUPLICATED,
+                        "",
+                        profileLocation
+                ));
     }
 }
