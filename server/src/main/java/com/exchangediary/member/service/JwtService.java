@@ -1,6 +1,9 @@
 package com.exchangediary.member.service;
 
+import com.exchangediary.global.exception.ErrorCode;
+import com.exchangediary.global.exception.serviceexception.UnauthorizedException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -20,6 +23,21 @@ public class JwtService {
 
     public String generateToken(Long memberId) {
         return buildToken(memberId);
+    }
+
+    public boolean verifyToken(String token) {
+        try {
+            Date now = new Date();
+
+            Claims claims = extractAllClaims(token);
+            return !claims.getExpiration().before(now);
+        } catch (JwtException | IllegalArgumentException exception) {
+            throw new UnauthorizedException(
+                    ErrorCode.EXPIRED_TOKEN,
+                    "",
+                    token
+            );
+        }
     }
 
     public Long extractMemberId(String token) {
