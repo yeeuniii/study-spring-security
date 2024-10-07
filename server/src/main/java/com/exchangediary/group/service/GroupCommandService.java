@@ -66,18 +66,18 @@ public class GroupCommandService {
         else {
             isProfileDuplicate(members, profileLocation);
             GroupQueryService.checkNumberOfMembers(members.size());
-            return null;
+            return "null";
         }
     }
 
     private void isProfileDuplicate(List<Member> members, String profileLocation) {
-        members.stream()
-                .filter(member -> member.getProfileLocation().equals(profileLocation))
-                .findAny()
-                .orElseThrow(() -> new DuplicateException(
-                        ErrorCode.PROFILE_DUPLICATED,
-                        "",
-                        profileLocation
-                ));
+        if (members.stream()
+                .anyMatch(member -> member.getProfileLocation().equals(profileLocation))) {
+            throw new DuplicateException(
+                    ErrorCode.PROFILE_DUPLICATED,
+                    "",
+                    profileLocation
+            );
+        }
     }
 }
