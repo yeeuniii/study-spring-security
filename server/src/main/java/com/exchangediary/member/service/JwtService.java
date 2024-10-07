@@ -33,7 +33,7 @@ public class JwtService {
             return !claims.getExpiration().before(now);
         } catch (JwtException | IllegalArgumentException exception) {
             throw new UnauthorizedException(
-                    ErrorCode.EXPIRED_TOKEN,
+                    ErrorCode.JWT_TOKEN_UNAUTHORIZED,
                     "",
                     token
             );
