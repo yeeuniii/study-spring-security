@@ -11,16 +11,9 @@
 }
 
 .photo-btn {
-    width: 215px;
-    height: 215px;
-    flex-shrink: 0;
-
     border-radius: 20px;
     border: 1px dashed #767676;
     background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.00) 0%, #FFF 100%);
-
-    position: relative;
-    top: 18px;
 }
 
 .write-btn {

@@ -81,8 +81,8 @@ function showSuccess(location) {
 
     background.outerHTML = `<div style="background-image: url('/images/diary/write-page/success_background.svg'); background-repeat: no-repeat; background-size: contain; height:100%;">
                                 <div style="width: 100%; height: 50px; position: relative; top: 427px;">
-                                    <div style="position:absolute; left: 107px;">
-                                        <a href=${location} style="width: 150px; height: 50px; flex-shrink: 0; border-radius: 20px; border: 0.5px solid var(--kakao-logo, #000); background: #FFF; float: left; position: relative; text-decoration-line: none;">
+                                    <div>
+                                        <a href=${location} style="width: 150px; height: 50px; flex-shrink: 0; border-radius: 20px; border: 0.5px solid var(--kakao-logo, #000); background: #FFF; text-decoration-line: none;">
                                             <p class="check-btn">확인</p>
                                         </a>
                                     </div>

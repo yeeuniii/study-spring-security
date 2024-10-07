@@ -7,20 +7,22 @@
 
 <th:block layout:fragment="content">
     <div class="background" style="background-image: url('/images/diary/view-page/background.svg');">
-        <div id="top-bar" class="top-bar">
-            <div style="width: 38px; height: 38px; margin: 7px 10px 7px 10px; float: left; display: flex; justify-content: center; align-items: center;">
-                <a href="/" class="back-btn"><img src="/images/diary/write-page/back_icon.svg" style="width: 24px; height: 24px; flex-shrink: 0; position: relative;"/></a>
+        <div class="top-bar">
+            <div class="bar-back">
+                <a href="/" class="back-btn"><img class="bar-icon" src="/images/diary/write-page/back_icon.svg"/></a>
             </div>
-            <div style="width: 184px; height: 38px; flex-shrink: 0; border-radius: 100px; border: 0.5px solid #767676; float: left; margin: 7px 10px 7px 10px; position: relative; left: 9px;">
+            <div class="bar-main">
                 <span class="date">[[${diary.createdAt}]]</span>
                 <div class="mood"><img src=""></div>
             </div>
         </div>
-        <div id="content" style="width: 100%; height: 440px; position: relative; top: 110px;">
-            <div class="image no-image" style="width: 215px; height: 215px; position: relative;">
-                <img src="" style="width:215px; height: 215px;" />
+
+        <div class="content">
+            <div class="page-bar"></div>
+            <div class="image no-image">
+                <img class="image" src=""/>
             </div>
-            <div style="position: relative;">
+            <div class="diary-content-area">
                 <p class="diary-content">[[${diary.content}]]</p>
             </div>
         </div>
