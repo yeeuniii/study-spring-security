@@ -31,6 +31,7 @@ public class GroupQueryServiceTest {
     private Member makeMember(Group group, int order) {
         return Member.builder()
                 .group(group)
+                .kakaoId(1234L + order)
                 .nickname("nickname" + order)
                 .orderInGroup(order)
                 .build();
