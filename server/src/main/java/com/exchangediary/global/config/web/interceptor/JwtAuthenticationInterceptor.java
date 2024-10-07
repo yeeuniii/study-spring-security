@@ -30,7 +30,7 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
     ) {
         String token = extractJwtToken(request);
 
-        if (jwtService.verifyToken(token)) {
+        if (!jwtService.verifyToken(token)) {
             throw new UnauthorizedException(
                     ErrorCode.EXPIRED_TOKEN,
                     "",
