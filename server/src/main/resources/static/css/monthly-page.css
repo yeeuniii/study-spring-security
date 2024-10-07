@@ -33,6 +33,10 @@ th,td {
     letter-spacing: -0.6px;
 }
 
+.on-table {
+    position: relative;
+}
+
 .year {
     position: absolute;
     top: 60%;
