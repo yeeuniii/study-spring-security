@@ -1,0 +1,58 @@
+@charset "utf-8";
+
+html, body {
+    margin: 0px;
+    overflow-x: hidden;
+}
+
+a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.back-btn {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.date {
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-variant-numeric: lining-nums proportional-nums;
+    font-feature-settings: 'dlig' on;
+    font-family: Vibur;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38px; /* 190% */
+    letter-spacing: 0.2px;
+
+    position: absolute;
+    top: 2px;
+    left: 20px;
+}
+
+.diary-content {
+    width: 304px;
+    height: 205px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    white-space: pre-line;
+
+    color: var(--kakao-logo, #000);
+    font-variant-numeric: lining-nums proportional-nums;
+    font-feature-settings: 'dlig' on;
+    font-family: "SOYOMaple";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16.65px; /* 100% */
+    text-align: center;
+}

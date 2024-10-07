@@ -1,4 +1,4 @@
-package com.exchangediary.group;
+package com.exchangediary.group.api;
 
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
@@ -13,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GroupCodeTest {
+@Sql(scripts = {"classpath:truncate.sql"}, executionPhase = BEFORE_TEST_METHOD)
+public class GroupCodeApiTest {
     private static final String API_PATH = "/api/groups/code/verify";
     @LocalServerPort
     private int port;
@@ -29,7 +32,6 @@ public class GroupCodeTest {
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
-        groupRepository.deleteAllInBatch();
     }
 
     /* TODO: 시나리오 따라서 테스트 수정

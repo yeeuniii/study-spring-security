@@ -2,19 +2,21 @@ package com.exchangediary.diary.domain.entity;
 
 import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.global.domain.entity.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.type.descriptor.jdbc.LongVarcharJdbcType;
 
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
@@ -30,10 +32,12 @@ public class Diary extends BaseEntity {
     @Column(name = "diary_id")
     private Long id;
     @Lob
+    @JdbcType(LongVarcharJdbcType.class)
+    @NotNull
     private String content;
+    @NotNull
     private String moodLocation;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "upload_image_id")
+    @OneToOne(mappedBy = "diary", cascade = CascadeType.ALL)
     private UploadImage uploadImage;
 
     public static Diary of(DiaryRequest diaryRequest, UploadImage uploadImage) {

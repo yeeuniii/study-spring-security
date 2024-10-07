@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>일기 작성 페이지</title>
+    <link rel="stylesheet" href="/css/fonts.css" type="text/css">
+    <link rel="stylesheet" href="/css/diary-common.css" type="text/css">
+    <link rel="stylesheet" href="/css/write-page.css" type="text/css">
+    <style>
+        .photo {
+            display: none;
+        }
+
+        .emojies {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="drag-prevent" align="center">
+        <div style="width: 100%; height: 100vh; position:relative;">
+            <div style="position:absolute; bottom:0; width: 100%; height: calc(100vw * 1.778); bottom: 0;">
+                <div class="background" style="background-image: url('/images/write-page/background.svg'); background-repeat: no-repeat; background-size: contain; height:100%;">
+                    <div id="top-bar" style="width: 100%; height: 52px; position: relative; top: 27px; left: 17px;">
+                        <div style="width: 38px; height: 38px; margin: 7px 10px 7px 10px; float: left; display: flex; justify-content: center; align-items: center;">
+                            <a href="/" class="back-btn"><img src="/images/write-page/back_icon.svg" style="width: 24px; height: 24px; flex-shrink: 0; position: relative;"/></a>
+                        </div>
+                        <div style="width: 184px; height: 38px; flex-shrink: 0; border-radius: 100px; border: 0.5px solid #767676; float: left; margin: 7px 10px 7px 10px; position: relative; left: 9px;">
+                            <span class="date"></span>
+                            <a href="#" class="mood-btn"><img src="/images/write-page/mood_icon.svg"/></a>
+                        </div>
+                        <div style="width: 38px; height: 38px; margin: 7px 10px 7px 10px; float: left; display: flex; justify-content: center; align-items: center; position: relative; left:17px;">
+                            <a href="#" class="write-btn"><img src="/images/write-page/write_icon.svg" style="width: 24px; height: 24px; flex-shrink: 0;"/></a>
+                        </div>
+                    </div>
+                    <div id="content" style="width: 100%; height: 500px; position: relative; top: 23px;">
+                        <div class="photo-btn">
+                            <img src="/images/write-page/photo_icon.svg" style="position: relative; top: 95px;">
+                        </div>
+                        <div style="position: relative; top: 42px;">
+                            <textarea class="diary-content" placeholder="여기에 일기를 작성해주세요〰️"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="emojies">
+                    <div style="position: relative; width: 100%; height:59px; justify-content: center; align-items: center; flex-shrink: 0;">
+                        <p class="modal-text">오늘 기분을 골라보세요.</p>
+                    </div>
+                    <table>
+                        <tr>
+                            <td><a href="#"><img src="/images/write-page/emoji/hilarious.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/wink.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/soso.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/calm.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/surprise.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/panic.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#"><img src="/images/write-page/emoji/dislike.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/dizzy.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/happy.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/bigsmile.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/hate.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/vexation.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#"><img src="/images/write-page/emoji/sunglasses.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/funny.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/smirk.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/beam.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/disgust.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                            <td><a href="#"><img src="/images/write-page/emoji/sleepy.svg" style="width: 26px; height: 26px; flex-shrink: 0;"/></a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="photo">
+                    <div style="position: relative; top: 5px; width: 100%; height:59px; justify-content: center; align-items: center; flex-shrink: 0;">
+                        <p class="modal-text">사진을 추가할 방법을 선택해주세요.</p>
+                    </div>
+                    <div style="position: relative; top: 10px; left: 31px; float: left; width: 60px; height: 100px;">
+                        <div style="width: 60px; height: 65px;">
+                            <a href="#"><img src="/images/write-page/modal/camera_icon.svg" style="width: 50px; height: 50px; flex-shrink: 0;"/></a>
+                        </div>
+                        <div style="width: 60px; height: 34px;">
+                            <span class="photo-text">카메라</span>
+                        </div>
+                    </div>
+                    <div style="width: 2px; height: 100px; position: relative; top: 10px; left: 83px; background-color: #767676; float: left;"></div>
+                    <div style="position: relative; top: 10px; left: 133px; float: left; width: 60px; height: 100px;">
+                        <div style="width: 60px; height: 65px;">
+                            <a href="#"><img src="/images/write-page/modal/photo_icon.svg" style="width: 48px; height: 48px; flex-shrink: 0;"/></a>
+                        </div>
+                        <div style="width: 60px; height: 34px; float: left;">
+                            <span class="photo-text">갤러리</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="/js/write-page/modal.js"></script>
+<script src="/js/write-page/sync-textarea.js"></script>
+<script src="/js/write-page/write-diary.js"></script>
+
+</html>

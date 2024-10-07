@@ -21,15 +21,24 @@ import java.util.Optional;
 @Transactional
 public class DiaryCommandService {
     private final DiaryRepository diaryRepository;
-    private final UploadImageService uploadImageService;
 
-    public Diary createDiary(DiaryRequest diaryRequest, MultipartFile file) {
+    public Long createDiary(DiaryRequest diaryRequest, MultipartFile file) {
         checkTodayDiaryExistent();
 
+        if (isEmptyFile(file)) {
+            Diary diary = Diary.of(diaryRequest, null);
+            Diary savedDiary = diaryRepository.save(diary);
+            return savedDiary.getId();
+        }
+
         try {
-            UploadImage uploadImage = uploadImageService.saveUploadImage(file);
-            Diary diary = Diary.of(diaryRequest, uploadImage);
-            return diaryRepository.save(diary);
+            UploadImage image = UploadImage.builder()
+                    .image(file.getBytes())
+                    .build();
+            Diary diary = Diary.of(diaryRequest, image);
+            Diary savedDiary = diaryRepository.save(diary);
+            image.uploadToDiary(savedDiary);
+            return savedDiary.getId();
         } catch (IOException e) {
             throw new FailedImageUploadException(
                     ErrorCode.FAILED_UPLOAD_IMAGE,
@@ -51,4 +60,9 @@ public class DiaryCommandService {
             );
         }
     }
+
+    private boolean isEmptyFile(MultipartFile file) {
+        return file == null || file.isEmpty();
+    }
+
 }
