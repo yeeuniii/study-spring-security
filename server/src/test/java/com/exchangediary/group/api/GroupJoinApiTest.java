@@ -1,4 +1,4 @@
-package com.exchangediary.group;
+package com.exchangediary.group.api;
 
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.NotFoundException;
@@ -16,15 +16,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(scripts = {"classpath:truncate.sql"}, executionPhase = BEFORE_TEST_METHOD)
 class GroupJoinApiTest {
+    private static final String GROUP_NAME = "버니즈";
     private static final String API_PATH = "/api/groups/%d/join/%d";
     @LocalServerPort
     private int port;
@@ -38,18 +42,18 @@ class GroupJoinApiTest {
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
-        memberRepository.deleteAllInBatch();
-        groupRepository.deleteAllInBatch();
+//        memberRepository.deleteAllInBatch();
+//        groupRepository.deleteAllInBatch();
     }
 
     @Test
     void 그룹_가입_성공 () {
-        Group group = Group.builder()
-                .build();
-        groupRepository.save(group);
+        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
+        Group group = groupRepository.findById(groupId).orElse(null);
         Member groupMember = Member.builder()
                 .kakaoId(12345L)
                 .orderInGroup(1)
+                .profileLocation("resource/image1")
                 .group(group)
                 .build();
         Member newMember = Member.builder()
@@ -57,17 +61,17 @@ class GroupJoinApiTest {
                 .orderInGroup(0)
                 .build();
         memberRepository.saveAll(Arrays.asList(groupMember, newMember));
-        GroupJoinRequest request = new GroupJoinRequest("resource/image1", "jisunggi");
+        GroupJoinRequest request = new GroupJoinRequest("resource/image2", "jisunggi");
 
         RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .body(request)
                 .when()
-                .patch(String.format(API_PATH, group.getId(), newMember.getId()))
+                .patch(String.format(API_PATH, groupId, newMember.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .body("message", equalTo("그룹 가입"));
+                .body("code", equalTo("null"));
 
         Member updatedMember = memberRepository.findById(newMember.getId())
                 .orElseThrow(() -> new NotFoundException(
@@ -76,16 +80,15 @@ class GroupJoinApiTest {
                         String.valueOf(newMember.getId())
                 ));
         assertThat(updatedMember.getNickname()).isEqualTo("jisunggi");
-        assertThat(updatedMember.getProfileLocation()).isEqualTo("resource/image1");
+        assertThat(updatedMember.getProfileLocation()).isEqualTo("resource/image2");
         assertThat(updatedMember.getOrderInGroup()).isEqualTo(2);
         assertThat(updatedMember.getGroup().getId()).isEqualTo(group.getId());
     }
 
     @Test
     void 그룹_생성_후_가입_성공 () {
-        Group group = Group.builder()
-                .build();
-        groupRepository.save(group);
+        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
+        Group group = groupRepository.findById(groupId).orElse(null);
         Member member = Member.builder()
                 .kakaoId(12345L)
                 .orderInGroup(0)
@@ -98,10 +101,10 @@ class GroupJoinApiTest {
                 .contentType(ContentType.JSON)
                 .body(request)
                 .when()
-                .patch(String.format(API_PATH, group.getId(), member.getId()))
+                .patch(String.format(API_PATH, groupId, member.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .body("message", equalTo("그룹 생성 후 가입"));
+                .body("code", equalTo(group.getCode()));
 
         Member updatedMember = memberRepository.findById(member.getId())
                 .orElseThrow(() -> new NotFoundException(
@@ -117,9 +120,8 @@ class GroupJoinApiTest {
 
     @Test
     void 프로필_중복_그룹_가입_실패() {
-        Group group = Group.builder()
-                .build();
-        groupRepository.save(group);
+        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
+        Group group = groupRepository.findById(groupId).orElse(null);
         Member groupMember = Member.builder()
                 .kakaoId(12345L)
                 .orderInGroup(1)
@@ -138,9 +140,9 @@ class GroupJoinApiTest {
                 .contentType(ContentType.JSON)
                 .body(request)
                 .when()
-                .patch(String.format(API_PATH, group.getId(), newMember.getId()))
+                .patch(String.format(API_PATH, groupId, newMember.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("message", equalTo("이미 선택 된 캐릭터입니다."));
+                .body("message", equalTo("이미 선택된 캐릭터입니다."));
     }
 }
