@@ -20,4 +20,14 @@ public class JwtServiceTest {
 
         assertThat(result).isEqualTo(memberId);
     }
+
+    @Test
+    void 토큰_만료기간_확인() {
+        Long memberId = 1L;
+        String token = jwtService.generateToken(memberId);
+
+        boolean result = jwtService.verifyToken(token);
+
+        assertThat(result).isTrue();
+    }
 }
