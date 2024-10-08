@@ -63,11 +63,9 @@ public class GroupCommandService {
         if (members.isEmpty()) {
             return group.getCode();
         }
-        else {
-            checkProfileDuplicate(members, profileLocation);
-            GroupQueryService.checkNumberOfMembers(members.size());
-            return null;
-        }
+        checkProfileDuplicate(members, profileLocation);
+        GroupQueryService.checkNumberOfMembers(members.size());
+        return null;
     }
 
     private void checkProfileDuplicate(List<Member> members, String profileLocation) {
