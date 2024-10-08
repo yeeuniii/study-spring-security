@@ -41,7 +41,7 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
 
         Long memberId = jwtService.extractMemberId(token);
         Member member = findMember(memberId);
-        request.setAttribute("memberId", member);
+        request.setAttribute("member", member);
 
         return true;
     }
