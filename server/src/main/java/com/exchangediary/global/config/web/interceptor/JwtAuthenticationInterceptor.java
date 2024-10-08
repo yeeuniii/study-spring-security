@@ -3,6 +3,7 @@ package com.exchangediary.global.config.web.interceptor;
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.UnauthorizedException;
 import com.exchangediary.member.domain.MemberRepository;
+import com.exchangediary.member.domain.entity.Member;
 import com.exchangediary.member.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,8 +40,8 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
         }
 
         Long memberId = jwtService.extractMemberId(token);
-        checkMemberExists(memberId);
-        request.setAttribute("memberId", memberId);
+        Member member = findMember(memberId);
+        request.setAttribute("memberId", member);
 
         return true;
     }
@@ -57,8 +58,8 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
         return authorization.substring(AUTHORIZATION_TYPE.length());
     }
 
-    private void checkMemberExists(Long memberId) {
-        memberRepository.findById(memberId)
+    private Member findMember(Long memberId) {
+        return memberRepository.findById(memberId)
                 .orElseThrow(() -> new UnauthorizedException(
                    ErrorCode.NOT_EXIST_MEMBER_TOKEN,
                    "",
