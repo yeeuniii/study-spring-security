@@ -47,7 +47,7 @@ public class GroupQueryService {
         return GroupProfileResponse.from(members);
     }
 
-    private void checkNumberOfMembers(int numberOfMembers) {
+    public static void checkNumberOfMembers(int numberOfMembers) {
         if (numberOfMembers >= 7) {
             throw new ConfilctException(
                     ErrorCode.FULL_MEMBERS_OF_GROUP,

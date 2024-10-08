@@ -24,6 +24,7 @@ public class MemberRegistrationService {
     private Member saveUser(Long kakaoId) {
         Member newMember = Member.builder()
                 .kakaoId(kakaoId)
+                .orderInGroup(0)
                 .build();
         return memberRepository.save(newMember);
     }
