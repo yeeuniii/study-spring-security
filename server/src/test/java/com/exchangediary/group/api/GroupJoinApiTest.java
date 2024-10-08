@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Arrays;
@@ -27,9 +28,10 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = {"classpath:truncate.sql"}, executionPhase = BEFORE_TEST_METHOD)
+@ActiveProfiles("test")
 class GroupJoinApiTest {
     private static final String GROUP_NAME = "버니즈";
-    private static final String API_PATH = "/api/groups/%d/join/%d";
+    private static final String API_PATH = "/api/groups/%d/join";
     @LocalServerPort
     private int port;
     @Autowired
@@ -54,6 +56,7 @@ class GroupJoinApiTest {
                 .profileLocation("resource/image1")
                 .group(group)
                 .build();
+        //Todo: newMember 가 api 주체가 되어야 함
         Member newMember = Member.builder()
                 .kakaoId(12345L)
                 .orderInGroup(0)
@@ -66,7 +69,7 @@ class GroupJoinApiTest {
                 .contentType(ContentType.JSON)
                 .body(request)
                 .when()
-                .patch(String.format(API_PATH, groupId, newMember.getId()))
+                .patch(String.format(API_PATH, groupId))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
                 .body("code", equalTo(null));
@@ -87,6 +90,7 @@ class GroupJoinApiTest {
     void 그룹_생성_후_가입_성공 () {
         Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
         Group group = groupRepository.findById(groupId).orElse(null);
+        //Todo: member 가 api 주체가 되어야 함
         Member member = Member.builder()
                 .kakaoId(12345L)
                 .orderInGroup(0)
@@ -99,7 +103,7 @@ class GroupJoinApiTest {
                 .contentType(ContentType.JSON)
                 .body(request)
                 .when()
-                .patch(String.format(API_PATH, groupId, member.getId()))
+                .patch(String.format(API_PATH, groupId))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
                 .body("code", equalTo(group.getCode()));
@@ -126,6 +130,7 @@ class GroupJoinApiTest {
                 .profileLocation("resource/image1")
                 .group(group)
                 .build();
+        //Todo: newMember 가 api 주체가 되어야 함
         Member newMember = Member.builder()
                 .kakaoId(12345L)
                 .orderInGroup(0)
@@ -138,7 +143,7 @@ class GroupJoinApiTest {
                 .contentType(ContentType.JSON)
                 .body(request)
                 .when()
-                .patch(String.format(API_PATH, groupId, newMember.getId()))
+                .patch(String.format(API_PATH, groupId))
                 .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("message", equalTo(ErrorCode.PROFILE_DUPLICATED.getMessage()));
