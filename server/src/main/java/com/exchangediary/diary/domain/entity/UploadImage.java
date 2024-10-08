@@ -38,6 +38,7 @@ public class UploadImage extends BaseEntity {
     private final byte[] image;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id", foreignKey = @ForeignKey(name = "upload_image_diary_id_fkey"))
+    @NotNull
     private Diary diary;
 
     public void uploadToDiary(Diary diary) {
