@@ -42,8 +42,6 @@ class GroupJoinApiTest {
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
-//        memberRepository.deleteAllInBatch();
-//        groupRepository.deleteAllInBatch();
     }
 
     @Test
@@ -71,7 +69,7 @@ class GroupJoinApiTest {
                 .patch(String.format(API_PATH, groupId, newMember.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .body("code", equalTo("null"));
+                .body("code", equalTo(null));
 
         Member updatedMember = memberRepository.findById(newMember.getId())
                 .orElseThrow(() -> new NotFoundException(
@@ -143,6 +141,6 @@ class GroupJoinApiTest {
                 .patch(String.format(API_PATH, groupId, newMember.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("message", equalTo("이미 선택된 캐릭터입니다."));
+                .body("message", equalTo(ErrorCode.PROFILE_DUPLICATED.getMessage()));
     }
 }

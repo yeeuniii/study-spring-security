@@ -41,11 +41,11 @@ public class GroupCommandService {
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.MEMBER_NOT_FOUND,
                         "",
-                        String.valueOf(groupId))
+                        String.valueOf(memberId))
                 );
         String code = processGroupJoinOrCreate(group, request.profileLocation());
         int maxOrderInGroup = findMaxOrderInGroup(group.getMembers());
-        member.updateMemberForGroupJoin(request, group, maxOrderInGroup + 1);
+        member.updateMemberGroupInfo(request, group, maxOrderInGroup + 1);
         memberRepository.save(member);
         return GroupJoinResponse.from(code);
     }
@@ -64,13 +64,13 @@ public class GroupCommandService {
             return group.getCode();
         }
         else {
-            isProfileDuplicate(members, profileLocation);
+            checkProfileDuplicate(members, profileLocation);
             GroupQueryService.checkNumberOfMembers(members.size());
-            return "null";
+            return null;
         }
     }
 
-    private void isProfileDuplicate(List<Member> members, String profileLocation) {
+    private void checkProfileDuplicate(List<Member> members, String profileLocation) {
         if (members.stream()
                 .anyMatch(member -> member.getProfileLocation().equals(profileLocation))) {
             throw new DuplicateException(
