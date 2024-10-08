@@ -16,6 +16,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.type.descriptor.jdbc.LongVarbinaryJdbcType;
 
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
@@ -31,10 +33,12 @@ public class UploadImage extends BaseEntity {
     @Column(name = "upload_image_id")
     private Long id;
     @Lob
+    @JdbcType(LongVarbinaryJdbcType.class)
     @NotNull
     private final byte[] image;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_id", foreignKey = @ForeignKey(name = "upload_image_diary_id_fkey"))
+    @NotNull
     private Diary diary;
 
     public void uploadToDiary(Diary diary) {
