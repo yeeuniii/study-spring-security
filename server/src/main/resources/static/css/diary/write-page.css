@@ -16,6 +16,18 @@
     background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.00) 0%, #FFF 100%);
 }
 
+.bar-write {
+    width: 38px; 
+    height: 38px;
+    margin: 7px 10px 7px 10px; 
+    float: left; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    position: relative; 
+    left:17px;
+}
+
 .write-btn {
     width: 38px;
     height: 38px;

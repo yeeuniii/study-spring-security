@@ -2,6 +2,7 @@
 <html xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/base">
 
 <th:block layout:fragment="header">
+    <title>스프링 - 일기 작성</title>
     <link rel="stylesheet" href="/css/diary/diary-common.css" type="text/css">
     <link rel="stylesheet" href="/css/diary/write-page.css" type="text/css">
     <link rel="stylesheet" href="/css/diary/modal.css" type="text/css">
@@ -71,23 +72,23 @@
                     <div class="modal-title">
                         <p class="modal-text">사진을 추가할 방법을 선택해주세요.</p>
                     </div>
-                    <div class="modal-btn camera">
+                    <a class="modal-btn camera" href="#">
                         <div class="modal-icon">
-                            <a href="#"><img src="/images/diary/write-page/modal/camera_icon.svg" style="width: 50px; height: 50px; flex-shrink: 0;"/></a>
+                            <img src="/images/diary/write-page/modal/camera_icon.svg" style="width: 50px; height: 50px; flex-shrink: 0;"/>
                         </div>
                         <div class="modal-btn-text">
                             <span class="photo-text">카메라</span>
                         </div>
-                    </div>
-                    <div class="stick"></div>
-                    <div class="modal-btn gallery">
+                    </a>
+                    <div class="partition-line"></div>
+                    <a class="modal-btn gallery" href="#">
                         <div class="modal-icon">
-                            <a href="#"><img src="/images/diary/write-page/modal/photo_icon.svg" style="width: 48px; height: 48px; flex-shrink: 0;"/></a>
+                            <img src="/images/diary/write-page/modal/photo_icon.svg" style="width: 48px; height: 48px; flex-shrink: 0;"/>
                         </div>
                         <div class="modal-btn-text">
                             <span class="photo-text">갤러리</span>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>

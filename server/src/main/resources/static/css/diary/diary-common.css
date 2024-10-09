@@ -4,6 +4,8 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
+    flex-direction: column;
 }
 
 .top-bar {
@@ -39,18 +41,6 @@ a {
     margin: 7px 10px 7px 10px; 
     position: relative; 
     left: 9px;
-}
-
-.bar-write {
-    width: 38px; 
-    height: 38px;
-    margin: 7px 10px 7px 10px; 
-    float: left; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    position: relative; 
-    left:17px;
 }
 
 .back-btn {
