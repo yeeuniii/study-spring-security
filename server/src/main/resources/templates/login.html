@@ -1,16 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <title>로그인 페이지</title>
-    <link rel="stylesheet" href="/css/fonts.css" type="text/css">
-    <style>
-        html, body {
-            margin: 0px;
-            overflow-x: hidden;
-        }
+<html xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/base">
 
+<th:block layout:fragment="header">
+    <title>스프링 - 로그인</title>
+<!--    <link rel="stylesheet" href="/css/.css" type="text/css">-->
+    <style>
         a {
             text-decoration: none;
             color: black;
@@ -53,50 +47,43 @@
             line-height: 34px; /* 212.5% */
             letter-spacing: -0.4px;
         }
-
     </style>
-</head>
-<body>
-<div align="center">
-    <div style="width: 100%; height: 100vh; position:relative;">
-        <div style="position:absolute; bottom:0; width: 100%; height: calc(100vw * 1.778); bottom: 0;">
-            <div style="background-image: url('/images/login-page/background.svg'); background-repeat: no-repeat; background-size: contain; height:100%;">
-                <div style="position: relative; top: 208px; width: 100%; height: 450px;">
-                    <div style="position: relative; width: 192px; height: 293px;">
-                        <div style="position: relative; left: 41px; width: 110px; height: 50px; float: left; flex-shrink: 0;">
-                            <img src="/images/login-page/spring.svg" style="width: 110px; height: 50px;">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div style="background-image: url('/images/login-page/background.svg'); background-repeat: no-repeat; background-size: contain; height:100%;">
+        <div style="position: relative; top: 208px; width: 100%; height: 450px;">
+            <div style="position: relative; width: 192px; height: 293px;">
+                <div style="position: relative; left: 41px; width: 110px; height: 50px; float: left; flex-shrink: 0;">
+                    <img src="/images/login-page/spring.svg" style="width: 110px; height: 50px;">
+                </div>
+                <div style="position: relative; top: 24px; width: 192px; height: 56px; float: left;">
+                    <span class="text main-text">우리만의 스프링을 만들어 볼까요?</span>
+                </div>
+                <div style="position: relative; left: 24px; top: 159px; width: 150px; height: 28px; float: left;">
+                    <span class="text signup-text">SNS 계정으로 간편 가입하기</span>
+                </div>
+            </div>
+            <div id="login-btn" style="width: 100%; height: 80px; position: relative;">
+                <div style="width: 326px; height: 60px;">
+                    <a style="width: 326px; height: 60px; flex-shrink: 0; border-radius: 30px; border: 0.5px solid #767676; background: #FC0; float: left; position: relative; text-decoration-line: none;"
+                       th:href="@{https://kauth.kakao.com/oauth/authorize(response_type='code', redirect_uri=${redirectUri}, client_id=${clientId})}">
+                        <div style="position: relative; top: 13px; left: 100px; width: 133px; height: 34px; float: left;">
+                            <div class="kakao">
+                                <img src="/images/login-page/kakao.svg">
+                            </div>
+                            <div style="position: relative; top: -2px; left: 2px; width: 100px; height: 34px; float: left;">
+                                <span class="text login-text">카카오 로그인</span>
+                            </div>
                         </div>
-                        <div style="position: relative; top: 24px; width: 192px; height: 56px; float: left;">
-                            <span class="text main-text">우리만의 스프링을 만들어 볼까요?</span>
-                        </div>
-                        <div style="position: relative; left: 24px; top: 159px; width: 150px; height: 28px; float: left;">
-                            <span class="text signup-text">SNS 계정으로 간편 가입하기</span>
-                        </div>
-                    </div>
-                    <div id="login-btn" style="width: 100%; height: 80px; position: relative;">
-                        <div style="position:absolute; left: 25px;">
-                            <a style="width: 326px; height: 60px; flex-shrink: 0; border-radius: 30px; border: 0.5px solid #767676; background: #FC0; float: left; position: relative; text-decoration-line: none;"
-                               th:href="@{https://kauth.kakao.com/oauth/authorize(response_type='code', redirect_uri=${redirectUri}, client_id=${clientId})}">
-                                <div style="position: relative; top: 13px; left: 100px; width: 133px; height: 34px; float: left;">
-                                    <div class="kakao">
-                                        <img src="/images/login-page/kakao.svg">
-                                    </div>
-                                    <div style="position: relative; top: -2px; left: 2px; width: 100px; height: 34px; float: left;">
-                                        <span class="text login-text">카카오 로그인</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</th:block>
 
-<script th:inline="javascript">
-    console.log([[${redirectUri}]]);
-    console.log([[${clientId}]]);
-</script>
-</body>
+<th:block layout:fragment="script">
+</th:block>
+
 </html>
