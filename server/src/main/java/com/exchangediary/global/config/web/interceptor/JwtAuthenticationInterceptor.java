@@ -4,22 +4,26 @@ import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.UnauthorizedException;
 import com.exchangediary.member.domain.MemberRepository;
 import com.exchangediary.member.domain.entity.Member;
+import com.exchangediary.member.service.CookieService;
 import com.exchangediary.member.service.JwtService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 public class JwtAuthenticationInterceptor implements HandlerInterceptor {
-    private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String AUTHORIZATION_TYPE = "Bearer ";
+    private static final String COOKIE_NAME = "token";
     private final JwtService jwtService;
+    private final CookieService cookieService;
     private final MemberRepository memberRepository;
 
     public JwtAuthenticationInterceptor(
             JwtService jwtService,
+            CookieService cookieService,
             MemberRepository memberRepository
     ) {
         this.jwtService = jwtService;
+        this.cookieService = cookieService;
         this.memberRepository = memberRepository;
     }
 
@@ -47,15 +51,17 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
     }
 
     private String extractJwtToken(HttpServletRequest request) {
-        String authorization = request.getHeader(AUTHORIZATION_HEADER);
-        if (authorization == null || authorization.indexOf(AUTHORIZATION_TYPE) != 0) {
+        try {
+            Cookie[] cookies = request.getCookies();
+
+            return cookieService.getValueFromCookies(cookies, COOKIE_NAME);
+        } catch (RuntimeException exception) {
             throw new UnauthorizedException(
-                    ErrorCode.INVALID_AUTHORIZATION_TYPE,
+                    ErrorCode.NEED_TO_REQUEST_TOKEN,
                     "",
-                    authorization
+                    COOKIE_NAME
             );
         }
-        return authorization.substring(AUTHORIZATION_TYPE.length());
     }
 
     private Member findMember(Long memberId) {
