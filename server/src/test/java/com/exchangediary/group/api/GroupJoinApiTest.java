@@ -1,6 +1,6 @@
 package com.exchangediary.group.api;
 
-import com.exchangediary.BaseTest;
+import com.exchangediary.ApiBaseTest;
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-class GroupJoinApiTest extends BaseTest {
+class GroupJoinApiTest extends ApiBaseTest {
     private static final String GROUP_NAME = "버니즈";
     private static final String API_PATH = "/api/groups/%d/join/%d";
     @Autowired

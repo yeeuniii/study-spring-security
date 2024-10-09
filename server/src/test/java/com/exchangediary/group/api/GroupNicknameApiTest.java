@@ -1,23 +1,17 @@
 package com.exchangediary.group.api;
 
-import com.exchangediary.BaseTest;
+import com.exchangediary.ApiBaseTest;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
-import com.exchangediary.group.service.GroupCommandService;
-import com.exchangediary.member.domain.MemberRepository;
 import com.exchangediary.member.domain.entity.Member;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 
-class GroupNicknameApiTest extends BaseTest {
+class GroupNicknameApiTest extends ApiBaseTest {
     private static final String GROUP_NAME = "버니즈";
     private static final String API_PATH = "/api/groups/%d/nickname/verify";
     @Autowired

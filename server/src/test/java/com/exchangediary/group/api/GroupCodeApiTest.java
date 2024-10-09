@@ -1,6 +1,6 @@
 package com.exchangediary.group.api;
 
-import com.exchangediary.BaseTest;
+import com.exchangediary.ApiBaseTest;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.ui.dto.request.GroupCodeRequest;
@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GroupCodeApiTest extends BaseTest {
+public class GroupCodeApiTest extends ApiBaseTest {
     private static final String API_PATH = "/api/groups/code/verify";
     private static final String GROUP_NAME = "버니즈";
     @Autowired

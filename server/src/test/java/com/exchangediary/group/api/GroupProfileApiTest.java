@@ -1,31 +1,22 @@
 package com.exchangediary.group.api;
 
-import com.exchangediary.BaseTest;
+import com.exchangediary.ApiBaseTest;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
-import com.exchangediary.group.service.GroupCommandService;
-import com.exchangediary.group.service.GroupQueryService;
 import com.exchangediary.group.ui.dto.response.GroupProfileResponse;
-import com.exchangediary.member.domain.MemberRepository;
 import com.exchangediary.member.domain.entity.Member;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
-class GroupProfileApiTest extends BaseTest {
+class GroupProfileApiTest extends ApiBaseTest {
     private static final String GROUP_NAME = "버니즈";
     private static final String API_PATH = "/api/groups/%d/profile-image";
     @Autowired
