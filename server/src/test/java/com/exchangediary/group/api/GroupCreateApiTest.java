@@ -1,5 +1,6 @@
 package com.exchangediary.group.api;
 
+import com.exchangediary.BaseTest;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.ui.dto.request.GroupNameRequest;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
@@ -17,20 +18,10 @@ import org.springframework.test.context.jdbc.Sql;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql(scripts = {"classpath:truncate.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@ActiveProfiles("test")
-public class GroupCreateApiTest {
+public class GroupCreateApiTest extends BaseTest {
     private static final String API_PATH = "/api/groups";
-    @LocalServerPort
-    private int port;
     @Autowired
     private GroupRepository groupRepository;
-
-    @BeforeEach
-    void setUp() {
-        RestAssured.port = port;
-    }
 
     @Test
     void 그룹_생성_성공() {
@@ -39,6 +30,7 @@ public class GroupCreateApiTest {
         Long groupId = RestAssured
                 .given().log().all()
                 .body(new GroupNameRequest(groupName))
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .when().post(API_PATH)
                 .then().log().all()

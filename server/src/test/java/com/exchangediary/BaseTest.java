@@ -18,7 +18,7 @@ public class BaseTest {
     @LocalServerPort
     private int port;
     @Autowired
-    private MemberRepository memberRepository;
+    protected MemberRepository memberRepository;
     @Autowired
     private JwtService jwtService;
     protected Member member;

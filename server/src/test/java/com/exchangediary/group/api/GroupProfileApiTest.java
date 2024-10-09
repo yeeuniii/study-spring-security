@@ -1,5 +1,6 @@
 package com.exchangediary.group.api;
 
+import com.exchangediary.BaseTest;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.service.GroupCommandService;
@@ -24,31 +25,18 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql(scripts = {"classpath:truncate.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@ActiveProfiles("test")
-class GroupProfileApiTest {
+class GroupProfileApiTest extends BaseTest {
     private static final String GROUP_NAME = "버니즈";
-    private static final String API_PATH = "/api/groups";
-    @LocalServerPort
-    private int port;
+    private static final String API_PATH = "/api/groups/%d/profile-image";
     @Autowired
     private GroupRepository groupRepository;
-    @Autowired
-    private MemberRepository memberRepository;
     @Autowired
     private GroupQueryService groupQueryService;
     @Autowired
     private GroupCommandService groupCommandService;
 
-    @BeforeEach
-    void setUp() {
-        RestAssured.port = port;
-    }
-
     @Test
     void 프로필_이미지_선택_목록_조회_성공() {
-        //Todo: 사용자 수정 api 구현 되면, 그룹 생성 api 와 같이 사용해서 테스트
         Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
         Group group = groupRepository.findById(groupId).orElse(null);
         Member member1 = createMember(group, 1);
@@ -61,7 +49,8 @@ class GroupProfileApiTest {
         GroupProfileResponse Response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get(API_PATH + "/" + group.getId() + "/profile-image")
+                .header("Authorization", "Bearer " + token)
+                .when().get(String.format(API_PATH, groupId))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
                 .extract().as(GroupProfileResponse.class);
@@ -76,7 +65,8 @@ class GroupProfileApiTest {
         RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get(API_PATH + "/" + groupId + "/profile-image")
+                .header("Authorization", "Bearer " + token)
+                .when().get(String.format(API_PATH, groupId))
                 .then().log().all()
                 .statusCode(HttpStatus.NOT_FOUND.value());
     }
@@ -94,7 +84,8 @@ class GroupProfileApiTest {
         RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
-                .when().get(API_PATH + "/" + group.getId() + "/profile-image")
+                .header("Authorization", "Bearer " + token)
+                .when().get(String.format(API_PATH, groupId))
                 .then().log().all()
                 .statusCode(HttpStatus.CONFLICT.value());
     }

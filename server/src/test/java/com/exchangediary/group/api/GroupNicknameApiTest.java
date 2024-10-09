@@ -1,5 +1,6 @@
 package com.exchangediary.group.api;
 
+import com.exchangediary.BaseTest;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.service.GroupCommandService;
@@ -16,27 +17,13 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")
-class GroupNicknameApiTest {
+class GroupNicknameApiTest extends BaseTest {
     private static final String GROUP_NAME = "버니즈";
     private static final String API_PATH = "/api/groups/%d/nickname/verify";
-    @LocalServerPort
-    private int port;
     @Autowired
     private GroupRepository groupRepository;
     @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
     private GroupCommandService groupCommandService;
-
-
-    @BeforeEach
-    void setUp() {
-        RestAssured.port = port;
-        memberRepository.deleteAllInBatch();
-        groupRepository.deleteAllInBatch();
-    }
 
     @Test
     void 닉네임_유효성_검사_성공() {
@@ -45,6 +32,7 @@ class GroupNicknameApiTest {
         RestAssured
                 .given().log().all()
                 .queryParam("nickname", "jisunggi")
+                .header("Authorization", "Bearer " + token)
                 .when().get(String.format(API_PATH, groupId))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
@@ -65,6 +53,7 @@ class GroupNicknameApiTest {
         RestAssured
                 .given().log().all()
                 .queryParam("nickname", "jisunggi")
+                .header("Authorization", "Bearer " + token)
                 .when().get(String.format(API_PATH, groupId))
                 .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
