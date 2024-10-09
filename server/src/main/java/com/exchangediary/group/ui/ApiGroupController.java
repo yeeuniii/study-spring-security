@@ -4,13 +4,19 @@ import com.exchangediary.group.service.GroupCodeService;
 import com.exchangediary.group.service.GroupQueryService;
 import com.exchangediary.group.service.GroupCommandService;
 import com.exchangediary.group.ui.dto.request.GroupCodeRequest;
+import com.exchangediary.group.ui.dto.request.GroupJoinRequest;
 import com.exchangediary.group.ui.dto.request.GroupNameRequest;
+import com.exchangediary.group.ui.dto.request.GroupNicknameRequest;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
+import com.exchangediary.group.ui.dto.response.GroupJoinResponse;
+import com.exchangediary.group.ui.dto.response.GroupNicknameVerifyResponse;
 import com.exchangediary.group.ui.dto.response.GroupProfileResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,5 +62,29 @@ public class ApiGroupController {
         return ResponseEntity
                 .ok()
                 .body(groupProfileResponse);
+    }
+
+    @GetMapping("/{groupId}/nickname/verify")
+    public ResponseEntity<GroupNicknameVerifyResponse> verifyNickname(
+            @PathVariable Long groupId,
+            @ModelAttribute @Valid GroupNicknameRequest request
+    ) {
+        GroupNicknameVerifyResponse response =
+                groupQueryService.verifyNickname(groupId, request.nickname());
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
+
+    @PatchMapping("/{groupId}/join/{memberId}")
+    public ResponseEntity<GroupJoinResponse> joinGroup(
+            @PathVariable Long groupId,
+            @PathVariable Long memberId, //Todo: 쿠키 도입 후 빠질 값
+            @RequestBody @Valid GroupJoinRequest request
+    ) {
+        GroupJoinResponse response = groupCommandService.joinGroup(groupId, request, memberId);
+        return ResponseEntity
+                .ok()
+                .body(response);
     }
 }
