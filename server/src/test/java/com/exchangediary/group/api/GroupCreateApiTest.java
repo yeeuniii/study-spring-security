@@ -2,8 +2,10 @@ package com.exchangediary.group.api;
 
 import com.exchangediary.ApiBaseTest;
 import com.exchangediary.group.domain.GroupRepository;
+import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.ui.dto.request.GroupNameRequest;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
+import com.exchangediary.member.domain.entity.Member;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
@@ -32,8 +34,9 @@ public class GroupCreateApiTest extends ApiBaseTest {
                 .extract().as(GroupIdResponse.class)
                 .groupId();
 
-        // ToDo: 아래 부분 location으로 확인하도록 수정
-        String result = groupRepository.findById(groupId).get().getName();
-        assertThat(result).isEqualTo(groupName);
+        Group group = groupRepository.findById(groupId).get();
+        assertThat(group.getName()).isEqualTo(groupName);
+        Member groupCreator = memberRepository.findById(member.getId()).get();
+        assertThat(groupCreator.getGroup().getId()).isEqualTo(group.getId());
     }
 }
