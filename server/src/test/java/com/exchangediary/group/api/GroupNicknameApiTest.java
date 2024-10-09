@@ -27,13 +27,14 @@ class GroupNicknameApiTest extends BaseTest {
 
     @Test
     void 닉네임_유효성_검사_성공() {
-        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
+        Group group = createGroup();
+        groupRepository.save(group);
 
         RestAssured
                 .given().log().all()
                 .queryParam("nickname", "jisunggi")
                 .header("Authorization", "Bearer " + token)
-                .when().get(String.format(API_PATH, groupId))
+                .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
                 .body("verification", equalTo(true));
