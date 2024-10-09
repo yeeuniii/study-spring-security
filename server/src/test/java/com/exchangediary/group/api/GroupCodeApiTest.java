@@ -3,7 +3,6 @@ package com.exchangediary.group.api;
 import com.exchangediary.BaseTest;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
-import com.exchangediary.group.service.GroupCommandService;
 import com.exchangediary.group.ui.dto.request.GroupCodeRequest;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
 import io.restassured.RestAssured;
@@ -16,21 +15,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class GroupCodeApiTest extends BaseTest {
     private static final String API_PATH = "/api/groups/code/verify";
+    private static final String GROUP_NAME = "버니즈";
     @Autowired
     private GroupRepository groupRepository;
-    @Autowired
-    private GroupCommandService groupCommandService;
 
-    /* TODO: 시나리오 따라서 테스트 수정
-     * 1. 그룹 생성
-     * 2. 사용자 정보 수정 -> 그룹 코드 반환
-     * 3. 그룹 코드 유효성 검사
-     */
     @Test
     void 그룹_코드_유효성_검증_성공() {
-        String groupName = "버니즈";
-        Long groupId = groupCommandService.createGroup(groupName).groupId();
-        Group group = groupRepository.findById(groupId).get();
+        Group group = createGroup();
+        groupRepository.save(group);
         GroupCodeRequest groupCodeRequest = new GroupCodeRequest(group.getCode());
 
         GroupIdResponse response = RestAssured
@@ -48,14 +40,13 @@ public class GroupCodeApiTest extends BaseTest {
 
     @Test
     void 그룹_코드_유효성_검증_실패() {
-        String groupName = "버니즈";
-        Long groupId = groupCommandService.createGroup(groupName).groupId();
-        Group group = groupRepository.findById(groupId).get();
-        GroupCodeRequest groupCodeRequest = new GroupCodeRequest(group.getCode() + "invalid");
+        createGroup();
+        GroupCodeRequest groupCodeRequest = new GroupCodeRequest("invalid-code");
 
         RestAssured
                 .given().log().all()
                 .body(groupCodeRequest)
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .when().post(API_PATH)
                 .then().log().all()
@@ -69,9 +60,18 @@ public class GroupCodeApiTest extends BaseTest {
         RestAssured
                 .given().log().all()
                 .body(groupCodeRequest)
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .when().post(API_PATH)
                 .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    private Group createGroup() {
+        return Group.builder()
+                .name(GROUP_NAME)
+                .currentOrder(0)
+                .code("code")
+                .build();
     }
 }
