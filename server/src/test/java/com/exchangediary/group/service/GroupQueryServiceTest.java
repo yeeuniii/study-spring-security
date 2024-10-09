@@ -12,6 +12,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
@@ -19,14 +20,33 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = {"classpath:truncate.sql"}, executionPhase = BEFORE_TEST_METHOD)
 public class GroupQueryServiceTest {
+    private static final String GROUP_NAME = "버니즈";
     @Autowired
     private GroupQueryService groupQueryService;
-    @Autowired
-    private GroupCommandService groupCommandService;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private GroupRepository groupRepository;
+
+    @Test
+    void 그룹원_정보_리스트_조회_성공() {
+        Group group = createGroup();
+        groupRepository.save(group);
+        List<Member> members = Arrays.asList(makeMember(group, 1), makeMember(group, 2));
+        memberRepository.saveAll(members);
+
+        GroupMembersResponse response = groupQueryService.listGroupMembersInfo(group.getId());
+
+        assertThat(response.members()).hasSize(2);
+    }
+
+    private Group createGroup() {
+        return Group.builder()
+                .name(GROUP_NAME)
+                .currentOrder(0)
+                .code("code")
+                .build();
+    }
 
     private Member makeMember(Group group, int order) {
         return Member.builder()
@@ -35,15 +55,5 @@ public class GroupQueryServiceTest {
                 .nickname("nickname" + order)
                 .orderInGroup(order)
                 .build();
-    }
-
-    @Test
-    void 그룹원_정보_리스트_조회_성공() {
-        Long groupId = groupCommandService.createGroup("버니즈").groupId();
-        Group group = groupRepository.findById(groupId).get();
-        memberRepository.saveAll(Arrays.asList(makeMember(group, 1), makeMember(group, 2)));
-        GroupMembersResponse response = groupQueryService.listGroupMembersInfo(groupId);
-
-        assertThat(response.members()).hasSize(2);
     }
 }

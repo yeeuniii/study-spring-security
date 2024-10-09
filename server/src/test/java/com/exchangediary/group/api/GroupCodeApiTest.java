@@ -1,56 +1,34 @@
 package com.exchangediary.group.api;
 
+import com.exchangediary.ApiBaseTest;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
-import com.exchangediary.group.service.GroupCommandService;
 import com.exchangediary.group.ui.dto.request.GroupCodeRequest;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql(scripts = {"classpath:truncate.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@ActiveProfiles("test")
-public class GroupCodeApiTest {
+public class GroupCodeApiTest extends ApiBaseTest {
     private static final String API_PATH = "/api/groups/code/verify";
-    @LocalServerPort
-    private int port;
+    private static final String GROUP_NAME = "버니즈";
     @Autowired
     private GroupRepository groupRepository;
-    @Autowired
-    private GroupCommandService groupCommandService;
 
-    @BeforeEach
-    void setUp() {
-        RestAssured.port = port;
-    }
-
-    /* TODO: 시나리오 따라서 테스트 수정
-     * 1. 그룹 생성
-     * 2. 사용자 정보 수정 -> 그룹 코드 반환
-     * 3. 그룹 코드 유효성 검사
-     */
     @Test
     void 그룹_코드_유효성_검증_성공() {
-        String groupName = "버니즈";
-        Long groupId = groupCommandService.createGroup(groupName).groupId();
-        Group group = groupRepository.findById(groupId).get();
+        Group group = createGroup();
+        groupRepository.save(group);
         GroupCodeRequest groupCodeRequest = new GroupCodeRequest(group.getCode());
 
         GroupIdResponse response = RestAssured
                 .given().log().all()
                 .body(groupCodeRequest)
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .when().post(API_PATH)
                 .then().log().all()
@@ -62,14 +40,13 @@ public class GroupCodeApiTest {
 
     @Test
     void 그룹_코드_유효성_검증_실패() {
-        String groupName = "버니즈";
-        Long groupId = groupCommandService.createGroup(groupName).groupId();
-        Group group = groupRepository.findById(groupId).get();
-        GroupCodeRequest groupCodeRequest = new GroupCodeRequest(group.getCode() + "invalid");
+        createGroup();
+        GroupCodeRequest groupCodeRequest = new GroupCodeRequest("invalid-code");
 
         RestAssured
                 .given().log().all()
                 .body(groupCodeRequest)
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .when().post(API_PATH)
                 .then().log().all()
@@ -83,9 +60,18 @@ public class GroupCodeApiTest {
         RestAssured
                 .given().log().all()
                 .body(groupCodeRequest)
+                .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.JSON)
                 .when().post(API_PATH)
                 .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    private Group createGroup() {
+        return Group.builder()
+                .name(GROUP_NAME)
+                .currentOrder(0)
+                .code("code")
+                .build();
     }
 }

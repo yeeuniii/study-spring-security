@@ -27,7 +27,7 @@ class GroupCommandServiceTest {
     void 그룹_생성() {
         //given
         String groupName = "버디즈";
-        String code = "asdf1234";
+        String code = "code";
 
         when(groupCodeService.generateCode(groupName)).thenReturn(code);
 
