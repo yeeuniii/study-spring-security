@@ -41,8 +41,8 @@ class GroupNicknameApiTest extends BaseTest {
 
     @Test
     void 닉네임_유효성_검사_중복() {
-        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
-        Group group = groupRepository.findById(groupId).orElse(null);
+        Group group = createGroup();
+        groupRepository.save(group);
         Member member = Member.builder()
                 .nickname("jisunggi")
                 .kakaoId(12345L)
@@ -54,8 +54,16 @@ class GroupNicknameApiTest extends BaseTest {
                 .given().log().all()
                 .queryParam("nickname", "jisunggi")
                 .header("Authorization", "Bearer " + token)
-                .when().get(String.format(API_PATH, groupId))
+                .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    private Group createGroup() {
+        return Group.builder()
+                .name(GROUP_NAME)
+                .currentOrder(0)
+                .code("code")
+                .build();
     }
 }

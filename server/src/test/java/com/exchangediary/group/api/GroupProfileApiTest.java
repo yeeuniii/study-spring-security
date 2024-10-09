@@ -37,8 +37,8 @@ class GroupProfileApiTest extends BaseTest {
 
     @Test
     void 프로필_이미지_선택_목록_조회_성공() {
-        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
-        Group group = groupRepository.findById(groupId).orElse(null);
+        Group group = createGroup();
+        groupRepository.save(group);
         Member member1 = createMember(group, 1);
         Member member2 = createMember(group, 2);
         memberRepository.saveAll(List.of(member1, member2));
@@ -50,7 +50,7 @@ class GroupProfileApiTest extends BaseTest {
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token)
-                .when().get(String.format(API_PATH, groupId))
+                .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
                 .extract().as(GroupProfileResponse.class);
@@ -73,8 +73,8 @@ class GroupProfileApiTest extends BaseTest {
 
     @Test
     void 프로필_이미지_선택_목록_조회_멤버_초과() {
-        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
-        Group group = groupRepository.findById(groupId).orElse(null);
+        Group group = createGroup();
+        groupRepository.save(group);
         List<Member> members = new ArrayList<>();
         for (int i = 1; i <= 7; i++) {
             members.add(createMember(group, i));
@@ -85,7 +85,7 @@ class GroupProfileApiTest extends BaseTest {
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token)
-                .when().get(String.format(API_PATH, groupId))
+                .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.CONFLICT.value());
     }
@@ -95,6 +95,14 @@ class GroupProfileApiTest extends BaseTest {
                 .profileLocation("resource/profile-Image" + index)
                 .kakaoId(1234L + index)
                 .group(group)
+                .build();
+    }
+
+    private Group createGroup() {
+        return Group.builder()
+                .name(GROUP_NAME)
+                .currentOrder(0)
+                .code("code")
                 .build();
     }
 }

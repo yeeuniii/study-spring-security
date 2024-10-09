@@ -31,14 +31,12 @@ class GroupJoinApiTest extends BaseTest {
     @Autowired
     private GroupRepository groupRepository;
     @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
     private GroupCommandService groupCommandService;
 
     @Test
     void 그룹_가입_성공 () {
-        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
-        Group group = groupRepository.findById(groupId).orElse(null);
+        Group group = createGroup();
+        groupRepository.save(group);
         Member groupMember = Member.builder()
                 .kakaoId(12345L)
                 .orderInGroup(1)
@@ -54,7 +52,7 @@ class GroupJoinApiTest extends BaseTest {
                 .body(request)
                 .header("Authorization", "Bearer " + token)
                 .when()
-                .patch(String.format(API_PATH, groupId, member.getId()))
+                .patch(String.format(API_PATH, group.getId(), member.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
                 .body("code", equalTo(null));
@@ -73,8 +71,8 @@ class GroupJoinApiTest extends BaseTest {
 
     @Test
     void 그룹_생성_후_가입_성공 () {
-        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
-        Group group = groupRepository.findById(groupId).orElse(null);
+        Group group = createGroup();
+        groupRepository.save(group);
         GroupJoinRequest request = new GroupJoinRequest("resource/image1", "jisunggi");
 
         RestAssured
@@ -83,7 +81,7 @@ class GroupJoinApiTest extends BaseTest {
                 .body(request)
                 .header("Authorization", "Bearer " + token)
                 .when()
-                .patch(String.format(API_PATH, groupId, member.getId()))
+                .patch(String.format(API_PATH, group.getId(), member.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
                 .body("code", equalTo(group.getCode()));
@@ -102,8 +100,8 @@ class GroupJoinApiTest extends BaseTest {
 
     @Test
     void 프로필_중복_그룹_가입_실패() {
-        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
-        Group group = groupRepository.findById(groupId).orElse(null);
+        Group group = createGroup();
+        groupRepository.save(group);
         Member groupMember = Member.builder()
                 .kakaoId(12345L)
                 .orderInGroup(1)
@@ -119,9 +117,17 @@ class GroupJoinApiTest extends BaseTest {
                 .body(request)
                 .header("Authorization", "Bearer " + token)
                 .when()
-                .patch(String.format(API_PATH, groupId, member.getId()))
+                .patch(String.format(API_PATH, group.getId(), member.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("message", equalTo(ErrorCode.PROFILE_DUPLICATED.getMessage()));
+    }
+
+    private Group createGroup() {
+        return Group.builder()
+                .name(GROUP_NAME)
+                .currentOrder(0)
+                .code("code")
+                .build();
     }
 }
