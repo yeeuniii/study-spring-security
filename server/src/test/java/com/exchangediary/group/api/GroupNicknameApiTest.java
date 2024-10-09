@@ -22,8 +22,6 @@ class GroupNicknameApiTest extends BaseTest {
     private static final String API_PATH = "/api/groups/%d/nickname/verify";
     @Autowired
     private GroupRepository groupRepository;
-    @Autowired
-    private GroupCommandService groupCommandService;
 
     @Test
     void 닉네임_유효성_검사_성공() {
@@ -44,11 +42,7 @@ class GroupNicknameApiTest extends BaseTest {
     void 닉네임_유효성_검사_중복() {
         Group group = createGroup();
         groupRepository.save(group);
-        Member member = Member.builder()
-                .nickname("jisunggi")
-                .kakaoId(12345L)
-                .group(group)
-                .build();
+        Member member = createMember(group);
         memberRepository.save(member);
 
         RestAssured
@@ -65,6 +59,14 @@ class GroupNicknameApiTest extends BaseTest {
                 .name(GROUP_NAME)
                 .currentOrder(0)
                 .code("code")
+                .build();
+    }
+
+    private Member createMember(Group group) {
+        return Member.builder()
+                .nickname("jisunggi")
+                .kakaoId(12345L)
+                .group(group)
                 .build();
     }
 }
