@@ -7,6 +7,7 @@ import com.exchangediary.global.exception.serviceexception.DuplicateException;
 import com.exchangediary.global.exception.serviceexception.ServiceException;
 import com.exchangediary.global.exception.serviceexception.InvalidDateException;
 import com.exchangediary.global.exception.serviceexception.NotFoundException;
+import com.exchangediary.global.exception.serviceexception.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -37,6 +38,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({InvalidDateException.class, DuplicateException.class})
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ApiErrorResponse handleInvalidRangeException(ServiceException exception) {
+        return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
+    }
+
+    @ExceptionHandler({UnauthorizedException.class})
+    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+    public ApiErrorResponse handleUnauthorizedException(ServiceException exception) {
         return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 

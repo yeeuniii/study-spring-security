@@ -2,8 +2,9 @@ package com.exchangediary.member;
 
 import com.exchangediary.member.domain.MemberRepository;
 import com.exchangediary.member.domain.entity.Member;
+import com.exchangediary.member.service.JwtService;
 import com.exchangediary.member.service.KakaoService;
-import com.exchangediary.member.ui.dto.response.MemberIdResponse;
+import com.exchangediary.member.ui.dto.response.JwtTokenResponse;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,8 @@ public class KakaoLoginTest {
     private int port;
     @MockBean
     private KakaoService kakaoService;
+    @Autowired
+    private JwtService jwtService;
     @Autowired
     private MemberRepository memberRepository;
 
@@ -57,13 +60,15 @@ public class KakaoLoginTest {
 
         when(kakaoService.loginKakao(any(String.class))).thenReturn(mockKakaoId);
 
-        MemberIdResponse response = RestAssured
+        String token = RestAssured
                 .given().log().all()
                 .when().get("/api/kakao/callback?code="+mockCode)
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(MemberIdResponse.class);
+                .extract().as(JwtTokenResponse.class)
+                .token();
 
-        assertThat(response.memberId()).isEqualTo(member.getId());
+        Long memberId = jwtService.extractMemberId(token);
+        assertThat(memberId).isEqualTo(member.getId());
     }
 }
