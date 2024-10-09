@@ -11,7 +11,7 @@ modal.style.display = "none";
 
 backgroundImage = new Image();
 backgroundImage.addEventListener("load", () => modal.style.backgroundImage = `url('${backgroundImage.src}')`)
-backgroundImage.src = "/images/write-page/modal/background.svg";
+backgroundImage.src = "/images/diary/write-page/modal/background.svg";
 
 moodBtn.addEventListener("click", (event) => {
     clickModalBtn(event, emojiDiv);

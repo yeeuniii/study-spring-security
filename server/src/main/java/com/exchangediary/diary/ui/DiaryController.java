@@ -17,13 +17,13 @@ public class DiaryController {
 
     @GetMapping
     public String writePage() {
-        return "write-page";
+        return "/diary/write-page";
     }
 
     @GetMapping("/{diaryId}")
     public String viewDiary(Model model, @PathVariable Long diaryId) {
         DiaryResponse diary = diaryQueryService.viewDiary(diaryId);
         model.addAttribute("diary", diary);
-        return "view-diary";
+        return "/diary/view-diary";
     }
 }

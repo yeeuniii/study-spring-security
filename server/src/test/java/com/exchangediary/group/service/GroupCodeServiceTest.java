@@ -2,6 +2,7 @@ package com.exchangediary.group.service;
 
 import com.exchangediary.global.exception.serviceexception.NotFoundException;
 import com.exchangediary.group.domain.GroupRepository;
+import com.exchangediary.group.domain.entity.Group;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,6 @@ public class GroupCodeServiceTest {
     @Autowired
     private GroupCodeService groupCodeService;
     @Autowired
-    private GroupCommandService groupCommandService;
-    @Autowired
     private GroupRepository groupRepository;
 
     @Test
@@ -35,17 +34,16 @@ public class GroupCodeServiceTest {
 
     @Test
     void 그룹_코드_검증_성공() {
-        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
-        String code = groupRepository.findById(groupId).get().getCode();
+        Group group = createGroup();
+        groupRepository.save(group);
 
-        Long result = groupCodeService.verifyCode(code);
+        Long result = groupCodeService.verifyCode(group.getCode());
 
-        assertThat(result).isEqualTo(groupId);
+        assertThat(result).isEqualTo(group.getId());
     }
 
     @Test
     void 그룹_코드_검증_실패() {
-        groupCommandService.createGroup(GROUP_NAME);
         String code = "invalid-code";
 
         NotFoundException exception = assertThrows(NotFoundException.class, () ->
@@ -57,12 +55,12 @@ public class GroupCodeServiceTest {
 
     @Test
     void 그룹_코드_반환_성공() {
-        Long groupId = groupCommandService.createGroup(GROUP_NAME).groupId();
-        String code = groupRepository.findById(groupId).get().getCode();
+        Group group = createGroup();
+        groupRepository.save(group);
 
-        String result = groupCodeService.findByGroupId(groupId);
+        String code = groupCodeService.findByGroupId(group.getId());
 
-        assertThat(result).isEqualTo(code);
+        assertThat(code).isEqualTo(group.getCode());
     }
 
     @Test
@@ -70,5 +68,13 @@ public class GroupCodeServiceTest {
         assertThrows(NotFoundException.class, () -> {
             groupCodeService.findByGroupId(1L);
         });
+    }
+
+    private Group createGroup() {
+        return Group.builder()
+                .name(GROUP_NAME)
+                .currentOrder(0)
+                .code("code")
+                .build();
     }
 }
