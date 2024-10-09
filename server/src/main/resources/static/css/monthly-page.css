@@ -1,10 +1,5 @@
 @charset "utf-8";
 
-html, body {
-    margin: 0px;
-    overflow-x: hidden;
-}
-
 a {
     text-decoration: none;
     box-sizing: border-box;
@@ -25,14 +20,6 @@ th,td {
     vertical-align: middle;
 }
 
-.drag-prevent{
-    -ms-user-select: none;
-    -moz-user-select: -moz-none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    user-select: none;
-}
-
 .group-name {
     color: var(--kakao-logo, #000);
     text-align: center;
@@ -44,6 +31,10 @@ th,td {
     font-weight: 700;
     line-height: 22px; /* 91.667% */
     letter-spacing: -0.6px;
+}
+
+.on-table {
+    position: relative;
 }
 
 .year {

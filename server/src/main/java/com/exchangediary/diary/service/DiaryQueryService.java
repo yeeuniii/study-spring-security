@@ -4,6 +4,7 @@ import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.DiaryRepository;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
+import com.exchangediary.diary.ui.dto.response.DiaryResponse;
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.InvalidDateException;
 import com.exchangediary.global.exception.serviceexception.NotFoundException;
@@ -21,6 +22,16 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class DiaryQueryService {
     private final DiaryRepository diaryRepository;
+
+    public DiaryResponse viewDiary(Long diaryId) {
+        Diary diary = diaryRepository.findById(diaryId)
+                .orElseThrow(() -> new NotFoundException(
+                        ErrorCode.DIARY_NOT_FOUND,
+                        "",
+                        String.valueOf(diaryId))
+                );
+        return DiaryResponse.of(diary);
+    }
 
     public DiaryMonthlyResponse viewMonthlyDiary(int year, int month) {
         checkValidDate(year, month, null);

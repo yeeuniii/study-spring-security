@@ -23,13 +23,18 @@ public class MemberRepositoryUnitTest {
 
     @Test
     void 일기_작성_순서_조회() {
-        Group group = Group.builder().build();
+        Group group = Group.builder()
+                .name("버니즈")
+                .currentOrder(0)
+                .code("code")
+                .build();
         entityManager.persist(group);
         List<Integer> nums = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
         Collections.shuffle(nums);
         for (int num : nums) {
             Member member = Member.builder()
                     .profileLocation("/images/" + num)
+                    .kakaoId(num * 10L)
                     .nickname(String.valueOf(num))
                     .orderInGroup(num)
                     .group(group)
