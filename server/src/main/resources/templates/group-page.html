@@ -3,86 +3,7 @@
 
 <th:block layout:fragment="header">
     <title>스프링 - 그룹 생성 및 가입</title>
-
-    <style>
-        a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            flex-direction: column;
-        }
-
-        .top-bar {
-            width: 375px;
-            height: 52px;
-            position: relative;
-            top: 27px;
-        }
-
-        .bar-back {
-            width: 38px;
-            height: 38px;
-            margin: 7px 10px 7px 27px;
-            float: left;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .back-icon {
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-        }
-
-        .logo {
-            width: 215px;
-            height: 52px;
-            margin: 0 75px 0 10px;
-            float: right;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .logo-icon {
-            width: 55px;
-            height: 25px;
-            flex-shrink: 0;
-        }
-
-        .content {
-            width: 100%;
-            height: 550px;
-            position: relative;
-            top: 35px;
-        }
-
-        .next-btn {
-            display: flex;
-            width: 150px;
-            height: 50px;
-            justify-content: center;
-            align-items: center;
-            flex-shrink: 0;
-
-            border-radius: 20px;
-            border: 0.5px solid var(--kakao-logo, #000);
-            background: #FFF;
-        }
-
-        .next-text {
-            color: var(--kakao-logo, #000);
-            text-align: center;
-            font-family: "SOYOMaple";
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 34px; /* 212.5% */
-            letter-spacing: -0.4px;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/group-page.css" type="text/css">
 </th:block>
 
 <th:block layout:fragment="content">
@@ -96,12 +17,12 @@
             </div>
         </div>
         <div class="content">
-            <div style="position: relative; top: 23px; width: 375px; height: 515px;">
-                <img style="width: 375px; height: 514px; flex-shrink: 0;" src="/images/group/note.svg">
-                <div style="width: 234px; height: 45px; position: absolute; top: -23px; left: 71px;">
-                    <img style="width: 234px; height: 45px; flex-shrink: 0;" src="/images/group/step1.svg">
+            <div class="note">
+                <img class="note-img" src="/images/group/note.svg">
+                <div class="step">
+                    <img class="step-img" src="/images/group/step1.svg">
                 </div>
-                <div style="position: absolute; bottom: 30px; left: 112.75px;">
+                <div class="next">
                     <div class="next-btn">
                         <span class="next-text">확인</span>
                     </div>
