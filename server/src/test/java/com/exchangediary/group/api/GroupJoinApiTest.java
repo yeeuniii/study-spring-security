@@ -2,48 +2,31 @@ package com.exchangediary.group.api;
 
 import com.exchangediary.BaseTest;
 import com.exchangediary.global.exception.ErrorCode;
-import com.exchangediary.global.exception.serviceexception.NotFoundException;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
-import com.exchangediary.group.service.GroupCommandService;
 import com.exchangediary.group.ui.dto.request.GroupJoinRequest;
-import com.exchangediary.member.domain.MemberRepository;
 import com.exchangediary.member.domain.entity.Member;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.jdbc.Sql;
-
-import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
 class GroupJoinApiTest extends BaseTest {
     private static final String GROUP_NAME = "버니즈";
     private static final String API_PATH = "/api/groups/%d/join/%d";
     @Autowired
     private GroupRepository groupRepository;
-    @Autowired
-    private GroupCommandService groupCommandService;
 
     @Test
     void 그룹_가입_성공 () {
         Group group = createGroup();
         groupRepository.save(group);
-        Member groupMember = Member.builder()
-                .kakaoId(12345L)
-                .orderInGroup(1)
-                .profileLocation("resource/image1")
-                .group(group)
-                .build();
-        memberRepository.save(groupMember);
+        Member member = createMemberInGroup(group);
+        memberRepository.save(member);
         GroupJoinRequest request = new GroupJoinRequest("resource/image2", "jisunggi");
 
         RestAssured
@@ -57,12 +40,7 @@ class GroupJoinApiTest extends BaseTest {
                 .statusCode(HttpStatus.OK.value())
                 .body("code", equalTo(null));
 
-        Member updatedMember = memberRepository.findById(member.getId())
-                .orElseThrow(() -> new NotFoundException(
-                        ErrorCode.MEMBER_NOT_FOUND,
-                        "",
-                        String.valueOf(member.getId())
-                ));
+        Member updatedMember = memberRepository.findById(member.getId()).get();
         assertThat(updatedMember.getNickname()).isEqualTo("jisunggi");
         assertThat(updatedMember.getProfileLocation()).isEqualTo("resource/image2");
         assertThat(updatedMember.getOrderInGroup()).isEqualTo(2);
@@ -86,12 +64,7 @@ class GroupJoinApiTest extends BaseTest {
                 .statusCode(HttpStatus.OK.value())
                 .body("code", equalTo(group.getCode()));
 
-        Member updatedMember = memberRepository.findById(member.getId())
-                .orElseThrow(() -> new NotFoundException(
-                        ErrorCode.MEMBER_NOT_FOUND,
-                        "",
-                        String.valueOf(member.getId())
-                ));
+        Member updatedMember = memberRepository.findById(member.getId()).get();
         assertThat(updatedMember.getNickname()).isEqualTo("jisunggi");
         assertThat(updatedMember.getProfileLocation()).isEqualTo("resource/image1");
         assertThat(updatedMember.getOrderInGroup()).isEqualTo(1);
@@ -102,13 +75,8 @@ class GroupJoinApiTest extends BaseTest {
     void 프로필_중복_그룹_가입_실패() {
         Group group = createGroup();
         groupRepository.save(group);
-        Member groupMember = Member.builder()
-                .kakaoId(12345L)
-                .orderInGroup(1)
-                .profileLocation("resource/image1")
-                .group(group)
-                .build();
-        memberRepository.save(groupMember);
+        Member member = createMemberInGroup(group);
+        memberRepository.save(member);
         GroupJoinRequest request = new GroupJoinRequest("resource/image1", "jisunggi");
 
         RestAssured
@@ -128,6 +96,15 @@ class GroupJoinApiTest extends BaseTest {
                 .name(GROUP_NAME)
                 .currentOrder(0)
                 .code("code")
+                .build();
+    }
+
+    private Member createMemberInGroup(Group group) {
+        return Member.builder()
+                .kakaoId(12345L)
+                .orderInGroup(1)
+                .profileLocation("resource/image1")
+                .group(group)
                 .build();
     }
 }
