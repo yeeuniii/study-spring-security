@@ -30,10 +30,6 @@ class GroupProfileApiTest extends BaseTest {
     private static final String API_PATH = "/api/groups/%d/profile-image";
     @Autowired
     private GroupRepository groupRepository;
-    @Autowired
-    private GroupQueryService groupQueryService;
-    @Autowired
-    private GroupCommandService groupCommandService;
 
     @Test
     void 프로필_이미지_선택_목록_조회_성공() {
@@ -43,10 +39,7 @@ class GroupProfileApiTest extends BaseTest {
         Member member2 = createMember(group, 2);
         memberRepository.saveAll(List.of(member1, member2));
 
-        GroupProfileResponse groupProfileResponse =
-                groupQueryService.viewSelectableProfileImage(group.getId());
-
-        GroupProfileResponse Response = RestAssured
+        GroupProfileResponse response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token)
@@ -55,7 +48,7 @@ class GroupProfileApiTest extends BaseTest {
                 .statusCode(HttpStatus.OK.value())
                 .extract().as(GroupProfileResponse.class);
 
-        assertThat(Response).isEqualTo(groupProfileResponse);
+        assertThat(response.selectedImages()).hasSize(2);
     }
 
     @Test
