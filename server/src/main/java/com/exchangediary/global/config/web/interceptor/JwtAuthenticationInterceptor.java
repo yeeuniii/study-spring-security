@@ -33,15 +33,8 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
             HttpServletResponse response,
             Object handler
     ) {
-        String token = extractJwtToken(request);
-
-        if (!jwtService.verifyToken(token)) {
-            throw new UnauthorizedException(
-                    ErrorCode.EXPIRED_TOKEN,
-                    "",
-                    token
-            );
-        }
+        String token = getJwtTokenFromCookies(request);
+        jwtService.verifyToken(token);
 
         Long memberId = jwtService.extractMemberId(token);
         Member member = findMember(memberId);
@@ -50,7 +43,7 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private String extractJwtToken(HttpServletRequest request) {
+    private String getJwtTokenFromCookies(HttpServletRequest request) {
         try {
             Cookie[] cookies = request.getCookies();
 
