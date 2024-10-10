@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/base">
+
+<th:block layout:fragment="header">
+    <title>스프링 - 그룹 생성 및 가입</title>
+    <link rel="stylesheet" href="/css/group-page.css" type="text/css">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="background" style="background-image: url('/images/group/background.svg');">
+        <div class="top-bar">
+            <div class="bar-back">
+                <a href="/" class="back-btn"><img class="back-icon" src="/images/common/back_icon.svg"/></a>
+            </div>
+            <div class="logo">
+                <img class="logo-icon" src="/images/group/logo.svg">
+            </div>
+        </div>
+        <div class="content">
+            <div class="note">
+                <img class="note-img" src="/images/group/note.svg">
+                <div class="step">
+                    <img class="step-img" src="/images/group/step1.svg">
+                </div>
+                <div style="height: 342px; width: 100%; position: absolute; top: 82px;">
+                    <!-- TODO: 스텝 별 페이지 구현 진행 -->
+                </div>
+                <div class="next">
+                    <a href="#" class="next-btn">
+                        <span class="next-text">확인</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script src="/js/monthly-page/draw-calendar.js"></script>
+    <script src="/js/monthly-page/calendar-arrow.js"></script>
+</th:block>
+
+</html>
