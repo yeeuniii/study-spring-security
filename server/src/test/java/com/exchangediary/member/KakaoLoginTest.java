@@ -4,7 +4,6 @@ import com.exchangediary.member.domain.MemberRepository;
 import com.exchangediary.member.domain.entity.Member;
 import com.exchangediary.member.service.JwtService;
 import com.exchangediary.member.service.KakaoService;
-import com.exchangediary.member.ui.dto.response.JwtTokenResponse;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,11 +43,15 @@ public class KakaoLoginTest {
 
         when(kakaoService.loginKakao(any(String.class))).thenReturn(mockKakaoId);
 
-        RestAssured
+        var response = RestAssured
                 .given().log().all()
                 .when().get("/api/kakao/callback?code="+mockCode)
                 .then().log().all()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.OK.value())
+                .extract();
+
+        String token = response.cookie("token");
+        assertThat(token).isNotNull();
     }
 
     @Test
@@ -60,14 +63,14 @@ public class KakaoLoginTest {
 
         when(kakaoService.loginKakao(any(String.class))).thenReturn(mockKakaoId);
 
-        String token = RestAssured
+        var response = RestAssured
                 .given().log().all()
                 .when().get("/api/kakao/callback?code="+mockCode)
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(JwtTokenResponse.class)
-                .token();
+                .extract();
 
+        String token = response.cookie("token");
         Long memberId = jwtService.extractMemberId(token);
         assertThat(memberId).isEqualTo(member.getId());
     }
