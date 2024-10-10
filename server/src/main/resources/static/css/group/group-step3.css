@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+.first-line {
+    width: 182px;
+    height: 70px;
+    position: relative;
+    top: 19px;
+}
+
+.second-line {
+    width: 307px;
+    height: 70px;
+    position: relative;
+    top: 37px;
+}
+
+.third-line {
+    width: 181px;
+    height: 70px;
+    position: relative;
+    top: 55px;
+}

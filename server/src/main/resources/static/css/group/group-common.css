@@ -68,17 +68,33 @@ a {
 }
 
 .step {
-    width: 234px;
-    height: 45px;
+    width: 100%;
+    height: 458px;
     position: absolute;
     top: -23px;
-    left: 71px;
+}
+
+.step-content {
+    width: 100%;
+    height: 353px;
+    position: relative;
+    top: 57px;
 }
 
 .step-img {
     width: 234px;
     height: 45px;
     flex-shrink: 0;
+}
+
+.subject {
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-family: "SOYOMaple";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
 .next {

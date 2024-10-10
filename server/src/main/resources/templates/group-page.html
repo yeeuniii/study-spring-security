@@ -3,7 +3,8 @@
 
 <th:block layout:fragment="header">
     <title>스프링 - 그룹 생성 및 가입</title>
-    <link rel="stylesheet" href="/css/group-page.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-common.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-step3.css" type="text/css">
 </th:block>
 
 <th:block layout:fragment="content">
@@ -19,12 +20,41 @@
         <div class="content">
             <div class="note">
                 <img class="note-img" src="/images/group/note.svg">
-                <div class="step">
-                    <img class="step-img" src="/images/group/step1.svg">
-                </div>
-                <div style="height: 342px; width: 100%; position: absolute; top: 82px;">
-                    <!-- TODO: 스텝 별 페이지 구현 진행 -->
-                </div>
+                    <div class="step step2">
+                        <img class="step-img" src="/images/group/step3.svg">
+                        <div class="step-content">
+                            <div style="width: 100%; height: 34px;">
+                                <span class="subject">나의 캐릭터를 골라요.</span>
+                            </div>
+                            <div class="first-line">
+                                <div id="pring2" style="width: 70px; height: 70px; float: left;">
+                                    <img src="/images/group/character/pring2.svg" style="width: 70px; height: 70px;">
+                                </div>
+                                <div id="pring3" style="width: 70px; height: 70px; float: right;">
+                                    <img src="/images/group/character/pring3.svg" style="width: 70px; height: 70px;">
+                                </div>
+                            </div>
+                            <div class="second-line">
+                                <div id="pring1" style="width: 70px; height: 70px; float: left;">
+                                    <img src="/images/group/character/pring1.svg" style="width: 70px; height: 70px;">
+                                </div>
+                                <div id="pring7" style="width: 70px; height: 70px; float: left; position: relative; left: 40px;">
+                                    <img src="/images/group/character/pring7.svg" style="width: 70px; height: 70px;">
+                                </div>
+                                <div id="pring4" style="width: 87px; height: 70px; float: left; position: relative; left: 80px;">
+                                    <img src="/images/group/character/pring4.svg" style="width: 87px; height: 70px;">
+                                </div>
+                            </div>
+                            <div class="third-line">
+                                <div id="pring5" style="width: 70px; height: 84px; float: left; position: relative; bottom: 14px;">
+                                    <img src="/images/group/character/pring5.svg" style="width: 70px; height: 84px;">
+                                </div>
+                                <div id="pring6" style="width: 70px; height: 70px; float: right">
+                                    <img src="/images/group/character/pring6.svg" style="width: 70px; height: 70px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <div class="next">
                     <a href="#" class="next-btn">
                         <span class="next-text">확인</span>
