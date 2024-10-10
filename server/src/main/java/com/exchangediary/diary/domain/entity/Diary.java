@@ -7,6 +7,7 @@ import com.exchangediary.member.domain.entity.Member;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -43,10 +44,10 @@ public class Diary extends BaseEntity {
     private String moodLocation;
     @OneToOne(mappedBy = "diary", cascade = CascadeType.ALL)
     private UploadImage uploadImage;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;
 
@@ -56,5 +57,10 @@ public class Diary extends BaseEntity {
                 .moodLocation(diaryRequest.moodLocation())
                 .uploadImage(uploadImage)
                 .build();
+    }
+
+    public void addMemberAndGroup(Member member, Group group) {
+        this.member = member;
+        this.group = group;
     }
 }

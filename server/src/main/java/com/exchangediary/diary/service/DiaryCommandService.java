@@ -7,6 +7,9 @@ import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.DuplicateException;
 import com.exchangediary.global.exception.serviceexception.FailedImageUploadException;
+import com.exchangediary.group.domain.GroupRepository;
+import com.exchangediary.group.domain.entity.Group;
+import com.exchangediary.member.domain.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +24,9 @@ import java.util.Optional;
 @Transactional
 public class DiaryCommandService {
     private final DiaryRepository diaryRepository;
+    private final GroupRepository groupRepository;
 
-    public Long createDiary(DiaryRequest diaryRequest, MultipartFile file) {
+    public Long createDiary(DiaryRequest diaryRequest, MultipartFile file, Long groupId, Member member) {
         checkTodayDiaryExistent();
 
         if (isEmptyFile(file)) {
@@ -36,6 +40,8 @@ public class DiaryCommandService {
                     .image(file.getBytes())
                     .build();
             Diary diary = Diary.of(diaryRequest, image);
+            Group group = groupRepository.findById(groupId).get();
+            diary.addMemberAndGroup(member, group);
             Diary savedDiary = diaryRepository.save(diary);
             image.uploadToDiary(savedDiary);
             return savedDiary.getId();
