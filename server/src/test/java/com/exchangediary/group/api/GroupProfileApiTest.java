@@ -33,7 +33,7 @@ class GroupProfileApiTest extends ApiBaseTest {
         GroupProfileResponse response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
-                .header("Authorization", "Bearer " + token)
+                .cookie("token", token)
                 .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
@@ -49,7 +49,7 @@ class GroupProfileApiTest extends ApiBaseTest {
         RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
-                .header("Authorization", "Bearer " + token)
+                .cookie("token", token)
                 .when().get(String.format(API_PATH, groupId))
                 .then().log().all()
                 .statusCode(HttpStatus.NOT_FOUND.value());
@@ -68,7 +68,7 @@ class GroupProfileApiTest extends ApiBaseTest {
         RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
-                .header("Authorization", "Bearer " + token)
+                .cookie("token", token)
                 .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.CONFLICT.value());
