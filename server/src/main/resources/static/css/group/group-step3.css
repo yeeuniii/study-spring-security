@@ -20,3 +20,32 @@
     position: relative;
     top: 55px;
 }
+
+.first {
+    float: left;
+}
+
+.mid {
+    float: left;
+    position: relative;
+    left: 40px;
+}
+
+.last {
+    float: right;
+}
+
+.character {
+    width: 70px;
+    height: 70px;
+}
+
+.blue {
+    width: 70px;
+    height: 84px;
+}
+
+.green {
+    width: 87px;
+    height: 70px;
+}
