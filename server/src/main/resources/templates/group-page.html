@@ -28,22 +28,27 @@
                         <span class="subject">스프링에 참여해요!</span>
                     </div>
                     <div class="group">
-                        <div class="group-join">
-                            <a href="#" class="select-circle">
+                        <div class="join-btn">
+                            <a href="#" class="join circle">
                                 <div style="width: 64px; height: 90px;">
                                     <img class="group-icon" src="/images/group/group_join.svg">
-                                    <span class="group-text">그룹 가입</span>
+                                    <img class="group-icon select" src="/images/group/group_join_white.svg">
+                                    <span class="text group-text">그룹 가입</span>
                                 </div>
                             </a>
                         </div>
-                        <div class="group-create">
-                            <a href="#" class="select-circle">
+                        <div class="create-btn">
+                            <a href="#" class="create circle">
                                 <div style="width: 64px; height: 90px;">
                                     <img class="group-icon" src="/images/group/group_create.svg">
-                                    <span class="group-text">그룹 생성</span>
+                                    <img class="group-icon select" src="/images/group/group_create_white.svg">
+                                    <span class="text group-text">그룹 생성</span>
                                 </div>
                             </a>
                         </div>
+                    </div>
+                    <div style="width: 260px; height: 40px; position: relative; top: 119px;">
+                        <span class="text question-text"></span>
                     </div>
                 </div>
                 <div class="next">
@@ -57,8 +62,7 @@
 </th:block>
 
 <th:block layout:fragment="script">
-    <script src="/js/monthly-page/draw-calendar.js"></script>
-    <script src="/js/monthly-page/calendar-arrow.js"></script>
+    <script src="/js/group/group-step1.js"></script>
 </th:block>
 
 </html>

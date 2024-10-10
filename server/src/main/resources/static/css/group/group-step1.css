@@ -14,13 +14,13 @@
     top: 64px;
 }
 
-.group-join {
+.join-btn {
     width: 150px;
     height: 150px;
     float: left;
 }
 
-.group-create {
+.create-btn {
     width: 150px;
     height: 150px;
     float: left;
@@ -28,7 +28,7 @@
     left: 27px;
 }
 
-.select-circle {
+.circle {
     width: 150px;
     height: 150px;
     flex-shrink: 0;
@@ -44,11 +44,7 @@
     flex-shrink: 0;
 }
 
-.group-text {
-    position: relative;
-    top: 7px;
-
-    color: #767676;
+.text {
     text-align: center;
     font-family: "SOYOMaple";
     font-size: 16px;
@@ -56,4 +52,19 @@
     font-weight: 400;
     line-height: 34px; /* 212.5% */
     letter-spacing: -0.4px;
+}
+
+.group-text {
+    position: relative;
+    top: 7px;
+
+    color: #767676;
+}
+
+.question-text {
+    color: #E84D59;
+}
+
+.select {
+    display: none;
 }
