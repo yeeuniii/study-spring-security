@@ -68,11 +68,17 @@ a {
 }
 
 .step {
-    width: 234px;
-    height: 45px;
+    width: 100%;
+    height: 458px;
     position: absolute;
     top: -23px;
-    left: 71px;
+}
+
+.step-content {
+    width: 100%;
+    height: 353px;
+    position: relative;
+    top: 60px;
 }
 
 .step-img {
