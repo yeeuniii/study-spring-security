@@ -3,7 +3,8 @@
 
 <th:block layout:fragment="header">
     <title>스프링 - 그룹 생성 및 가입</title>
-    <link rel="stylesheet" href="/css/group-page.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-common.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-step1.css" type="text/css">
 </th:block>
 
 <th:block layout:fragment="content">
@@ -22,8 +23,28 @@
                 <div class="step">
                     <img class="step-img" src="/images/group/step1.svg">
                 </div>
-                <div style="height: 342px; width: 100%; position: absolute; top: 82px;">
-                    <!-- TODO: 스텝 별 페이지 구현 진행 -->
+                <div class="step1">
+                    <div style="width: 195px; height: 34px;">
+                        <span class="subject">스프링에 참여해요!</span>
+                    </div>
+                    <div class="group">
+                        <div class="group-join">
+                            <a href="#" class="select-circle">
+                                <div style="width: 64px; height: 90px;">
+                                    <img class="group-icon" src="/images/group/group_join.svg">
+                                    <span class="group-text">그룹 가입</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="group-create">
+                            <a href="#" class="select-circle">
+                                <div style="width: 64px; height: 90px;">
+                                    <img class="group-icon" src="/images/group/group_create.svg">
+                                    <span class="group-text">그룹 생성</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="next">
                     <a href="#" class="next-btn">

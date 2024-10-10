@@ -81,6 +81,16 @@ a {
     flex-shrink: 0;
 }
 
+.subject {
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-family: "SOYOMaple";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
 .next {
     position: absolute;
     bottom: 30px;

@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+.step1 {
+    width: 100%;
+    height: 342px;
+    position: absolute;
+    top: 82px;
+}
+
+.group {
+    width: 327px;
+    height: 150px;
+    position: relative;
+    top: 64px;
+}
+
+.group-join {
+    width: 150px;
+    height: 150px;
+    float: left;
+}
+
+.group-create {
+    width: 150px;
+    height: 150px;
+    float: left;
+    position: relative;
+    left: 27px;
+}
+
+.select-circle {
+    width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+
+    border-radius: 50%;
+    border: 0.5px solid var(--kakao-logo, #000);
+    background: #FFF;
+}
+
+.group-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.group-text {
+    position: relative;
+    top: 7px;
+
+    color: #767676;
+    text-align: center;
+    font-family: "SOYOMaple";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 34px; /* 212.5% */
+    letter-spacing: -0.4px;
+}
