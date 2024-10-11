@@ -1,4 +1,4 @@
-const nickname = document.querySelector(".name-textarea")
+const nickname = document.querySelector(".name")
 const error = document.querySelector(".error-text")
 
 nickname.addEventListener("input", checkNickname)

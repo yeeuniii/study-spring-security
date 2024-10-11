@@ -11,7 +11,7 @@
     border: 0.5px solid #767676;
 }
 
-.name {
+.name-textarea {
     width: 269px;
     height: 34px;
     float: left;
@@ -20,7 +20,7 @@
     top: 13px;
 }
 
-.name-textarea {
+.name {
     width: 269px;
     height: 34px;
     background-color: transparent;
