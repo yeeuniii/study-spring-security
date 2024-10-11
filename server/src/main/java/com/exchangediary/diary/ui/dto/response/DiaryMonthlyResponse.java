@@ -13,8 +13,7 @@ public record DiaryMonthlyResponse(
 ) {
     public static DiaryMonthlyResponse of(int year, int month, List<Diary> diaries) {
         List<DiaryInfo> diaryInfos = diaries.stream()
-                .map(diary -> DiaryInfo.of(
-                        diary.getCreatedAt().getDayOfMonth(), diary.getMember().getProfileLocation()))
+                .map(DiaryInfo::of)
                 .toList();
         return DiaryMonthlyResponse.builder()
                 .year(year)
@@ -28,10 +27,10 @@ public record DiaryMonthlyResponse(
             int date,
             String profileImage
     ) {
-        public static DiaryInfo of(int date, String profileImage) {
+        public static DiaryInfo of(Diary diary) {
             return DiaryInfo.builder()
-                    .date(date)
-                    .profileImage(profileImage)
+                    .date(diary.getCreatedAt().getDayOfMonth())
+                    .profileImage(diary.getMember().getProfileLocation())
                     .build();
         }
     }
