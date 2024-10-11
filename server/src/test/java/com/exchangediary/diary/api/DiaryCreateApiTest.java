@@ -31,7 +31,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
         Group group = createGroup();
         groupRepository.save(group);
         Map<String, String> data = new HashMap<>();
-        data.put("content", "내용");
+        data.put("content", "buddies");
         data.put("moodLocation", "/images/sad.png");
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(data);
@@ -52,9 +52,12 @@ class DiaryCreateApiTest extends ApiBaseTest {
         );
 
         Diary newDiary = diaryRepository.findById(diaryId).get();
+        System.out.println(newDiary.getContent());
         assertThat(diaryId).isEqualTo(1L);
         assertThat(newDiary.getGroup().getId()).isEqualTo(group.getId());
         assertThat(newDiary.getMember().getId()).isEqualTo(member.getId());
+        assertThat(newDiary.getContent()).isEqualTo(data.get("content"));
+        assertThat(newDiary.getMoodLocation()).isEqualTo(data.get("moodLocation"));
     }
 
     private Group createGroup() {
