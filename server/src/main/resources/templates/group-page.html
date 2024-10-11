@@ -5,6 +5,18 @@
     <title>스프링 - 그룹 생성 및 가입</title>
     <link rel="stylesheet" href="/css/group/group-common.css" type="text/css">
     <link rel="stylesheet" href="/css/group/group-step4.css" type="text/css">
+    <style>
+        .error-text {
+            color: #E84D59;
+            font-family: "SOYOMaple";
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 34px; /* 242.857% */
+            letter-spacing: -0.35px;
+            float: left;
+        }
+    </style>
 </th:block>
 
 <th:block layout:fragment="content">
@@ -32,9 +44,12 @@
                         <div class="name-box">
                             <div class="name">
                                 <label>
-                                    <textarea class="name-textarea" placeholder="이름" maxlength="13"></textarea>
+                                    <textarea class="name-textarea" placeholder="이름" maxlength="13" spellcheck="false"></textarea>
                                 </label>
                             </div>
+                        </div>
+                        <div class="error-message" style="width: 283px; height: 34px; float: left; position: relative; left: 46px; top: 24px;">
+                            <span class="error-text"></span>
                         </div>
                     </div>
                 </div>
@@ -49,6 +64,7 @@
 </th:block>
 
 <th:block layout:fragment="script">
+    <script src="/js/group/check-nickname.js"></script>
 </th:block>
 
 </html>
