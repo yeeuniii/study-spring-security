@@ -4,19 +4,21 @@ const error = document.querySelector(".error-text")
 nickname.addEventListener("input", checkNickname)
 
 function checkNickname() {
-    if (nickname.value !== "") {
-        checkFormat();
+    error.innerText = "";
+
+    if (nickname.value !== "" && checkFormat()) {
         checkDuplicate();
     }
 }
 
 function checkFormat() {
-    const specialChar = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/;
+    const specialChar = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"₩]/;
 
-    error.innerText = "";
     if (specialChar.test(nickname.value)) {
         error.innerText = "특수문자는 사용할 수 없습니다.";
+        return false;
     }
+    return true;
 }
 
 function checkDuplicate() {
