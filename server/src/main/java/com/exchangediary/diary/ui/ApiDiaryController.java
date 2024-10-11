@@ -58,9 +58,10 @@ public class ApiDiaryController {
     @GetMapping("/monthly")
     public ResponseEntity<DiaryMonthlyResponse> viewMonthlyDiary(
             @RequestParam int year,
-            @RequestParam int month
+            @RequestParam int month,
+            @PathVariable Long groupId
     ) {
-        DiaryMonthlyResponse diaryMonthlyResponse = diaryQueryService.viewMonthlyDiary(year, month);
+        DiaryMonthlyResponse diaryMonthlyResponse = diaryQueryService.viewMonthlyDiary(year, month, groupId);
         return ResponseEntity
                 .ok()
                 .body(diaryMonthlyResponse);

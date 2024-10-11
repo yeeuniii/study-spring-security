@@ -33,9 +33,9 @@ public class DiaryQueryService {
         return DiaryResponse.of(diary);
     }
 
-    public DiaryMonthlyResponse viewMonthlyDiary(int year, int month) {
+    public DiaryMonthlyResponse viewMonthlyDiary(int year, int month, Long groupId) {
         checkValidDate(year, month, null);
-        List<Diary> diaries = diaryRepository.findByAllYearAndMonth(year, month);
+        List<Diary> diaries = diaryRepository.findByAllGroupYearAndMonth(groupId, year, month);
         return DiaryMonthlyResponse.of(year, month, diaries);
     }
 
