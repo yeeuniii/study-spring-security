@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+.name-box {
+    width: 326px;
+    height: 60px;
+    flex-shrink: 0;
+    position: relative;
+    top: 24px;
+
+    border-radius: 20px;
+    border: 0.5px solid #767676;
+}
+
+.name-textarea {
+    width: 269px;
+    height: 34px;
+    float: left;
+    position: relative;
+    left: 29px;
+    top: 13px;
+}
+
+.name-textarea {
+    width: 269px;
+    height: 34px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    white-space: pre-line;
+
+    color: #767676;
+    font-family: "SOYOMaple";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    /*line-height: 34px; !* 170% *!*/
+    letter-spacing: -0.5px;
+}
