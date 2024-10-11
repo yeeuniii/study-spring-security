@@ -46,9 +46,10 @@ public class ApiDiaryController {
     public ResponseEntity<DiaryIdResponse> findDiaryId(
             @RequestParam int year,
             @RequestParam int month,
-            @RequestParam int day
+            @RequestParam int day,
+            @PathVariable Long groupId
     ) {
-        DiaryIdResponse diaryIdResponse = diaryQueryService.findDiaryIdByDate(year, month, day);
+        DiaryIdResponse diaryIdResponse = diaryQueryService.findDiaryIdByDate(year, month, day, groupId);
         return ResponseEntity
                 .ok()
                 .body(diaryIdResponse);

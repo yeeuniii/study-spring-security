@@ -39,9 +39,9 @@ public class DiaryQueryService {
         return DiaryMonthlyResponse.of(year, month, diaries);
     }
 
-    public DiaryIdResponse findDiaryIdByDate(int year, int month, int day) {
+    public DiaryIdResponse findDiaryIdByDate(int year, int month, int day, Long groupId) {
         checkValidDate(year, month, day);
-        Long diaryId = diaryRepository.findIdByDate(year, month, day)
+        Long diaryId = diaryRepository.findIdByGroupAndDate(groupId, year, month, day)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.DIARY_NOT_FOUND,
                         "",

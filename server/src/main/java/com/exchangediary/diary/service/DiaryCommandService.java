@@ -27,7 +27,7 @@ public class DiaryCommandService {
     private final GroupRepository groupRepository;
 
     public Long createDiary(DiaryRequest diaryRequest, MultipartFile file, Long groupId, Member member) {
-        checkTodayDiaryExistent();
+        checkTodayDiaryExistent(groupId);
 
         if (isEmptyFile(file)) {
             Diary diary = Diary.of(diaryRequest, null);
@@ -54,9 +54,11 @@ public class DiaryCommandService {
         }
     }
 
-    private void checkTodayDiaryExistent() {
+    private void checkTodayDiaryExistent(Long groupId) {
         LocalDate today = LocalDate.now();
-        Optional<Long> todayDiary = diaryRepository.findIdByDate(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
+        Optional<Long> todayDiary =
+                diaryRepository.findIdByGroupAndDate(
+                        groupId, today.getYear(), today.getMonthValue(), today.getDayOfMonth());
 
         if (todayDiary.isPresent()) {
             throw new DuplicateException(
