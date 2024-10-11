@@ -4,16 +4,28 @@ const error = document.querySelector(".error-text")
 nickname.addEventListener("input", checkNickname)
 
 function checkNickname() {
-    checkFormat();
-    console.log(`test value: ${nickname.value}`);
+    if (nickname.value !== "") {
+        checkFormat();
+        checkDuplicate();
+    }
 }
 
 function checkFormat() {
     const specialChar = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/;
 
     error.innerText = "";
-    console.log(specialChar.test(nickname.value));
     if (specialChar.test(nickname.value)) {
         error.innerText = "특수문자는 사용할 수 없습니다.";
     }
+}
+
+function checkDuplicate() {
+    const groupId = window.localStorage.getItem("groupId");
+
+    fetch(`/api/groups/${groupId}/nickname/verify?nickname=${nickname.value}`)
+        .then(response => {
+            if (response.status !== 200) {
+                error.innerText = "이미 존재하는 이름입니다.";
+            }
+        })
 }
