@@ -9,7 +9,6 @@ import com.exchangediary.group.ui.dto.request.GroupJoinRequest;
 import com.exchangediary.group.ui.dto.request.GroupNameRequest;
 import com.exchangediary.group.ui.dto.request.GroupNicknameRequest;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
-import com.exchangediary.group.ui.dto.response.GroupJoinResponse;
 import com.exchangediary.group.ui.dto.response.GroupNicknameVerifyResponse;
 import com.exchangediary.group.ui.dto.response.GroupProfileResponse;
 import jakarta.validation.Valid;
@@ -81,14 +80,14 @@ public class ApiGroupController {
     }
 
     @PatchMapping("/{groupId}/join")
-    public ResponseEntity<GroupJoinResponse> joinGroup(
+    public ResponseEntity<Void> joinGroup(
             @PathVariable Long groupId,
             @RequestBody @Valid GroupJoinRequest request,
             @RequestAttribute Long memberId
     ) {
-        GroupJoinResponse response = groupJoinService.joinGroup(groupId, request, memberId);
+        groupJoinService.joinGroup(groupId, request, memberId);
         return ResponseEntity
                 .ok()
-                .body(response);
+                .build();
     }
 }

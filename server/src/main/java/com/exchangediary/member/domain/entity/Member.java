@@ -44,9 +44,9 @@ public class Member extends BaseEntity {
         this.group = group;
     }
 
-    public void updateMemberGroupInfo(GroupJoinRequest request, Group group, int orderInGroup) {
-        this.nickname = request.nickname();
-        this.profileLocation = request.profileLocation();
+    public void updateMemberGroupInfo(String nickname, String profileLocation, int orderInGroup, Group group) {
+        this.nickname = nickname;
+        this.profileLocation = profileLocation;
         this.orderInGroup = orderInGroup;
         this.group = group;
     }
