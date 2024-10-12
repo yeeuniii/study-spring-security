@@ -6,13 +6,15 @@ import com.exchangediary.group.service.GroupQueryService;
 import com.exchangediary.group.service.GroupCreateService;
 import com.exchangediary.group.ui.dto.request.GroupCodeRequest;
 import com.exchangediary.group.ui.dto.request.GroupJoinRequest;
-import com.exchangediary.group.ui.dto.request.GroupNameRequest;
+import com.exchangediary.group.ui.dto.request.GroupCreateRequest;
 import com.exchangediary.group.ui.dto.request.GroupNicknameRequest;
+import com.exchangediary.group.ui.dto.response.GroupCreateResponse;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
 import com.exchangediary.group.ui.dto.response.GroupNicknameVerifyResponse;
 import com.exchangediary.group.ui.dto.response.GroupProfileResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,14 +38,14 @@ public class ApiGroupController {
     private final GroupQueryService groupQueryService;
 
     @PostMapping
-    public ResponseEntity<GroupIdResponse> createGroup(
-            @RequestBody @Valid GroupNameRequest request,
+    public ResponseEntity<GroupCreateResponse> createGroup(
+            @RequestBody @Valid GroupCreateRequest request,
             @RequestAttribute Long memberId
     ) {
-        GroupIdResponse groupIdResponse = groupCreateService.createGroup(request.groupName(), memberId);
+        GroupCreateResponse response = groupCreateService.createGroup(request, memberId);
         return ResponseEntity
-                .created(URI.create("/api/groups/" + groupIdResponse.groupId()))
-                .body(groupIdResponse);
+                .status(HttpStatus.CREATED)
+                .body(response);
     }
 
     @PostMapping("/code/verify")
