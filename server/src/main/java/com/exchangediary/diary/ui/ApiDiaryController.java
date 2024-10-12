@@ -33,9 +33,9 @@ public class ApiDiaryController {
             @RequestPart(name = "data") @Valid DiaryRequest diaryRequest,
             @RequestPart(name = "file", required = false) MultipartFile file,
             @PathVariable Long groupId,
-            @RequestAttribute Member member
+            @RequestAttribute Long memberId
     ) {
-        Long diaryId = diaryCommandService.createDiary(diaryRequest, file, groupId, member);
+        Long diaryId = diaryCommandService.createDiary(diaryRequest, file, groupId, memberId);
         return ResponseEntity
                 .created(URI.create(String.format("/api/diary/%d", diaryId)))
                 .header("Content-Location", "/diary/" + diaryId)

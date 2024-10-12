@@ -7,9 +7,10 @@ import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.DuplicateException;
 import com.exchangediary.global.exception.serviceexception.FailedImageUploadException;
-import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
+import com.exchangediary.group.service.GroupQueryService;
 import com.exchangediary.member.domain.entity.Member;
+import com.exchangediary.member.service.MemberQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,14 +25,19 @@ import java.util.Optional;
 @Transactional
 public class DiaryCommandService {
     private final DiaryRepository diaryRepository;
-    private final GroupRepository groupRepository;
+    private final MemberQueryService memberQueryService;
+    private final GroupQueryService groupQueryService;
 
-    public Long createDiary(DiaryRequest diaryRequest, MultipartFile file, Long groupId, Member member) {
+
+    public Long createDiary(DiaryRequest diaryRequest, MultipartFile file, Long groupId, Long memberId) {
+        Member member = memberQueryService.findMember(memberId);
+        Group group = groupQueryService.findGroup(groupId);
         checkTodayDiaryExistent(groupId);
 
         if (isEmptyFile(file)) {
             Diary diary = Diary.of(diaryRequest, null);
             Diary savedDiary = diaryRepository.save(diary);
+            diary.addMemberAndGroup(member, group);
             return savedDiary.getId();
         }
 
@@ -40,9 +46,8 @@ public class DiaryCommandService {
                     .image(file.getBytes())
                     .build();
             Diary diary = Diary.of(diaryRequest, image);
-            Group group = groupRepository.findById(groupId).get();
-            diary.addMemberAndGroup(member, group);
             Diary savedDiary = diaryRepository.save(diary);
+            diary.addMemberAndGroup(member, group);
             image.uploadToDiary(savedDiary);
             return savedDiary.getId();
         } catch (IOException e) {
