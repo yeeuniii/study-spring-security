@@ -3,6 +3,7 @@ package com.exchangediary.member.service;
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.UnauthorizedException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -25,12 +26,15 @@ public class JwtService {
         return buildToken(memberId);
     }
 
-    public boolean verifyToken(String token) {
+    public void verifyToken(String token) {
         try {
-            Date now = new Date();
-
-            Claims claims = extractAllClaims(token);
-            return !claims.getExpiration().before(now);
+            extractAllClaims(token);
+        } catch (ExpiredJwtException exception) {
+            throw new UnauthorizedException(
+                    ErrorCode.EXPIRED_TOKEN,
+                    "",
+                    token
+            );
         } catch (JwtException | IllegalArgumentException exception) {
             throw new UnauthorizedException(
                     ErrorCode.JWT_TOKEN_UNAUTHORIZED,

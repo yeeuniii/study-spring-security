@@ -40,13 +40,9 @@ public class Member extends BaseEntity {
     @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "member_group_id_fkey"))
     private Group group;
 
-    public void addGroup(Group group) {
-        this.group = group;
-    }
-
-    public void updateMemberGroupInfo(GroupJoinRequest request, Group group, int orderInGroup) {
-        this.nickname = request.nickname();
-        this.profileLocation = request.profileLocation();
+    public void updateMemberGroupInfo(String nickname, String profileLocation, int orderInGroup, Group group) {
+        this.nickname = nickname;
+        this.profileLocation = profileLocation;
         this.orderInGroup = orderInGroup;
         this.group = group;
     }
