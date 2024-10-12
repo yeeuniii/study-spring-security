@@ -25,7 +25,7 @@ class GroupNicknameApiTest extends ApiBaseTest {
         RestAssured
                 .given().log().all()
                 .queryParam("nickname", "jisunggi")
-                .header("Authorization", "Bearer " + token)
+                .cookie("token", token)
                 .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
@@ -42,7 +42,7 @@ class GroupNicknameApiTest extends ApiBaseTest {
         RestAssured
                 .given().log().all()
                 .queryParam("nickname", "jisunggi")
-                .header("Authorization", "Bearer " + token)
+                .cookie("token", token)
                 .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value());

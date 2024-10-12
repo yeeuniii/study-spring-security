@@ -28,7 +28,7 @@ public class GroupCodeApiTest extends ApiBaseTest {
         GroupIdResponse response = RestAssured
                 .given().log().all()
                 .body(groupCodeRequest)
-                .header("Authorization", "Bearer " + token)
+                .cookie("token", token)
                 .contentType(ContentType.JSON)
                 .when().post(API_PATH)
                 .then().log().all()
@@ -46,7 +46,7 @@ public class GroupCodeApiTest extends ApiBaseTest {
         RestAssured
                 .given().log().all()
                 .body(groupCodeRequest)
-                .header("Authorization", "Bearer " + token)
+                .cookie("token", token)
                 .contentType(ContentType.JSON)
                 .when().post(API_PATH)
                 .then().log().all()
@@ -60,7 +60,7 @@ public class GroupCodeApiTest extends ApiBaseTest {
         RestAssured
                 .given().log().all()
                 .body(groupCodeRequest)
-                .header("Authorization", "Bearer " + token)
+                .cookie("token", token)
                 .contentType(ContentType.JSON)
                 .when().post(API_PATH)
                 .then().log().all()

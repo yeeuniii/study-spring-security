@@ -1,0 +1,128 @@
+@charset "utf-8";
+
+a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    flex-direction: column;
+}
+
+.top-bar {
+    width: 375px;
+    height: 52px;
+    position: relative;
+    top: 27px;
+}
+
+.bar-back {
+    width: 38px;
+    height: 38px;
+    margin: 7px 10px 7px 27px;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.back-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 215px;
+    height: 52px;
+    margin: 0 75px 0 10px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-icon {
+    width: 55px;
+    height: 25px;
+    flex-shrink: 0;
+}
+
+.content {
+    width: 100%;
+    height: 550px;
+    position: relative;
+    top: 35px;
+}
+
+.note {
+    position: relative;
+    top: 23px;
+    width:375px;
+    height: 515px;
+}
+
+.note-img {
+    width: 375px;
+    height: 514px;
+    flex-shrink: 0;
+}
+
+.step {
+    width: 100%;
+    height: 458px;
+    position: absolute;
+    top: -23px;
+}
+
+.step-content {
+    width: 100%;
+    height: 353px;
+    position: relative;
+    top: 57px;
+}
+
+.step-img {
+    width: 234px;
+    height: 45px;
+    flex-shrink: 0;
+}
+
+.subject {
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-family: "SOYOMaple";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.next {
+    position: absolute;
+    bottom: 30px;
+    left: 112.75px;
+}
+
+.next-btn {
+    display: flex;
+    width: 150px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+
+    border-radius: 20px;
+    border: 0.5px solid var(--kakao-logo, #000);
+    background: #FFF;
+}
+
+.next-text {
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-family: "SOYOMaple";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 34px; /* 212.5% */
+    letter-spacing: -0.4px;
+}

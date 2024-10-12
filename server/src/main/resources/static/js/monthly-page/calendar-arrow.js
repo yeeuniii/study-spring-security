@@ -17,11 +17,21 @@ function clickLeftArrowButton(event) {
 
 function clickRightArrowButton(event) {
     event.preventDefault();
-    month.innerText = Number(month.innerText) + 1;
-    if (month.innerText === "13") {
-        month.innerText = 1;
-        year.innerText = Number(year.innerText) + 1;
+    if (!isSameYearAndMonthWithToday()) {
+        month.innerText = Number(month.innerText) + 1;
+        if (month.innerText === "13") {
+            month.innerText = 1;
+            year.innerText = Number(year.innerText) + 1;
+        }
+        clearDate();
+        drawDateOfCalendar()
     }
-    clearDate();
-    drawDateOfCalendar()
+}
+
+
+function isSameYearAndMonthWithToday() {
+    const today = new Date();
+
+    return Number(year.innerText) === today.getFullYear()
+        && Number(month.innerText - 1) === today.getMonth();
 }

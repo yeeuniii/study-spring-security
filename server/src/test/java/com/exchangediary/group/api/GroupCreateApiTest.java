@@ -26,7 +26,7 @@ public class GroupCreateApiTest extends ApiBaseTest {
         Long groupId = RestAssured
                 .given().log().all()
                 .body(new GroupNameRequest(groupName))
-                .header("Authorization", "Bearer " + token)
+                .cookie("token", token)
                 .contentType(ContentType.JSON)
                 .when().post(API_PATH)
                 .then().log().all()
