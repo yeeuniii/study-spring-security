@@ -24,7 +24,7 @@ class DiaryFindIdApiTest extends ApiBaseTest {
     private DiaryRepository diaryRepository;
 
     @Test
-    void 일기_id_조회_성공 () {
+    void 일기_id_조회_성공() {
         Group group = createGroup();
         groupRepository.save(group);
         Diary diary = createDiary(group);
@@ -46,7 +46,7 @@ class DiaryFindIdApiTest extends ApiBaseTest {
     }
 
     @Test
-    void 일기_id_조회_실패_일기_없음 () {
+    void 일기_id_조회_실패_일기_없음() {
         Group group = createGroup();
         groupRepository.save(group);
         RestAssured
@@ -60,6 +60,53 @@ class DiaryFindIdApiTest extends ApiBaseTest {
                 .then().log().all()
                 .statusCode(HttpStatus.NOT_FOUND.value())
                 .body("message", equalTo(ErrorCode.DIARY_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void 일기_id_조회_실패_빈_형식() {
+        Group group = createGroup();
+        groupRepository.save(group);
+        RestAssured
+                .given().log().all()
+                .queryParam("year", "2024")
+                .queryParam("month", "10")
+                .contentType(ContentType.JSON)
+                .cookie("token", token)
+                .when().get(String.format(API_PATH, group.getId()))
+                .then().log().all()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void 일기_id_조회_실패_빈_값() {
+        Group group = createGroup();
+        groupRepository.save(group);
+        RestAssured
+                .given().log().all()
+                .queryParam("year", "")
+                .queryParam("month", "10")
+                .queryParam("day", "10")
+                .contentType(ContentType.JSON)
+                .cookie("token", token)
+                .when().get(String.format(API_PATH, group.getId()))
+                .then().log().all()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void 일기_id_조회_실패_날짜_유효성_검사() {
+        Group group = createGroup();
+        groupRepository.save(group);
+        RestAssured
+                .given().log().all()
+                .queryParam("year", "2024")
+                .queryParam("month", "13")
+                .queryParam("day", "10")
+                .contentType(ContentType.JSON)
+                .cookie("token", token)
+                .when().get(String.format(API_PATH, group.getId()))
+                .then().log().all()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
     private Group createGroup() {
