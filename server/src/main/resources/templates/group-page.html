@@ -3,7 +3,7 @@
 
 <th:block layout:fragment="header">
     <title>스프링 - 그룹 생성 및 가입</title>
-    <link rel="stylesheet" href="/css/group-page.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-common.css" type="text/css">
 </th:block>
 
 <th:block layout:fragment="content">
@@ -19,12 +19,18 @@
         <div class="content">
             <div class="note">
                 <img class="note-img" src="/images/group/note.svg">
-                <div class="step">
-                    <img class="step-img" src="/images/group/step1.svg">
+
+                <div class="step step#">
+                    <img class="step-img" src="/images/group/step#.svg">
+                        <!-- TODO: # 진행 단계로 치환  -->
+                    <div class="step-content">
+                        <div style="width: 195px; height: 34px;">
+                            <span class="subject"></span>
+                        </div>
+                        <!-- TODO: 단게별 작업 진행  -->
+                    </div>
                 </div>
-                <div style="height: 342px; width: 100%; position: absolute; top: 82px;">
-                    <!-- TODO: 스텝 별 페이지 구현 진행 -->
-                </div>
+
                 <div class="next">
                     <a href="#" class="next-btn">
                         <span class="next-text">확인</span>
@@ -36,8 +42,6 @@
 </th:block>
 
 <th:block layout:fragment="script">
-    <script src="/js/monthly-page/draw-calendar.js"></script>
-    <script src="/js/monthly-page/calendar-arrow.js"></script>
 </th:block>
 
 </html>
