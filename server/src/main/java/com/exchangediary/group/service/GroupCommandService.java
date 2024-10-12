@@ -24,24 +24,20 @@ public class GroupCommandService {
     private final GroupCodeService groupCodeService;
     private final MemberRepository memberRepository;
 
-    public GroupIdResponse createGroup(String groupName) {
+    public GroupIdResponse createGroup(String groupName, Member member) {
         Group group = Group.of(groupName, groupCodeService.generateCode(groupName));
         groupRepository.save(group);
+        member.addGroup(group);
+        memberRepository.save(member);
         return GroupIdResponse.from(group.getId());
     }
 
-    public GroupJoinResponse joinGroup(Long groupId, GroupJoinRequest request, Long memberId) {
+    public GroupJoinResponse joinGroup(Long groupId, GroupJoinRequest request, Member member) {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.GROUP_NOT_FOUND,
                         "",
                         String.valueOf(groupId))
-                );
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException(
-                        ErrorCode.MEMBER_NOT_FOUND,
-                        "",
-                        String.valueOf(memberId))
                 );
         String code = processGroupJoinOrCreate(group, request.profileLocation());
         int maxOrderInGroup = findMaxOrderInGroup(group.getMembers());

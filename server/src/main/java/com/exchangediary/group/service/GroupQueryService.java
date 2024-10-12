@@ -42,7 +42,7 @@ public class GroupQueryService {
                         "",
                         String.valueOf(groupId))
                 );
-        List<Member> members = memberRepository.findAllByGroupId(groupId);
+        List<Member> members = group.getMembers();
         checkNumberOfMembers(members.size());
         return GroupProfileResponse.from(members);
     }
@@ -64,12 +64,13 @@ public class GroupQueryService {
                         "",
                         String.valueOf(groupId))
                 );
-        boolean verification = isNicknameDuplicate(groupId, nickname);
+        boolean verification = isNicknameDuplicate(group.getMembers(), nickname);
         return GroupNicknameVerifyResponse.from(verification);
     }
 
-    private boolean isNicknameDuplicate(Long groupId, String nickname) {
-        if (memberRepository.existsByGroupIdAndNickname(groupId, nickname)) {
+    private boolean isNicknameDuplicate(List<Member> members, String nickname) {
+        if (members.stream()
+                .anyMatch(member -> member.getNickname().equals(nickname))) {
             throw new DuplicateException(
                     ErrorCode.NICKNAME_DUPLICATED,
                     "",
