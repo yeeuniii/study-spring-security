@@ -78,4 +78,13 @@ public class GroupQueryService {
         }
         return true;
     }
+
+    public Member findGroup(Long groupId) {
+        return memberRepository.findById(groupId)
+                .orElseThrow(() -> new NotFoundException(
+                        ErrorCode.GROUP_NOT_FOUND,
+                        "",
+                        String.valueOf(groupId)
+                ));
+    }
 }
