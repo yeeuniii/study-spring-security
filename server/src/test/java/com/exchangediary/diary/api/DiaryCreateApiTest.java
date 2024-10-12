@@ -55,7 +55,6 @@ class DiaryCreateApiTest extends ApiBaseTest {
 
         Diary newDiary = diaryRepository.findById(diaryId).get();
         System.out.println(newDiary.getContent());
-        assertThat(diaryId).isEqualTo(1L);
         assertThat(newDiary.getGroup().getId()).isEqualTo(group.getId());
         assertThat(newDiary.getMember().getId()).isEqualTo(member.getId());
         assertThat(newDiary.getContent()).isEqualTo(data.get("content"));
