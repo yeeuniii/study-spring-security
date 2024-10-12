@@ -80,8 +80,8 @@ public class GroupQueryService {
         return true;
     }
 
-    public Member findGroup(Long groupId) {
-        return memberRepository.findById(groupId)
+    public Group findGroup(Long groupId) {
+        return groupRepository.findById(groupId)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.GROUP_NOT_FOUND,
                         "",

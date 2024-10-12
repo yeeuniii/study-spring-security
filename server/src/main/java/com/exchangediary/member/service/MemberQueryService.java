@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberQueryService {
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-    private Member findMember(Long memberId) {
+    public Member findMember(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.MEMBER_NOT_FOUND,
