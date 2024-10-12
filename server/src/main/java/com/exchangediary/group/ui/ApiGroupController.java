@@ -37,9 +37,10 @@ public class ApiGroupController {
 
     @PostMapping
     public ResponseEntity<GroupIdResponse> createGroup(
-            @RequestBody @Valid GroupNameRequest request
+            @RequestBody @Valid GroupNameRequest request,
+            @RequestAttribute Member member
     ) {
-        GroupIdResponse groupIdResponse = groupCommandService.createGroup(request.groupName());
+        GroupIdResponse groupIdResponse = groupCommandService.createGroup(request.groupName(), member);
         return ResponseEntity
                 .created(URI.create("/api/groups/" + groupIdResponse.groupId()))
                 .body(groupIdResponse);

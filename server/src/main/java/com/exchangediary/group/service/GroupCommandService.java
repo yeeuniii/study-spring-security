@@ -24,9 +24,11 @@ public class GroupCommandService {
     private final GroupCodeService groupCodeService;
     private final MemberRepository memberRepository;
 
-    public GroupIdResponse createGroup(String groupName) {
+    public GroupIdResponse createGroup(String groupName, Member member) {
         Group group = Group.of(groupName, groupCodeService.generateCode(groupName));
         groupRepository.save(group);
+        member.addGroup(group);
+        memberRepository.save(member);
         return GroupIdResponse.from(group.getId());
     }
 
