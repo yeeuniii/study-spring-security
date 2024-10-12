@@ -32,7 +32,6 @@ public class GroupQueryService {
     public GroupProfileResponse viewSelectableProfileImage(Long groupId) {
         Group group = findGroup(groupId);
         List<Member> members = group.getMembers();
-        groupValidationService.checkNumberOfMembers(members.size());
         return GroupProfileResponse.from(members);
     }
 
