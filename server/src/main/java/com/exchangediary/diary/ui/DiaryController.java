@@ -20,9 +20,9 @@ public class DiaryController {
         return "/diary/write-page";
     }
 
-    @GetMapping("/{diaryId}")
-    public String viewDiary(Model model, @PathVariable Long diaryId) {
-        DiaryResponse diary = diaryQueryService.viewDiary(diaryId);
+    @GetMapping("/{diaryId}/groups/{groupId}")
+    public String viewDiary(Model model, @PathVariable Long diaryId, @PathVariable Long groupId) {
+        DiaryResponse diary = diaryQueryService.viewDiary(diaryId, groupId);
         model.addAttribute("diary", diary);
         return "/diary/view-diary";
     }
