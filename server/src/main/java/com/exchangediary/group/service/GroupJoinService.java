@@ -27,7 +27,7 @@ public class GroupJoinService {
 
         String code = processGroupJoinOrCreate(group, request.profileLocation());
         int maxOrderInGroup = findMaxOrderInGroup(group.getMembers());
-        member.updateMemberGroupInfo(request, group, maxOrderInGroup + 1);
+//        member.updateMemberGroupInfo(request, group, maxOrderInGroup + 1);
         memberRepository.save(member);
         return GroupJoinResponse.from(code);
     }
