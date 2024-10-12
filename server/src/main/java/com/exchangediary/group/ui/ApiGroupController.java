@@ -11,6 +11,7 @@ import com.exchangediary.group.ui.dto.response.GroupIdResponse;
 import com.exchangediary.group.ui.dto.response.GroupJoinResponse;
 import com.exchangediary.group.ui.dto.response.GroupNicknameVerifyResponse;
 import com.exchangediary.group.ui.dto.response.GroupProfileResponse;
+import com.exchangediary.member.domain.entity.Member;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,9 +37,10 @@ public class ApiGroupController {
 
     @PostMapping
     public ResponseEntity<GroupIdResponse> createGroup(
-            @RequestBody @Valid GroupNameRequest request
+            @RequestBody @Valid GroupNameRequest request,
+            @RequestAttribute Member member
     ) {
-        GroupIdResponse groupIdResponse = groupCommandService.createGroup(request.groupName());
+        GroupIdResponse groupIdResponse = groupCommandService.createGroup(request.groupName(), member);
         return ResponseEntity
                 .created(URI.create("/api/groups/" + groupIdResponse.groupId()))
                 .body(groupIdResponse);
@@ -76,13 +79,13 @@ public class ApiGroupController {
                 .body(response);
     }
 
-    @PatchMapping("/{groupId}/join/{memberId}")
+    @PatchMapping("/{groupId}/join")
     public ResponseEntity<GroupJoinResponse> joinGroup(
             @PathVariable Long groupId,
-            @PathVariable Long memberId, //Todo: 쿠키 도입 후 빠질 값
-            @RequestBody @Valid GroupJoinRequest request
+            @RequestBody @Valid GroupJoinRequest request,
+            @RequestAttribute Member member
     ) {
-        GroupJoinResponse response = groupCommandService.joinGroup(groupId, request, memberId);
+        GroupJoinResponse response = groupCommandService.joinGroup(groupId, request, member);
         return ResponseEntity
                 .ok()
                 .body(response);
