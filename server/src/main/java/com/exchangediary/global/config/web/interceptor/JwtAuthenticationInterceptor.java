@@ -2,8 +2,6 @@ package com.exchangediary.global.config.web.interceptor;
 
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.UnauthorizedException;
-import com.exchangediary.member.domain.MemberRepository;
-import com.exchangediary.member.domain.entity.Member;
 import com.exchangediary.member.service.CookieService;
 import com.exchangediary.member.service.JwtService;
 import jakarta.servlet.http.Cookie;
@@ -15,16 +13,13 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
     private static final String COOKIE_NAME = "token";
     private final JwtService jwtService;
     private final CookieService cookieService;
-    private final MemberRepository memberRepository;
 
     public JwtAuthenticationInterceptor(
             JwtService jwtService,
-            CookieService cookieService,
-            MemberRepository memberRepository
+            CookieService cookieService
     ) {
         this.jwtService = jwtService;
         this.cookieService = cookieService;
-        this.memberRepository = memberRepository;
     }
 
     @Override
@@ -44,8 +39,7 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
         }
 
         Long memberId = jwtService.extractMemberId(token);
-        Member member = findMember(memberId);
-        request.setAttribute("member", member);
+        request.setAttribute("memberId", memberId);
 
         return true;
     }
@@ -62,14 +56,5 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
                     COOKIE_NAME
             );
         }
-    }
-
-    private Member findMember(Long memberId) {
-        return memberRepository.findById(memberId)
-                .orElseThrow(() -> new UnauthorizedException(
-                   ErrorCode.NOT_EXIST_MEMBER_TOKEN,
-                   "",
-                   String.valueOf(memberId)
-                ));
     }
 }
