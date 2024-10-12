@@ -26,7 +26,7 @@ class DiaryViewMonthlyTest extends ApiBaseTest {
     private DiaryRepository diaryRepository;
 
     @Test
-    void 달력형_일기_조회() {
+    void 달력형_일기_조회_성공() {
         Group group = createGroup();
         Group otherGroup = createGroup();
         groupRepository.save(group);
