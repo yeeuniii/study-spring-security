@@ -2,6 +2,7 @@ package com.exchangediary.member.domain.entity;
 
 import com.exchangediary.global.domain.entity.BaseEntity;
 import com.exchangediary.group.domain.entity.Group;
+import com.exchangediary.group.ui.dto.request.GroupJoinRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
