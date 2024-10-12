@@ -1,7 +1,5 @@
 package com.exchangediary.group.service;
 
-import com.exchangediary.global.exception.ErrorCode;
-import com.exchangediary.global.exception.serviceexception.DuplicateException;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.ui.dto.request.GroupJoinRequest;
@@ -20,11 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class GroupCommandService {
-    private final GroupRepository groupRepository;
     private final GroupCodeService groupCodeService;
-    private final MemberRepository memberRepository;
-    private final MemberQueryService memberQueryService;
     private final GroupQueryService groupQueryService;
+    private final GroupValidationService groupValidationService;
+    private final GroupRepository groupRepository;
+    private final MemberQueryService memberQueryService;
+    private final MemberRepository memberRepository;
 
     public GroupIdResponse createGroup(String groupName, Long memberId) {
         Member member = memberQueryService.findMember(memberId);
@@ -45,32 +44,21 @@ public class GroupCommandService {
         return GroupJoinResponse.from(code);
     }
 
+    private String processGroupJoinOrCreate(Group group, String profileLocation) {
+        List<Member> members = group.getMembers();
+
+        if (members.isEmpty()) {
+            return group.getCode();
+        }
+        groupValidationService.checkProfileDuplicate(members, profileLocation);
+        groupValidationService.checkNumberOfMembers(members.size());
+        return null;
+    }
+
     private int findMaxOrderInGroup(List<Member> members) {
         return members.stream()
                 .mapToInt(Member::getOrderInGroup)
                 .max()
                 .orElse(0);
-    }
-
-    private String processGroupJoinOrCreate(Group group, String profileLocation)
-    {
-        List<Member> members = group.getMembers();
-        if (members.isEmpty()) {
-            return group.getCode();
-        }
-        checkProfileDuplicate(members, profileLocation);
-        GroupQueryService.checkNumberOfMembers(members.size());
-        return null;
-    }
-
-    private void checkProfileDuplicate(List<Member> members, String profileLocation) {
-        if (members.stream()
-                .anyMatch(member -> member.getProfileLocation().equals(profileLocation))) {
-            throw new DuplicateException(
-                    ErrorCode.PROFILE_DUPLICATED,
-                    "",
-                    profileLocation
-            );
-        }
     }
 }
