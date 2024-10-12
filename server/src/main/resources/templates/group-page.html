@@ -5,6 +5,8 @@
     <title>스프링 - 그룹 생성 및 가입</title>
     <link rel="stylesheet" href="/css/group/group-common.css" type="text/css">
     <link rel="stylesheet" href="/css/group/group-step4.css" type="text/css">
+
+    <script src="/js/group/group-step4.js"></script>
 </th:block>
 
 <th:block layout:fragment="content">
@@ -22,27 +24,11 @@
                 <img class="note-img" src="/images/group/note.svg">
                 <div class="step step4">
                     <img class="step-img" src="/images/group/step4.svg">
-                    <div class="step-content">
-                        <div style="width: 100px; height: 100px;">
-                            <img class="selected-pring" src="" style="width: 100px; height: 100px;">
-                        </div>
-                        <div style="width: 100%; height: 34px; position: relative; top: 16px;">
-                            <span class="subject">캐릭터 이름을 지어주세요.</span>
-                        </div>
-                        <div class="name-box">
-                            <div class="name-textarea">
-                                <label>
-                                    <textarea class="name" placeholder="이름" maxlength="13" spellcheck="false"></textarea>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="error-message" style="width: 283px; height: 34px; float: left; position: relative; left: 46px; top: 24px;">
-                            <span class="error-text"></span>
-                        </div>
+                    <div class="note-body">
                     </div>
                 </div>
                 <div class="next">
-                    <a href="#" class="next-btn">
+                    <a href="#" class="confirm-btn">
                         <span class="next-text">확인</span>
                     </a>
                 </div>
@@ -52,7 +38,7 @@
 </th:block>
 
 <th:block layout:fragment="script">
-    <script src="/js/group/check-nickname.js"></script>
+    <script src="/js/group/group-common.js"></script>
 </th:block>
 
 </html>

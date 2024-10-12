@@ -1,17 +1,15 @@
 @charset "utf-8";
 
-.name-box {
+.input-box {
     width: 326px;
     height: 60px;
     flex-shrink: 0;
     position: relative;
     top: 24px;
-
     border-radius: 20px;
     border: 0.5px solid #767676;
 }
-
-.name-textarea {
+.input-textarea {
     width: 269px;
     height: 34px;
     float: left;
@@ -19,8 +17,7 @@
     left: 29px;
     top: 13px;
 }
-
-.name {
+.input-value {
     width: 269px;
     height: 34px;
     background-color: transparent;
@@ -28,8 +25,7 @@
     outline: none;
     resize: none;
     white-space: pre-line;
-
-    color: #767676;
+    color: #000000;
     font-family: "SOYOMaple";
     font-size: 20px;
     font-style: normal;
