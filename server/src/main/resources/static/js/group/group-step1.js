@@ -1,32 +1,34 @@
-const STEP1_HTML = `<div style="width: 195px; height: 34px;">
-                        <span class="subject">스프링에 참여해요!</span>
-                    </div>
-                    <div class="group">
-                        <div class="join-btn">
-                            <a href="#" class="join circle">
-                                <div style="width: 64px; height: 90px;">
-                                    <img class="group-icon" src="/images/group/group_join.svg">
-                                    <img class="group-icon select" src="/images/group/group_join_white.svg">
-                                    <span class="text group-text">그룹 가입</span>
-                                </div>
-                            </a>
+const STEP1_HTML = `<div class="step-content">
+                        <div style="width: 195px; height: 34px;">
+                            <span class="subject">스프링에 참여해요!</span>
                         </div>
-                        <div class="create-btn">
-                            <a href="#" class="create circle">
-                                <div style="width: 64px; height: 90px;">
-                                    <img class="group-icon" src="/images/group/group_create.svg">
-                                    <img class="group-icon select" src="/images/group/group_create_white.svg">
-                                    <span class="text group-text">그룹 생성</span>
-                                </div>
-                            </a>
+                        <div class="group">
+                            <div class="join-btn">
+                                <a href="#" class="join circle">
+                                    <div style="width: 64px; height: 90px;">
+                                        <img class="group-icon" src="/images/group/group_join.svg">
+                                        <img class="group-icon select" src="/images/group/group_join_white.svg">
+                                        <span class="text group-text">그룹 가입</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="create-btn">
+                                <a href="#" class="create circle">
+                                    <div style="width: 64px; height: 90px;">
+                                        <img class="group-icon" src="/images/group/group_create.svg">
+                                        <img class="group-icon select" src="/images/group/group_create_white.svg">
+                                        <span class="text group-text">그룹 생성</span>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="question">
-                        <span class="text question-text"></span>
+                        <div class="question">
+                            <span class="text question-text"></span>
+                        </div>
                     </div>`
 
 function drawStep1() {
-    step_content.innerHTML = STEP1_HTML;
+    note_body.innerHTML = STEP1_HTML;
 
     initStep1();
 }
