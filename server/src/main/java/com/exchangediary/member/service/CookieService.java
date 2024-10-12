@@ -9,13 +9,13 @@ import java.util.Arrays;
 @Service
 public class CookieService {
     @Value("${cookie.max-age.millisecond}")
-    private int maxAge;
+    private int maxAgeInMilliseconds;
 
     public Cookie createCookie(String name, String value) {
         Cookie cookie = new Cookie(name, value);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
-        cookie.setMaxAge(maxAge);
+        cookie.setMaxAge(maxAgeInMilliseconds / 1000);
         return cookie;
     }
 
