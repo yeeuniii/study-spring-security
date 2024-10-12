@@ -1,9 +1,7 @@
 package com.exchangediary.group.service;
 
-import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.ui.dto.request.GroupJoinRequest;
-import com.exchangediary.group.ui.dto.response.GroupIdResponse;
 import com.exchangediary.group.ui.dto.response.GroupJoinResponse;
 import com.exchangediary.member.domain.MemberRepository;
 import com.exchangediary.member.domain.entity.Member;
@@ -17,26 +15,16 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class GroupCommandService {
-    private final GroupCodeService groupCodeService;
+public class GroupJoinService {
     private final GroupQueryService groupQueryService;
     private final GroupValidationService groupValidationService;
-    private final GroupRepository groupRepository;
     private final MemberQueryService memberQueryService;
     private final MemberRepository memberRepository;
-
-    public GroupIdResponse createGroup(String groupName, Long memberId) {
-        Member member = memberQueryService.findMember(memberId);
-        Group group = Group.of(groupName, groupCodeService.generateCode(groupName));
-        groupRepository.save(group);
-        member.addGroup(group);
-        memberRepository.save(member);
-        return GroupIdResponse.from(group.getId());
-    }
 
     public GroupJoinResponse joinGroup(Long groupId, GroupJoinRequest request, Long memberId) {
         Group group = groupQueryService.findGroup(groupId);
         Member member = memberQueryService.findMember(memberId);
+
         String code = processGroupJoinOrCreate(group, request.profileLocation());
         int maxOrderInGroup = findMaxOrderInGroup(group.getMembers());
         member.updateMemberGroupInfo(request, group, maxOrderInGroup + 1);

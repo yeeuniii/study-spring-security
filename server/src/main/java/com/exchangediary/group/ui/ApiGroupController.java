@@ -1,8 +1,9 @@
 package com.exchangediary.group.ui;
 
 import com.exchangediary.group.service.GroupCodeService;
+import com.exchangediary.group.service.GroupJoinService;
 import com.exchangediary.group.service.GroupQueryService;
-import com.exchangediary.group.service.GroupCommandService;
+import com.exchangediary.group.service.GroupCreateService;
 import com.exchangediary.group.ui.dto.request.GroupCodeRequest;
 import com.exchangediary.group.ui.dto.request.GroupJoinRequest;
 import com.exchangediary.group.ui.dto.request.GroupNameRequest;
@@ -30,7 +31,8 @@ import java.net.URI;
 @RequiredArgsConstructor
 @RequestMapping("/api/groups")
 public class ApiGroupController {
-    private final GroupCommandService groupCommandService;
+    private final GroupCreateService groupCreateService;
+    private final GroupJoinService groupJoinService;
     private final GroupCodeService groupCodeService;
     private final GroupQueryService groupQueryService;
 
@@ -39,7 +41,7 @@ public class ApiGroupController {
             @RequestBody @Valid GroupNameRequest request,
             @RequestAttribute Long memberId
     ) {
-        GroupIdResponse groupIdResponse = groupCommandService.createGroup(request.groupName(), memberId);
+        GroupIdResponse groupIdResponse = groupCreateService.createGroup(request.groupName(), memberId);
         return ResponseEntity
                 .created(URI.create("/api/groups/" + groupIdResponse.groupId()))
                 .body(groupIdResponse);
@@ -84,7 +86,7 @@ public class ApiGroupController {
             @RequestBody @Valid GroupJoinRequest request,
             @RequestAttribute Long memberId
     ) {
-        GroupJoinResponse response = groupCommandService.joinGroup(groupId, request, memberId);
+        GroupJoinResponse response = groupJoinService.joinGroup(groupId, request, memberId);
         return ResponseEntity
                 .ok()
                 .body(response);
