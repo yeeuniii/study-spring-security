@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 class GroupJoinApiTest extends ApiBaseTest {
     private static final String GROUP_NAME = "버니즈";
-    private static final String API_PATH = "/api/groups/%d/join/%d";
+    private static final String API_PATH = "/api/groups/%d/join";
     @Autowired
     private GroupRepository groupRepository;
 
@@ -25,8 +25,8 @@ class GroupJoinApiTest extends ApiBaseTest {
     void 그룹_가입_성공 () {
         Group group = createGroup();
         groupRepository.save(group);
-        Member member = createMemberInGroup(group);
-        memberRepository.save(member);
+        Member groupMember = createMemberInGroup(group);
+        memberRepository.save(groupMember);
         GroupJoinRequest request = new GroupJoinRequest("resource/image2", "jisunggi");
 
         RestAssured
@@ -35,7 +35,7 @@ class GroupJoinApiTest extends ApiBaseTest {
                 .body(request)
                 .cookie("token", token)
                 .when()
-                .patch(String.format(API_PATH, group.getId(), member.getId()))
+                .patch(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
                 .body("code", equalTo(null));
@@ -59,7 +59,7 @@ class GroupJoinApiTest extends ApiBaseTest {
                 .body(request)
                 .cookie("token", token)
                 .when()
-                .patch(String.format(API_PATH, group.getId(), member.getId()))
+                .patch(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
                 .body("code", equalTo(group.getCode()));
@@ -85,7 +85,7 @@ class GroupJoinApiTest extends ApiBaseTest {
                 .body(request)
                 .cookie("token", token)
                 .when()
-                .patch(String.format(API_PATH, group.getId(), member.getId()))
+                .patch(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .body("message", equalTo(ErrorCode.PROFILE_DUPLICATED.getMessage()));
