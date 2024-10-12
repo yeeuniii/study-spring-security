@@ -1,3 +1,4 @@
+const nicknameBox = document.querySelector(".name-box")
 const nickname = document.querySelector(".name")
 const error = document.querySelector(".error-text")
 
@@ -5,8 +6,10 @@ nickname.addEventListener("input", checkNickname)
 
 function checkNickname() {
     error.innerText = "";
+    nicknameBox.style.border = "0.5px solid #767676";
 
     if (nickname.value !== "" && checkFormat()) {
+        nicknameBox.style.border = "2px solid #FC0";
         checkDuplicate();
     }
 }
