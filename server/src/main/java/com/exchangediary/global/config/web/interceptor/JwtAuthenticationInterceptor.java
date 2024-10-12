@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.io.IOException;
+
 public class JwtAuthenticationInterceptor implements HandlerInterceptor {
     private static final String COOKIE_NAME = "token";
     private final JwtService jwtService;
@@ -32,25 +34,22 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
             HttpServletRequest request,
             HttpServletResponse response,
             Object handler
-    ) {
-        String token = extractJwtToken(request);
+    ) throws IOException {
+        try {
+            String token = getJwtTokenFromCookies(request);
+            jwtService.verifyToken(token);
 
-        if (!jwtService.verifyToken(token)) {
-            throw new UnauthorizedException(
-                    ErrorCode.EXPIRED_TOKEN,
-                    "",
-                    token
-            );
+            Long memberId = jwtService.extractMemberId(token);
+            Member member = findMember(memberId);
+            request.setAttribute("member", member);
+        } catch (UnauthorizedException exception) {
+            response.sendRedirect(request.getContextPath()+ "/login");
+            return false;
         }
-
-        Long memberId = jwtService.extractMemberId(token);
-        Member member = findMember(memberId);
-        request.setAttribute("member", member);
-
         return true;
     }
 
-    private String extractJwtToken(HttpServletRequest request) {
+    private String getJwtTokenFromCookies(HttpServletRequest request) {
         try {
             Cookie[] cookies = request.getCookies();
 
