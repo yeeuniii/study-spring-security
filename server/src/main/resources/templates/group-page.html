@@ -4,6 +4,46 @@
 <th:block layout:fragment="header">
     <title>스프링 - 그룹 생성 및 가입</title>
     <link rel="stylesheet" href="/css/group/group-common.css" type="text/css">
+    <style>
+        .name-box {
+            width: 326px;
+            height: 60px;
+            flex-shrink: 0;
+            position: relative;
+            top: 24px;
+
+            border-radius: 20px;
+            border: 0.5px solid #767676;
+        }
+
+        .name-textarea {
+            width: 269px;
+            height: 34px;
+            float: left;
+            position: relative;
+            left: 29px;
+            top: 13px;
+        }
+
+        .name {
+            width: 269px;
+            height: 34px;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            resize: none;
+            white-space: pre-line;
+
+            color: #767676;
+            font-family: "SOYOMaple";
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            /*line-height: 34px; !* 170% *!*/
+            letter-spacing: -0.5px;
+        }
+
+    </style>
 </th:block>
 
 <th:block layout:fragment="content">
@@ -27,10 +67,10 @@
                         <div style="width: 100%; height: 34px;">
                             <span class="subject">그룹코드를 입력해주세요.</span>
                         </div>
-                        <div class="name-box">
+                        <div class="name-box" id="nameBox">
                             <div class="name-textarea">
                                 <label>
-                                    <textarea class="name" placeholder="" maxlength="13" spellcheck="false"></textarea>
+                                    <textarea class="name" placeholder="그룹코드" maxlength="13" spellcheck="false"></textarea>
                                 </label>
                             </div>
                         </div>
@@ -49,6 +89,12 @@
 </th:block>
 
 <th:block layout:fragment="script">
+    const nameTextarea = document.querySelector('.name-textarea');
+    const nameBox = document.getElementById('nameBox');
+
+    nameTextarea.addEventListener('click', function() {
+    nameBox.style.border = '0.5px solid yellow'; // 노란색 테두리로 변경
+    });
 </th:block>
 
 </html>
