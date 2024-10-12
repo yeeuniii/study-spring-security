@@ -27,16 +27,12 @@ public class GroupJoinService {
         List<Member> members = group.getMembers();
         groupValidationService.checkProfileDuplicate(members, request.profileLocation());
         groupValidationService.checkNumberOfMembers(members.size());
-        int maxOrderInGroup = findMaxOrderInGroup(group.getMembers());
-        member.updateMemberGroupInfo(
-                request.nickname(), request.profileLocation(),maxOrderInGroup + 1, group);
-        memberRepository.save(member);
-    }
 
-    private int findMaxOrderInGroup(List<Member> members) {
-        return members.stream()
-                .mapToInt(Member::getOrderInGroup)
-                .max()
-                .orElse(0);
+        member.updateMemberGroupInfo(
+                request.nickname(),
+                request.profileLocation(),
+                members.size() + 1,
+                group);
+        memberRepository.save(member);
     }
 }
