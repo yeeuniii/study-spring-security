@@ -52,7 +52,7 @@ class DiaryViewMonthlyTest extends ApiBaseTest {
     }
 
     @Test
-    void 달력형_일기_조회_실패() {
+    void 달력형_일기_조회_실패_날짜_유효성_검사() {
         Group group = createGroup();
         groupRepository.save(group);
 
