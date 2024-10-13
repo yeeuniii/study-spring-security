@@ -12,8 +12,8 @@ const steps = {
         "confirm": confirmStep1
     },
     3: {
-        "draw": drawStep1,
-        "confirm": confirmStep1
+        "draw": drawStep3,
+        "confirm": confirmStep3
     },
     4: {
         "draw": drawStep1,
