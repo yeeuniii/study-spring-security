@@ -1,4 +1,4 @@
-const STEP2_HTML_CREATE = `<div class="step-content">
+const STEP2_HTML_CREATE = `
                         <div style="width: 100%; height: 34px;">
                             <span class="subject">스프링의 이름을 지어주세요.</span>
                         </div>
@@ -11,10 +11,9 @@ const STEP2_HTML_CREATE = `<div class="step-content">
                         </div>
                         <div class="error-message" style="width: 283px; height: 34px; float: left; position: relative; left: 46px; top: 24px;">
                             <span class="error-text"></span>
-                        </div>
-                    </div>`
+                        </div>`
 
-const STEP2_HTML_JOIN = `<div class="step-content">
+const STEP2_HTML_JOIN = `
                         <div style="width: 100%; height: 34px;">
                             <span class="subject">그룹코드를 입력해주세요.</span>
                         </div>
@@ -24,8 +23,7 @@ const STEP2_HTML_JOIN = `<div class="step-content">
                                     <textarea class="group-code input-value" placeholder="그룹코드" spellcheck="false"></textarea>
                                 </label>
                             </div>
-                        </div>
-                    </div>`
+                        </div>`
 
 function drawStep2(html, direction) {
     const step_content = document.createElement("div");
