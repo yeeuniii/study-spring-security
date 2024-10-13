@@ -83,6 +83,16 @@ a {
     height: 353px;
     position: relative;
     top: 36px;
+
+    transition: transform 0.3s ease-out;
+}
+
+.step-content.next {
+    transform: translateX(100%);
+}
+
+.step-content.prev {
+    transform: translateX(-100%);
 }
 
 .step-bar {
