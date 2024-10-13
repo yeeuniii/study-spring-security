@@ -46,8 +46,10 @@ async function confirmStep4() {
         if (error.innerText !== "") {
             return false;
         }
+        steps[5].draw = drawStep5Create;
         return await createGroup();
     }
+    steps[5].draw = drawStep5Join;
     return await joinGroup();
 }
 
