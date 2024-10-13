@@ -70,8 +70,10 @@ async function verifyNickname() {
 }
 
 async function isDuplicateNickname() {
-    const groupId = window.localStorage.getItem("groupId");
-    return await fetch(`/api/groups/${groupId}/nickname/verify?nickname=${nickname.value}`)
+    if (groupData.groupId === "") {
+        return false;
+    }
+    return await fetch(`/api/groups/${groupData.groupId}/nickname/verify?nickname=${nickname.value}`)
         .then(response => response.status !== 200);
 }
 
