@@ -16,8 +16,8 @@ const steps = {
         "confirm": confirmStep1
     },
     4: {
-        "draw": drawStep1,
-        "confirm": confirmStep1
+        "draw": drawStep4,
+        "confirm": confirmStep4
     },
     5: {
         "draw": drawStep1,
@@ -28,7 +28,8 @@ const groupData = {
     "groupId": "",
     "groupName": "",
     "profileLocation": "",
-    "nickname": ""
+    "nickname": "",
+    "groupCode": ""
 }
 
 var currentStep = 1;
