@@ -99,6 +99,7 @@ async function createGroup() {
         })
         .then(data => {
             groupData.groupCode = data.code;
+            groupData.groupId = data.groupId;
             return true;
         })
         .catch(status => {
