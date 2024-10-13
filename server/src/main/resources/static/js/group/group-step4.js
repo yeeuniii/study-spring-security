@@ -43,13 +43,12 @@ function initStep4() {
 
 async function confirmStep4() {
     if (groupData.groupId === "") {
-        console.log("group create");
         if (error.innerText !== "") {
-            console.log("error");
             return false;
         }
         return await createGroup();
     }
+    return await joinGroup();
 }
 
 function setProfileImage() {
@@ -104,6 +103,26 @@ async function createGroup() {
                 return false;
             }
             openNotificationModal("error", ["그룹 생성에 실패했습니다."], 2000);
+            return false;
+        });
+}
+
+async function joinGroup() {
+    return await fetch(`/api/groups/${groupData.groupId}/join`,{
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "profileLocation": groupData.profileLocation,
+            "nickname": nickname.value
+        })
+    })
+        .then(response => {
+            if (response.status === 200) {
+                return true;
+            }
+            openNotificationModal("error", ["이미 선택된 캐릭터입니다.<br>다시 선택해주세요."], 2000);
             return false;
         });
 }
