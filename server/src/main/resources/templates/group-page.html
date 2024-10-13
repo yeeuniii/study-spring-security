@@ -4,6 +4,13 @@
 <th:block layout:fragment="header">
     <title>스프링 - 그룹 생성 및 가입</title>
     <link rel="stylesheet" href="/css/group/group-common.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-step1.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-step2.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-step4.css" type="text/css">
+
+    <script src="/js/group/group-step1.js"></script>
+    <script src="/js/group/group-step2.js"></script>
+    <script src="/js/group/group-step4.js"></script>
 </th:block>
 
 <th:block layout:fragment="content">
@@ -18,22 +25,20 @@
         </div>
         <div class="content">
             <div class="note">
-                <img class="note-img" src="/images/group/note.svg">
-
-                <div class="step step#">
-                    <img class="step-img" src="/images/group/step#.svg">
-                        <!-- TODO: # 진행 단계로 치환  -->
-                    <div class="step-content">
-                        <div style="width: 195px; height: 34px;">
-                            <span class="subject"></span>
-                        </div>
-                        <!-- TODO: 단게별 작업 진행  -->
+                <div class="note-header">
+                    <div class="step-bar">
+                        <div class="step-icon step1 fill"></div>
+                        <div class="step-icon step2"></div>
+                        <div class="step-icon step3"></div>
+                        <div class="step-icon step4"></div>
+                        <div class="step-icon step5"></div>
                     </div>
                 </div>
-
-                <div class="next">
-                    <a href="#" class="next-btn">
-                        <span class="next-text">확인</span>
+                <div class="note-body">
+                </div>
+                <div class="note-footer">
+                    <a href="#" class="confirm-btn">
+                        <span class="confirm-text">확인</span>
                     </a>
                 </div>
             </div>
@@ -42,6 +47,7 @@
 </th:block>
 
 <th:block layout:fragment="script">
+    <script src="/js/group/group-common.js"></script>
 </th:block>
 
 </html>
