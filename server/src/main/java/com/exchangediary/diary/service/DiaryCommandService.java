@@ -7,6 +7,10 @@ import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.DuplicateException;
 import com.exchangediary.global.exception.serviceexception.FailedImageUploadException;
+import com.exchangediary.group.domain.entity.Group;
+import com.exchangediary.group.service.GroupQueryService;
+import com.exchangediary.member.domain.entity.Member;
+import com.exchangediary.member.service.MemberQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,13 +25,19 @@ import java.util.Optional;
 @Transactional
 public class DiaryCommandService {
     private final DiaryRepository diaryRepository;
+    private final MemberQueryService memberQueryService;
+    private final GroupQueryService groupQueryService;
 
-    public Long createDiary(DiaryRequest diaryRequest, MultipartFile file) {
-        checkTodayDiaryExistent();
+
+    public Long createDiary(DiaryRequest diaryRequest, MultipartFile file, Long groupId, Long memberId) {
+        Member member = memberQueryService.findMember(memberId);
+        Group group = groupQueryService.findGroup(groupId);
+        checkTodayDiaryExistent(groupId);
 
         if (isEmptyFile(file)) {
             Diary diary = Diary.of(diaryRequest, null);
             Diary savedDiary = diaryRepository.save(diary);
+            diary.addMemberAndGroup(member, group);
             return savedDiary.getId();
         }
 
@@ -37,6 +47,7 @@ public class DiaryCommandService {
                     .build();
             Diary diary = Diary.of(diaryRequest, image);
             Diary savedDiary = diaryRepository.save(diary);
+            diary.addMemberAndGroup(member, group);
             image.uploadToDiary(savedDiary);
             return savedDiary.getId();
         } catch (IOException e) {
@@ -48,9 +59,11 @@ public class DiaryCommandService {
         }
     }
 
-    private void checkTodayDiaryExistent() {
+    private void checkTodayDiaryExistent(Long groupId) {
         LocalDate today = LocalDate.now();
-        Optional<Long> todayDiary = diaryRepository.findIdByDate(today.getYear(), today.getMonthValue(), today.getDayOfMonth());
+        Optional<Long> todayDiary =
+                diaryRepository.findIdByGroupAndDate(
+                        groupId, today.getYear(), today.getMonthValue(), today.getDayOfMonth());
 
         if (todayDiary.isPresent()) {
             throw new DuplicateException(

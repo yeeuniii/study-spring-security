@@ -58,4 +58,9 @@ public class Diary extends BaseEntity {
                 .uploadImage(uploadImage)
                 .build();
     }
+
+    public void addMemberAndGroup(Member member, Group group) {
+        this.member = member;
+        this.group = group;
+    }
 }
