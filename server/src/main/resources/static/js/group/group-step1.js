@@ -6,8 +6,7 @@ const STEP1_HTML = `
                         <div class="join-btn">
                             <a href="#" class="join circle">
                                 <div style="width: 64px; height: 90px;">
-                                    <img class="group-icon" src="/images/group/group_join.svg">
-                                    <img class="group-icon select" src="/images/group/group_join_white.svg">
+                                    <img class="group-icon">
                                     <span class="text group-text">그룹 가입</span>
                                 </div>
                             </a>
@@ -15,8 +14,7 @@ const STEP1_HTML = `
                         <div class="create-btn">
                             <a href="#" class="create circle">
                                 <div style="width: 64px; height: 90px;">
-                                    <img class="group-icon" src="/images/group/group_create.svg">
-                                    <img class="group-icon select" src="/images/group/group_create_white.svg">
+                                    <img class="group-icon">
                                     <span class="text group-text">그룹 생성</span>
                                 </div>
                             </a>
@@ -55,13 +53,10 @@ function clickGroupCreateBtn(event) {
 }
 
 function changeStyle(selected, unselected) {
-    selected.style.background = "#FC0";
-    selected.children[0].children[0].style.display = "none";
-    selected.children[0].children[1].style.display = "block";
-    selected.children[0].children[2].style.color = "#FFF";
+    selected.classList.add("selected");
+    unselected.classList.remove("selected");
+}
 
-    unselected.style.background = "#FFF";
-    unselected.children[0].children[0].style.display = "block";
-    unselected.children[0].children[1].style.display = "none";
-    unselected.children[0].children[2].style.color = "#767676";
+function confirmStep1(event) {
+    // steps[2].draw = createGroup or joinGroup
 }

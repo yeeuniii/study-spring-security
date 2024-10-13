@@ -31,10 +31,30 @@
     background: #FFF;
 }
 
+.circle.selected {
+    background-color: #FC0;
+}
+
 .group-icon {
     width: 48px;
     height: 48px;
     flex-shrink: 0;
+}
+
+.join .group-icon {
+    content: url("/images/group/group_join.svg");
+}
+
+.join.selected .group-icon {
+    content: url("/images/group/group_join_white.svg");
+}
+
+.create .group-icon {
+    content: url("/images/group/group_create.svg");
+}
+
+.create.selected .group-icon {
+    content: url("/images/group/group_create_white.svg");
 }
 
 .text {
@@ -54,6 +74,10 @@
     color: #767676;
 }
 
+.selected .group-text {
+    color: #FFF;
+}
+
 .question {
     width: 260px;
     height: 40px;
@@ -63,8 +87,4 @@
 
 .question-text {
     color: #E84D59;
-}
-
-.select {
-    display: none;
 }

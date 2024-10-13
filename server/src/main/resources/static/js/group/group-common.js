@@ -1,15 +1,40 @@
 const note_body = document.querySelector(".note-body");
 const step_bar = document.querySelector(".step-bar");
 const stepIcons = Array.from(step_bar.children);
+const confirm_btn = document.querySelector(".confirm-btn");
 const steps = {
-    1: drawStep1,
-    2: drawStep1,
-    3: drawStep1,
-    4: drawStep1,
-    5: drawStep1
+    1: {
+        "draw": drawStep1,
+        "confirm": confirmStep1
+    },
+    2: {
+        "draw": drawStep1,
+        "confirm": confirmStep1
+    },
+    3: {
+        "draw": drawStep1,
+        "confirm": confirmStep1
+    },
+    4: {
+        "draw": drawStep1,
+        "confirm": confirmStep1
+    },
+    5: {
+        "draw": drawStep1,
+        "confirm": confirmStep1
+    }
+}
+const groupData = {
+    "groupId": "",
+    "groupName": "",
+    "profileLocation": "",
+    "nickname": ""
 }
 
 var currentStep = 1;
+
+confirm_btn.addEventListener("click", confirmStep);
+drawStep(currentStep);
 
 function nextStep() {
     addStepIcon();
@@ -30,7 +55,7 @@ function removeStep(direction) {
 }
 
 function drawStep(stepNumber, direction) {
-    setTimeout(() => steps[stepNumber](direction), 350);
+    setTimeout(() => steps[stepNumber].draw(direction), 350);
 }
 
 function prevStep() {
@@ -45,4 +70,7 @@ function deleteStepIcon() {
     stepIcon.classList.remove("fill");
 }
 
-drawStep(currentStep);
+function confirmStep(event) {
+    steps[currentStep].confirm();
+    nextStep();
+}
