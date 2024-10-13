@@ -59,11 +59,11 @@ function changeStyle(selected, unselected) {
 
 function confirmStep1() {
     if (createBtn.classList.contains("selected")) {
-        // steps[2].draw = drawCreateGroup
+        steps[2].draw = drawCreateGroup
         return true;
     }
     if (joinBtn.classList.contains("selected")) {
-        // steps[2].draw = drawJoinGroup
+        steps[2].draw = drawJoinGroup
         return true;
     }
     openNotificationModal("error", ["그룹 가입 또는 생성 중에 골라주세요!"], 2000);
