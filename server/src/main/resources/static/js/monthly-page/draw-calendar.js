@@ -4,6 +4,7 @@ const month = document.querySelector(".month");
 const trs = Array.from(table.children[0].children).slice(3);
 const today = new Date();
 const calendarBottom = document.querySelector(".calendar-bottom")
+const groupId = localStorage.getItem("groupId");
 
 function init() {
     year.innerText = today.getFullYear();
@@ -21,7 +22,7 @@ async function drawDateOfCalendar() {
     let day = firstDay
     let column = 0;
 
-    const days = await fetch(`/api/groups/{groupId}/diaries/monthly?year=${year.innerText}&month=${month.innerText}`)
+    const days = await fetch(`/api/groups/${groupId}/diaries/monthly?year=${year.innerText}&month=${month.innerText}`)
         .then(response => response.json())
         .then(data => data.days);
     const diaryDays = days.map(day => Number(day.date))
@@ -45,7 +46,7 @@ function clearDate() {
 
 function makeCircle(date, diaryDays) {
     if (diaryDays.includes(date)) {
-        return `<a class="date day${date} diary highlight" href="/api/groups/{groupId}/diaries">${date}</a>`;
+        return `<a class="date day${date} diary highlight" href="/api/groups/${groupId}/diaries">${date}</a>`;
     }
     if (isToday(date)) {
         return `<a class="date day${date} today highlight" href="/diary">${date}</a>`;
@@ -79,7 +80,7 @@ function showDiary(event) {
 }
 
 function drawBottom() {
-    fetch(`/api/groups/{groupId}/diaries?year=${today.getFullYear()}&month=${today.getMonth() + 1}&day=${today.getDate()}`)
+    fetch(`/api/groups/${groupId}/diaries?year=${today.getFullYear()}&month=${today.getMonth() + 1}&day=${today.getDate()}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error("")
