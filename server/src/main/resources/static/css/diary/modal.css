@@ -17,19 +17,19 @@ td {
     background-size: cover;
 }
 
-.modal-content {
+.modal .modal-body {
     display: flex;
     justify-content: center;
 }
 
-.modal-body {
+.modal .modal-content {
     position: relative;
     top: 25px;
     width: 289px;
     height: 132px;
 }
 
-.modal-text {
+.modal .modal-text {
     color: var(--kakao-logo, #000);
     text-align: center;
     font-family: "SOYOMaple";
@@ -59,7 +59,7 @@ td {
     display: none;
 }
 
-.modal-title {
+.modal .modal-title {
     position: relative; 
     top: 5px;
     width: 100%; 
@@ -75,7 +75,7 @@ td {
     flex-shrink: 0;
 }
 
-.modal-btn {
+.modal .modal-btn {
     width: 60px; 
     height:100px;
     position: relative; 
@@ -85,20 +85,20 @@ td {
     height: 100px;
 } 
 
-.modal-btn.camera {
+.modal .modal-btn.camera {
     left: 31px; 
 }
 
-.modal-btn.gallery {
+.modal .modal-btn.gallery {
     left: 133px; 
 }
 
-.modal-icon {
+.modal .modal-icon {
     width: 50px; 
     height: 50px;
 }
 
-.modal-btn-text {
+.modal .modal-btn-text {
     width: 60px; 
     height: 34px;
 }
