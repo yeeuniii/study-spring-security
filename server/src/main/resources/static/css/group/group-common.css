@@ -49,7 +49,7 @@ a {
 
 .content {
     width: 100%;
-    height: 550px;
+    height: 570px;
     position: relative;
     top: 35px;
 }
@@ -58,33 +58,91 @@ a {
     position: relative;
     top: 23px;
     width:375px;
-    height: 515px;
-}
-
-.note-img {
-    width: 375px;
     height: 514px;
-    flex-shrink: 0;
+
+    background-image: url('/images/group/note.svg');
 }
 
-.step {
-    width: 100%;
-    height: 458px;
-    position: absolute;
-    top: -23px;
+.note-header {
+    width: 375px;
+    height: 45px;
+}
+
+.note-body {
+    width: 375px;
+    height: 389px;
+}
+
+.note-footer {
+    width: 375px;
+    height: 80px;
 }
 
 .step-content {
-    width: 100%;
+    width: 375px;;
     height: 353px;
     position: relative;
-    top: 57px;
+    top: 36px;
+
+    transition: transform 0.3s ease-out;
 }
 
-.step-img {
+.step-content.next {
+    transform: translateX(100%);
+}
+
+.step-content.prev {
+    transform: translateX(-100%);
+}
+
+.step-content.stop {
+    transform: translateX(0);
+}
+
+.step-bar {
     width: 234px;
     height: 45px;
-    flex-shrink: 0;
+
+    position: relative;
+    top: -24px;
+}
+
+.step-icon {
+    width: 22px;
+    height: 44px;
+
+    box-sizing: border-box;
+    float:left;
+
+    position: relative;
+
+    background: #FFFFFF;
+    border: 1px solid #5A402A;
+    border-radius: 20px;
+}
+
+.step-icon.fill {
+    background: #5A402A;
+}
+
+.step-icon.step1 {
+    left: 0;
+}
+
+.step-icon.step2 {
+    left: 31px;
+}
+
+.step-icon.step3 {
+    left: 62px;
+}
+
+.step-icon.step4 {
+    left: 93px;
+}
+
+.step-icon.step5 {
+    left: 124px;
 }
 
 .subject {
@@ -97,13 +155,7 @@ a {
     line-height: normal;
 }
 
-.next {
-    position: absolute;
-    bottom: 30px;
-    left: 112.75px;
-}
-
-.next-btn {
+.confirm-btn {
     display: flex;
     width: 150px;
     height: 50px;
@@ -116,7 +168,7 @@ a {
     background: #FFF;
 }
 
-.next-text {
+.confirm-text {
     color: var(--kakao-logo, #000);
     text-align: center;
     font-family: "SOYOMaple";
