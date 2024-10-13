@@ -70,7 +70,8 @@ function deleteStepIcon() {
     stepIcon.classList.remove("fill");
 }
 
-function confirmStep(event) {
-    steps[currentStep].confirm();
-    nextStep();
+function confirmStep() {
+    if (steps[currentStep].confirm()) {
+        nextStep();
+    }
 }
