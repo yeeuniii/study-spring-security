@@ -12,23 +12,25 @@ public record DiaryMonthlyResponse(
         List<DiaryInfo> days
 ) {
     public static DiaryMonthlyResponse of(int year, int month, List<Diary> diaries) {
-        List<DiaryInfo> diaryInfo = diaries.stream()
-                .map(diary -> DiaryInfo.of(diary.getCreatedAt().getDayOfMonth()))
+        List<DiaryInfo> diaryInfos = diaries.stream()
+                .map(DiaryInfo::of)
                 .toList();
         return DiaryMonthlyResponse.builder()
                 .year(year)
                 .month(month)
-                .days(diaryInfo)
+                .days(diaryInfos)
                 .build();
     }
 
     @Builder
     private record DiaryInfo(
-            int date
+            int date,
+            String profileImage
     ) {
-        public static DiaryInfo of(int date) {
+        public static DiaryInfo of(Diary diary) {
             return DiaryInfo.builder()
-                    .date(date)
+                    .date(diary.getCreatedAt().getDayOfMonth())
+                    .profileImage(diary.getMember().getProfileLocation())
                     .build();
         }
     }
