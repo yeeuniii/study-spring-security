@@ -71,11 +71,6 @@ async function confirmStep2() {
             return false;
         }
         return await matchGroupByGroupCode()
-            .then(() => true)
-            .catch(() => {
-                openNotificationModal("error", ["그룹코드가 유효하지 않습니다."], 2000);
-                return false;
-            })
     }
     return false;
 }
@@ -134,5 +129,12 @@ async function matchGroupByGroupCode() {
         }
         return response.json();
     })
-        .then(data => groupData.groupId = data.groupId);
+        .then(data => {
+            groupData.groupId = data.groupId;
+            return true;
+        })
+        .catch(() => {
+            openNotificationModal("error", ["그룹코드가 유효하지 않습니다."], 2000);
+            return false;
+        });
 }
