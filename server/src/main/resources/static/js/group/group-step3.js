@@ -66,7 +66,9 @@ function initStep3() {
         icon.addEventListener("click", (event) => selectIcon(event));
     })
 
-    // viewSelectableCharacter();
+    if (groupData.groupId !== "") {
+        viewSelectableCharacter();
+    }
 }
 
 function selectIcon(event) {
