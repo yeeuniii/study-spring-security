@@ -9,8 +9,6 @@ import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.InvalidDateException;
 import com.exchangediary.global.exception.serviceexception.NotFoundException;
 import com.exchangediary.group.service.GroupQueryService;
-import com.exchangediary.group.domain.entity.Group;
-import com.exchangediary.group.service.GroupQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +25,7 @@ public class DiaryQueryService {
     private final DiaryRepository diaryRepository;
     private final GroupQueryService groupQueryService;
 
-    public DiaryResponse viewDiary(Long diaryId, Long groupId) {
-        groupQueryService.findGroup(groupId); //Todo: 그룹 인가 구현 후 삭제 될 코드
+    public DiaryResponse viewDiary(Long diaryId) {
         Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new NotFoundException(
                         ErrorCode.DIARY_NOT_FOUND,

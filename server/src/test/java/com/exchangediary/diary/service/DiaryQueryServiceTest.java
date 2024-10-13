@@ -38,19 +38,19 @@ public class DiaryQueryServiceTest extends ApiBaseTest {
         groupRepository.save(group);
         Diary diary = createDiary(member, group);
         diaryRepository.save(diary);
-        DiaryResponse response = diaryQueryService.viewDiary(diary.getId(), group.getId());
+        DiaryResponse response = diaryQueryService.viewDiary(diary.getId());
 
         assertThat(response.diaryId()).isEqualTo(diary.getId());
     }
 
     @Test
-    void 일기_조회_실패() {
+    void 일기_조회_실패_일기_없음() {
         Group group = createGroup();
         groupRepository.save(group);
         Long diaryId = 1L;
 
         NotFoundException exception = assertThrows(NotFoundException.class, () ->
-                diaryQueryService.viewDiary(diaryId, group.getId())
+                diaryQueryService.viewDiary(diaryId)
         );
 
         assertThat(exception.getValue()).isEqualTo(diaryId.toString());
