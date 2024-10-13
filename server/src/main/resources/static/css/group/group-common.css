@@ -95,6 +95,10 @@ a {
     transform: translateX(-100%);
 }
 
+.step-content.stop {
+    transform: translateX(0);
+}
+
 .step-bar {
     width: 234px;
     height: 45px;

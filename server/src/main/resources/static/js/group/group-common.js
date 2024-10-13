@@ -34,7 +34,7 @@ const groupData = {
 var currentStep = 1;
 
 confirm_btn.addEventListener("click", confirmStep);
-drawStep(currentStep);
+drawStep(currentStep, "stop");
 
 function nextStep() {
     addStepIcon();
