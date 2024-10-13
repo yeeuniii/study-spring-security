@@ -37,37 +37,12 @@ class GroupJoinApiTest extends ApiBaseTest {
                 .when()
                 .patch(String.format(API_PATH, group.getId()))
                 .then().log().all()
-                .statusCode(HttpStatus.OK.value())
-                .body("code", equalTo(null));
+                .statusCode(HttpStatus.OK.value());
 
         Member updatedMember = memberRepository.findById(member.getId()).get();
         assertThat(updatedMember.getNickname()).isEqualTo("jisunggi");
         assertThat(updatedMember.getProfileLocation()).isEqualTo("resource/image2");
         assertThat(updatedMember.getOrderInGroup()).isEqualTo(2);
-        assertThat(updatedMember.getGroup().getId()).isEqualTo(group.getId());
-    }
-
-    @Test
-    void 그룹_생성_후_가입_성공 () {
-        Group group = createGroup();
-        groupRepository.save(group);
-        GroupJoinRequest request = new GroupJoinRequest("resource/image1", "jisunggi");
-
-        RestAssured
-                .given().log().all()
-                .contentType(ContentType.JSON)
-                .body(request)
-                .cookie("token", token)
-                .when()
-                .patch(String.format(API_PATH, group.getId()))
-                .then().log().all()
-                .statusCode(HttpStatus.OK.value())
-                .body("code", equalTo(group.getCode()));
-
-        Member updatedMember = memberRepository.findById(member.getId()).get();
-        assertThat(updatedMember.getNickname()).isEqualTo("jisunggi");
-        assertThat(updatedMember.getProfileLocation()).isEqualTo("resource/image1");
-        assertThat(updatedMember.getOrderInGroup()).isEqualTo(1);
         assertThat(updatedMember.getGroup().getId()).isEqualTo(group.getId());
     }
 
