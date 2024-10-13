@@ -1,18 +1,3 @@
-let join = false;
-
-const STEP2_HTML_JOIN = `<div class="step-content">
-                        <div style="width: 100%; height: 34px;">
-                            <span class="subject">그룹코드를 입력해주세요.</span>
-                        </div>
-                        <div class="input-box">
-                            <div class="input-textarea">
-                                <label>
-                                    <textarea class="group-code input-value" placeholder="그룹코드" spellcheck="false"></textarea>
-                                </label>
-                            </div>
-                        </div>
-                    </div>`
-
 const STEP2_HTML_CREATE = `<div class="step-content">
                         <div style="width: 100%; height: 34px;">
                             <span class="subject">스프링의 이름을 지어주세요.</span>
@@ -29,39 +14,88 @@ const STEP2_HTML_CREATE = `<div class="step-content">
                         </div>
                     </div>`
 
-function getStep2Html() {
-    if (join) {
-        return STEP2_HTML_JOIN;
-    }
-    return STEP2_HTML_CREATE;
-}
+const STEP2_HTML_JOIN = `<div class="step-content">
+                        <div style="width: 100%; height: 34px;">
+                            <span class="subject">그룹코드를 입력해주세요.</span>
+                        </div>
+                        <div class="input-box">
+                            <div class="input-textarea">
+                                <label>
+                                    <textarea class="group-code input-value" placeholder="그룹코드" spellcheck="false"></textarea>
+                                </label>
+                            </div>
+                        </div>
+                    </div>`
 
-function drawStep2() {
-    note_body.innerHTML = getStep2Html();
-
+function drawStep2(html, direction) {
+    const step_content = document.createElement("div");
+    step_content.classList.add("step-content", direction);
+    step_content.innerHTML = html;
+    note_body.appendChild(step_content);
+    setTimeout(() => step_content.style.transform = "translateX(0)", 10);
     initStep2();
 }
 
-function initStep2() {
-    const confirmBtn = document.querySelector(".confirm-btn");
-    inputValue = document.querySelector(".input-value");
-
-    inputValue.addEventListener("input", () => {
-        changeCodeBoxColor();
-        if (!join) {
-            const error = document.querySelector(".error-text");
-            error.innerText = verifyGroupName();
-        }
-    });
-    confirmBtn.addEventListener("click", clickConfirmBtn);
+function drawCreateGroup(direction) {
+    drawStep2(STEP2_HTML_CREATE, direction);
 }
 
-function changeCodeBoxColor() {
+function drawJoinGroup(direction) {
+    drawStep2(STEP2_HTML_JOIN, direction);
+}
+
+function initStep2() {
+    inputValue = document.querySelector(".input-value");
+    error = document.querySelector(".error-text");
+
+    inputValue.addEventListener("input", () => {
+        changeBoxBorderStyle();
+        if (isCreate()) {
+            error.innerText = verifyGroupName();
+        }
+    })
+}
+
+function confirmStep2() {
+    if (isCreate() && error.innerText === "") {
+        if (inputValue.value === "") {
+            openNotificationModal("error", ["그룹명을 입력해주세요."], 2000);
+            return false;
+        }
+        groupData.groupName = inputValue.value;
+        return true;
+    }
+    if (isJoin()) {
+        if (inputValue.value === "") {
+            openNotificationModal("error", ["그룹코드를 입력해주세요."], 2000);
+            return false;
+        }
+        return matchGroupByGroupCode()
+            .then(() => true)
+            .catch(() => {
+                openNotificationModal("error", ["그룹코드가 유효하지 않습니다."], 2000);
+                return false;
+            })
+    }
+    return false;
+}
+
+function isCreate() {
+    return inputValue.classList.contains("group-name");
+}
+
+function isJoin() {
+    return inputValue.classList.contains("group-code");
+}
+
+function changeBoxBorderStyle() {
     const inputBox = document.querySelector(".input-box");
 
-    inputBox.style.border = "0.5px solid #767676";
-    if (inputValue.value !== "") {
-        inputBox.style.border = "2px solid #FC0";
+    if (inputValue.value !== "" && !inputBox.classList.contains("input")) {
+        inputBox.classList.add("input");
+    }
+    if (inputValue.value === "" && inputBox.classList.contains("input")) {
+        inputBox.classList.remove("input");
     }
 }
 
@@ -82,16 +116,10 @@ function verifyGroupName() {
     return "";
 }
 
-function clickConfirmBtn() {
-    if (join) {
-        verifyGroupCode();
-    }
-}
-
-function verifyGroupCode() {
+function matchGroupByGroupCode() {
     const groupCode = document.querySelector(".group-code");
 
-    fetch("/api/groups/code/verify", {
+    return fetch("/api/groups/code/verify", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -99,9 +127,12 @@ function verifyGroupCode() {
         body: JSON.stringify({
             "code": groupCode.value
         })
-    }).then(response => {
-        if (response.status === 200) {
-            return response.json();
+    })
+        .then(response => {
+        if (response.status !== 200) {
+            throw new Error();
         }
-    }).then(data => window.localStorage.setItem("groupId", data.groupId));
+        return response.json();
+    })
+        .then(data => groupData.groupId = data.groupId);
 }

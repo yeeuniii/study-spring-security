@@ -8,8 +8,8 @@ const steps = {
         "confirm": confirmStep1
     },
     2: {
-        "draw": drawStep1,
-        "confirm": confirmStep1
+        "draw": drawStep2,
+        "confirm": confirmStep2
     },
     3: {
         "draw": drawStep1,

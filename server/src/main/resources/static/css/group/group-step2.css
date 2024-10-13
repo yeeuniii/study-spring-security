@@ -11,6 +11,10 @@
     border: 0.5px solid #767676;
 }
 
+.input-box.input {
+    border: 2px solid #FC0;
+}
+
 .input-textarea {
     width: 269px;
     height: 34px;
