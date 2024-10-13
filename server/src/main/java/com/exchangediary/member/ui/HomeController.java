@@ -1,4 +1,4 @@
-package com.exchangediary.group.ui;
+package com.exchangediary.member.ui;
 
 import com.exchangediary.member.service.MemberQueryService;
 import lombok.RequiredArgsConstructor;
@@ -8,16 +8,14 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 
 @Controller
 @RequiredArgsConstructor
-public class GroupController {
+public class HomeController {
     private final MemberQueryService memberQueryService;
 
-    @GetMapping("/group")
-    public String createOrJoinGroup(
-            @RequestAttribute Long memberId
-    ) {
-        if (memberQueryService.isInGroup(memberId)) {
-            return "redirect:/";
+    @GetMapping("/")
+    public String home(@RequestAttribute Long memberId) {
+        if (!memberQueryService.isInGroup(memberId)) {
+            return "redirect:/group";
         }
-        return "group-page";
+        return "index.html";
     }
 }

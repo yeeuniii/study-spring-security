@@ -23,4 +23,8 @@ public class MemberQueryService {
                         String.valueOf(memberId)
                 ));
     }
+
+    public boolean isInGroup(Long memberId) {
+        return memberRepository.existsByIdAndGroupIsNotNull(memberId);
+    }
 }
