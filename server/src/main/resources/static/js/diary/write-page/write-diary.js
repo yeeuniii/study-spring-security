@@ -7,6 +7,8 @@ function init() {
     addEventToWriteBtn();
 }
 
+const groupId = localStorage.getItem("groupId");
+
 function addEventToTextArea() {
     const textArea = document.querySelector("textarea");
 
@@ -38,7 +40,7 @@ function writeDiary() {
     formData.append("data", new Blob([json], {type: "application/json"}));
     formData.append("file", getUploadImage());
 
-    fetch("/api/diary", {
+    fetch(`api/groups/${groupId}/diaries`, {
         method: "post",
         body: formData
     })
