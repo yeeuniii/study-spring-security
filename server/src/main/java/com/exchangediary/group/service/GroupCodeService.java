@@ -15,6 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class GroupCodeService {
     private final GroupRepository groupRepository;
+    private final GroupQueryService groupQueryService;
 
     public String generateCode(String groupName) {
         LocalDateTime today = LocalDateTime.now();
@@ -35,12 +36,7 @@ public class GroupCodeService {
     }
 
     public String findByGroupId(Long groupId) {
-        Group group = groupRepository.findById(groupId)
-                .orElseThrow(() -> new NotFoundException(
-                        ErrorCode.GROUP_NOT_FOUND,
-                        "",
-                        String.valueOf(groupId)
-                ));
+        Group group = groupQueryService.findGroup(groupId);
         return group.getCode();
     }
 }
