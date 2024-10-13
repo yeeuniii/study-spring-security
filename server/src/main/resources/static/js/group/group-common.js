@@ -20,8 +20,8 @@ const steps = {
         "confirm": confirmStep4
     },
     5: {
-        "draw": drawStep1,
-        "confirm": confirmStep1
+        "draw": drawStep5,
+        "confirm": confirmStep5
     }
 }
 const groupData = {
