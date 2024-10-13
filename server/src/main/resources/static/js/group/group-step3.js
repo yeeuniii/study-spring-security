@@ -1,32 +1,52 @@
 const STEP3_HTML = `<div style="width: 100%; height: 34px;">
                                 <span class="subject">나의 캐릭터를 골라요.</span>
                             </div>
-                            <div class="first-line">
-                                <a id="pring2" href="#" class="first character">
-                                    <img src="/images/group/character/pring2.svg" class="character">
-                                </a>
-                                <a id="pring3" href="#" class="last character">
-                                    <img src="/images/group/character/pring3.svg" class="character">
-                                </a>
+                            <div class="line">
+                                <div style="margin-left: 90px; height: 100%">
+                                    <div class="character-btn">
+                                        <a id="pring2" href="#" class="character-icon">
+                                            <img src="/images/group/character/pring2.svg" class="character-icon">
+                                        </a>
+                                    </div>
+                                    <div class="character-btn">
+                                        <a id="pring3" href="#" class="character-icon">
+                                            <img src="/images/group/character/pring3.svg" class="character-icon">
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="second-line">
-                                <a id="pring1" href="#" class="first character">
-                                    <img src="/images/group/character/pring1.svg" class="character">
-                                </a>
-                                <a id="pring7" href="#" class="mid character">
-                                    <img src="/images/group/character/pring7.svg" class="character">
-                                </a>
-                                <a id="pring4" href="#" class="last green">
-                                    <img src="/images/group/character/pring4.svg" class="green">
-                                </a>
+                            <div class="line">
+                                <div style="margin-left: 35px; height: 100%">
+                                    <div class="character-btn">
+                                        <a id="pring1" href="#" class="character-icon">
+                                            <img src="/images/group/character/pring1.svg" class="character-icon">
+                                        </a>
+                                    </div>
+                                    <div class="character-btn">
+                                        <a id="pring7" href="#" class="character-icon">
+                                            <img src="/images/group/character/pring7.svg" class="character-icon">
+                                        </a>
+                                    </div>
+                                    <div class="character-btn">
+                                        <a id="pring4" href="#" class="character-icon">
+                                            <img src="/images/group/character/pring4.svg" class="character-icon green">
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="third-line">
-                                <a id="pring5" href="#" class="first blue" style="position: relative; bottom: 14px;">
-                                    <img src="/images/group/character/pring5.svg" class="blue">
-                                </a>
-                                <a id="pring6" href="#" class="last character">
-                                    <img src="/images/group/character/pring6.svg" class="character">
-                                </a>
+                            <div class="line">
+                                <div style="margin-left: 90px; height: 100%">
+                                    <div class="character-btn">
+                                        <a id="pring5" href="#" class="character-icon">
+                                            <img src="/images/group/character/pring5.svg" class="character-icon blue">
+                                        </a>                                    
+                                    </div>
+                                    <div class="character-btn">
+                                        <a id="pring6" href="#" class="character-icon">
+                                            <img src="/images/group/character/pring6.svg" class="character-icon">
+                                        </a>
+                                    </div>           
+                                </div>
                             </div>`;
 
 function drawStep3(direction) {
@@ -39,11 +59,26 @@ function drawStep3(direction) {
 }
 
 function initStep3() {
-    viewSelectableCharacter();
+    const icons = note_body.querySelectorAll("a.character-icon");
+    selectedIcon = null;
+
+    Array.from(icons).forEach(icon => {
+        icon.addEventListener("click", (event) => selectIcon(event));
+    })
+
+    // viewSelectableCharacter();
+}
+
+function selectIcon(event) {
+    if (selectedIcon != null) {
+        selectedIcon.classList.remove("selected");
+    }
+    selectedIcon = event.target.closest("div.character-btn");
+    selectedIcon.classList.add("selected");
 }
 
 async function viewSelectableCharacter() {
-    const groupId = window.localStorage.getItem("groupId");
+    const groupId = groupData.groupId;
 
     const selectedImages = await fetch(`/api/groups/${groupId}/profile-image`)
         .then(response => response.json())
@@ -61,5 +96,10 @@ async function viewSelectableCharacter() {
 }
 
 function confirmStep3() {
-
+    if (selectedIcon != null) {
+        groupData.profileLocation = selectedIcon.children[0].children[0].src;
+        return true;
+    }
+    openNotificationModal("error", ["캐릭터를 선택해주세요."], 2000);
+    return false;
 }
