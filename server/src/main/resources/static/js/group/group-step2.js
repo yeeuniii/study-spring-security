@@ -56,7 +56,7 @@ function initStep2() {
     })
 }
 
-function confirmStep2() {
+async function confirmStep2() {
     if (isCreate() && error.innerText === "") {
         if (inputValue.value === "") {
             openNotificationModal("error", ["그룹명을 입력해주세요."], 2000);
@@ -70,7 +70,7 @@ function confirmStep2() {
             openNotificationModal("error", ["그룹코드를 입력해주세요."], 2000);
             return false;
         }
-        return matchGroupByGroupCode()
+        return await matchGroupByGroupCode()
             .then(() => true)
             .catch(() => {
                 openNotificationModal("error", ["그룹코드가 유효하지 않습니다."], 2000);
@@ -116,7 +116,7 @@ function verifyGroupName() {
     return "";
 }
 
-function matchGroupByGroupCode() {
+async function matchGroupByGroupCode() {
     const groupCode = document.querySelector(".group-code");
 
     return fetch("/api/groups/code/verify", {
