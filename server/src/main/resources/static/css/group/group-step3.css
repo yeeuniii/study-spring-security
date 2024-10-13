@@ -34,3 +34,35 @@
     height: auto;
     margin-bottom: 13px;
 }
+
+a.gray {
+    pointer-events: none
+}
+
+#pring1.gray .character-icon {
+    content: url("/images/group/character/gray-pring1.svg")
+}
+
+#pring2.gray .character-icon {
+    content: url("/images/group/character/gray-pring2.svg")
+}
+
+#pring3.gray .character-icon {
+    content: url("/images/group/character/gray-pring3.svg")
+}
+
+#pring4.gray .character-icon {
+    content: url("/images/group/character/gray-pring4.svg")
+}
+
+#pring5.gray .character-icon {
+    content: url("/images/group/character/gray-pring5.svg")
+}
+
+#pring6.gray .character-icon {
+    content: url("/images/group/character/gray-pring6.svg")
+}
+
+#pring7.gray .character-icon {
+    content: url("/images/group/character/gray-pring7.svg")
+}

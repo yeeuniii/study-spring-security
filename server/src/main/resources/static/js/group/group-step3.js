@@ -92,8 +92,7 @@ async function viewSelectableCharacter() {
         const name = profileLocation.substr(index, 6);
         const pring = document.getElementById(name);
 
-        pring.removeAttribute("href");
-        pring.children[0].src = `/images/group/character/gray-${name}.svg`;
+        pring.classList.add("gray");
     });
 }
 
