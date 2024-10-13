@@ -43,6 +43,46 @@ class GroupProfileApiTest extends ApiBaseTest {
     }
 
     @Test
+    void 프로필_이미지_선택_목록_조회_그룹원_없을때() {
+        Group group = createGroup();
+        groupRepository.save(group);
+
+        GroupProfileResponse response = RestAssured
+                .given().log().all()
+                .contentType(ContentType.JSON)
+                .cookie("token", token)
+                .when().get(String.format(API_PATH, group.getId()))
+                .then().log().all()
+                .statusCode(HttpStatus.OK.value())
+                .extract().as(GroupProfileResponse.class);
+
+        assertThat(response.selectedImages()).hasSize(0);
+    }
+
+    @Test
+    void 프로필_이미지_선택_목록_조회_그룹원_다참() {
+        Group group = createGroup();
+        groupRepository.save(group);
+        List<Member> members = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
+            members.add(createMember(group, i));
+        }
+        memberRepository.saveAll(members);
+
+        GroupProfileResponse response = RestAssured
+                .given().log().all()
+                .contentType(ContentType.JSON)
+                .cookie("token", token)
+                .when().get(String.format(API_PATH, group.getId()))
+                .then().log().all()
+                .statusCode(HttpStatus.OK.value())
+                .extract().as(GroupProfileResponse.class);
+
+
+        assertThat(response.selectedImages()).hasSize(7);
+    }
+
+    @Test
     void 프로필_이미지_선택_목록_조회_그룹없음() {
         Long groupId = 100L;
 
@@ -53,25 +93,6 @@ class GroupProfileApiTest extends ApiBaseTest {
                 .when().get(String.format(API_PATH, groupId))
                 .then().log().all()
                 .statusCode(HttpStatus.NOT_FOUND.value());
-    }
-
-    @Test
-    void 프로필_이미지_선택_목록_조회_멤버_초과() {
-        Group group = createGroup();
-        groupRepository.save(group);
-        List<Member> members = new ArrayList<>();
-        for (int i = 1; i <= 7; i++) {
-            members.add(createMember(group, i));
-        }
-        memberRepository.saveAll(members);
-
-        RestAssured
-                .given().log().all()
-                .contentType(ContentType.JSON)
-                .cookie("token", token)
-                .when().get(String.format(API_PATH, group.getId()))
-                .then().log().all()
-                .statusCode(HttpStatus.CONFLICT.value());
     }
 
     private Member createMember(Group group, int index) {

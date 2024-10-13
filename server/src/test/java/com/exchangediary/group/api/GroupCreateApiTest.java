@@ -2,11 +2,15 @@ package com.exchangediary.group.api;
 
 import com.exchangediary.ApiBaseTest;
 import com.exchangediary.group.domain.GroupRepository;
-import com.exchangediary.group.ui.dto.request.GroupNameRequest;
-import com.exchangediary.group.ui.dto.response.GroupIdResponse;
+import com.exchangediary.group.domain.entity.Group;
+import com.exchangediary.group.ui.dto.request.GroupCreateRequest;
+import com.exchangediary.group.ui.dto.response.GroupCreateResponse;
+import com.exchangediary.member.domain.entity.Member;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
@@ -20,20 +24,57 @@ public class GroupCreateApiTest extends ApiBaseTest {
     @Test
     void 그룹_생성_성공() {
         String groupName = "버니즈";
+        String profileLocation = "/profile/location";
+        String nickname = "yen";
 
-        Long groupId = RestAssured
+        var response = RestAssured
                 .given().log().all()
-                .body(new GroupNameRequest(groupName))
+                .body(new GroupCreateRequest(groupName, profileLocation, nickname))
                 .cookie("token", token)
                 .contentType(ContentType.JSON)
                 .when().post(API_PATH)
                 .then().log().all()
                 .statusCode(HttpStatus.CREATED.value())
-                .extract().as(GroupIdResponse.class)
-                .groupId();
+                .extract().as(GroupCreateResponse.class);
 
-        // ToDo: 아래 부분 location으로 확인하도록 수정
-        String result = groupRepository.findById(groupId).get().getName();
-        assertThat(result).isEqualTo(groupName);
+        Group group = groupRepository.findById(response.groupId()).get();
+        assertThat(group.getName()).isEqualTo(groupName);
+        Member groupCreator = memberRepository.findById(member.getId()).get();
+        assertThat(groupCreator.getGroup().getId()).isEqualTo(group.getId());
+        assertThat(groupCreator.getOrderInGroup()).isEqualTo(1);
+        assertThat(groupCreator.getNickname()).isEqualTo(nickname);
+        assertThat(groupCreator.getProfileLocation()).isEqualTo(profileLocation);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", " ", "    "})
+    void 그룹_생성_실패_빈_닉네임(String nickname) {
+        String groupName = "버니즈";
+        String profileLocation = "/profile/location";
+
+        RestAssured
+                .given().log().all()
+                .body(new GroupCreateRequest(groupName, profileLocation, nickname))
+                .cookie("token", token)
+                .contentType(ContentType.JSON)
+                .when().post(API_PATH)
+                .then().log().all()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", " ", "    "})
+    void 그룹_생성_실패_빈_프로필_경로(String profileLocation) {
+        String groupName = "버니즈";
+        String nickname = "yen";
+
+        RestAssured
+                .given().log().all()
+                .body(new GroupCreateRequest(groupName, profileLocation, nickname))
+                .cookie("token", token)
+                .contentType(ContentType.JSON)
+                .when().post(API_PATH)
+                .then().log().all()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 }

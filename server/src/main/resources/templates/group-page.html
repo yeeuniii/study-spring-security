@@ -4,7 +4,9 @@
 <th:block layout:fragment="header">
     <title>스프링 - 그룹 생성 및 가입</title>
     <link rel="stylesheet" href="/css/group/group-common.css" type="text/css">
-    <link rel="stylesheet" href="/css/group/group-step3.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-step1.css" type="text/css">
+
+    <script src="/js/group/group-step1.js"></script>
 </th:block>
 
 <th:block layout:fragment="content">
@@ -19,45 +21,20 @@
         </div>
         <div class="content">
             <div class="note">
-                <img class="note-img" src="/images/group/note.svg">
-                    <div class="step step2">
-                        <img class="step-img" src="/images/group/step3.svg">
-                        <div class="step-content">
-                            <div style="width: 100%; height: 34px;">
-                                <span class="subject">나의 캐릭터를 골라요.</span>
-                            </div>
-                            <div class="first-line">
-                                <a id="pring2" href="#" class="first character">
-                                    <img src="/images/group/character/pring2.svg" class="character">
-                                </a>
-                                <a id="pring3" href="#" class="last character">
-                                    <img src="/images/group/character/pring3.svg" class="character">
-                                </a>
-                            </div>
-                            <div class="second-line">
-                                <a id="pring1" href="#" class="first character">
-                                    <img src="/images/group/character/pring1.svg" class="character">
-                                </a>
-                                <a id="pring7" href="#" class="mid character">
-                                    <img src="/images/group/character/pring7.svg" class="character">
-                                </a>
-                                <a id="pring4" href="#" class="last green">
-                                    <img src="/images/group/character/pring4.svg" class="green">
-                                </a>
-                            </div>
-                            <div class="third-line">
-                                <a id="pring5" href="#" class="first blue" style="position: relative; bottom: 14px;">
-                                    <img src="/images/group/character/pring5.svg" class="blue">
-                                </a>
-                                <a id="pring6" href="#" class="last character">
-                                    <img src="/images/group/character/pring6.svg" class="character">
-                                </a>
-                            </div>
-                        </div>
+                <div class="note-header">
+                    <div class="step-bar">
+                        <div class="step-icon step1 fill"></div>
+                        <div class="step-icon step2"></div>
+                        <div class="step-icon step3"></div>
+                        <div class="step-icon step4"></div>
+                        <div class="step-icon step5"></div>
                     </div>
-                <div class="next">
-                    <a href="#" class="next-btn">
-                        <span class="next-text">확인</span>
+                </div>
+                <div class="note-body">
+                </div>
+                <div class="note-footer">
+                    <a href="#" class="confirm-btn">
+                        <span class="confirm-text">확인</span>
                     </a>
                 </div>
             </div>
@@ -66,7 +43,7 @@
 </th:block>
 
 <th:block layout:fragment="script">
-    <script src="/js/group/select-character.js"></script>
+    <script src="/js/group/group-common.js"></script>
 </th:block>
 
 </html>

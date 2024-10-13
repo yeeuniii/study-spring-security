@@ -1,24 +1,27 @@
 package com.exchangediary.group.ui;
 
 import com.exchangediary.group.service.GroupCodeService;
+import com.exchangediary.group.service.GroupJoinService;
 import com.exchangediary.group.service.GroupQueryService;
-import com.exchangediary.group.service.GroupCommandService;
+import com.exchangediary.group.service.GroupCreateService;
 import com.exchangediary.group.ui.dto.request.GroupCodeRequest;
 import com.exchangediary.group.ui.dto.request.GroupJoinRequest;
-import com.exchangediary.group.ui.dto.request.GroupNameRequest;
+import com.exchangediary.group.ui.dto.request.GroupCreateRequest;
 import com.exchangediary.group.ui.dto.request.GroupNicknameRequest;
+import com.exchangediary.group.ui.dto.response.GroupCreateResponse;
 import com.exchangediary.group.ui.dto.response.GroupIdResponse;
-import com.exchangediary.group.ui.dto.response.GroupJoinResponse;
 import com.exchangediary.group.ui.dto.response.GroupNicknameVerifyResponse;
 import com.exchangediary.group.ui.dto.response.GroupProfileResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,18 +32,20 @@ import java.net.URI;
 @RequiredArgsConstructor
 @RequestMapping("/api/groups")
 public class ApiGroupController {
-    private final GroupCommandService groupCommandService;
+    private final GroupCreateService groupCreateService;
+    private final GroupJoinService groupJoinService;
     private final GroupCodeService groupCodeService;
     private final GroupQueryService groupQueryService;
 
     @PostMapping
-    public ResponseEntity<GroupIdResponse> createGroup(
-            @RequestBody @Valid GroupNameRequest request
+    public ResponseEntity<GroupCreateResponse> createGroup(
+            @RequestBody @Valid GroupCreateRequest request,
+            @RequestAttribute Long memberId
     ) {
-        GroupIdResponse groupIdResponse = groupCommandService.createGroup(request.groupName());
+        GroupCreateResponse response = groupCreateService.createGroup(request, memberId);
         return ResponseEntity
-                .created(URI.create("/api/groups/" + groupIdResponse.groupId()))
-                .body(groupIdResponse);
+                .status(HttpStatus.CREATED)
+                .body(response);
     }
 
     @PostMapping("/code/verify")
@@ -76,15 +81,15 @@ public class ApiGroupController {
                 .body(response);
     }
 
-    @PatchMapping("/{groupId}/join/{memberId}")
-    public ResponseEntity<GroupJoinResponse> joinGroup(
+    @PatchMapping("/{groupId}/join")
+    public ResponseEntity<Void> joinGroup(
             @PathVariable Long groupId,
-            @PathVariable Long memberId, //Todo: 쿠키 도입 후 빠질 값
-            @RequestBody @Valid GroupJoinRequest request
+            @RequestBody @Valid GroupJoinRequest request,
+            @RequestAttribute Long memberId
     ) {
-        GroupJoinResponse response = groupCommandService.joinGroup(groupId, request, memberId);
+        groupJoinService.joinGroup(groupId, request, memberId);
         return ResponseEntity
                 .ok()
-                .body(response);
+                .build();
     }
 }
