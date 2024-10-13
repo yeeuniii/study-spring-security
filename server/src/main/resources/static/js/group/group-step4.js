@@ -1,6 +1,4 @@
-let join = true;
-
-const STEP4_HTML = `<div class="step-content">
+const STEP4_HTML = `
                         <div style="width: 100px; height: 100px;">
                             <img class="selected-pring" src="" style="width: 100px; height: 100px;">
                         </div>
@@ -16,32 +14,48 @@ const STEP4_HTML = `<div class="step-content">
                         </div>
                         <div class="error-message" style="width: 283px; height: 34px; float: left; position: relative; left: 46px; top: 24px;">
                             <span class="error-text"></span>
-                        </div>
-                    </div>`;
+                        </div>`;
 
-function drawStep4() {
-    note_body.innerHTML = STEP4_HTML;
-
+function drawStep4(direction) {
+    const step_content = document.createElement("div");
+    step_content.classList.add("step-content", direction);
+    step_content.innerHTML = STEP4_HTML;
+    note_body.appendChild(step_content);
+    setTimeout(() => step_content.style.transform = "translateX(0)", 10);
     initStep4();
 }
 
 function initStep4() {
     nicknameBox = document.querySelector(".input-box");
     nickname = document.querySelector(".nickname");
-    const confirmBtn = document.querySelector(".confirm-btn");
+    error = document.querySelector(".error-text");
 
+    setProfileImage();
     nickname.addEventListener("input", async () => {
-        const error = document.querySelector(".error-text");
-
         if (nickname.value === "") {
             nicknameBox.style.border = "0.5px solid #767676";
-
         } else {
             nicknameBox.style.border = "2px solid #FC0";
             error.innerText = await verifyNickname();
         }
     });
-    confirmBtn.addEventListener("click", createOrJoinGroup);
+}
+
+async function confirmStep4() {
+    if (groupData.groupId === "") {
+        console.log("group create");
+        if (error.innerText !== "") {
+            console.log("error");
+            return false;
+        }
+        return await createGroup();
+    }
+}
+
+function setProfileImage() {
+    const pring = document.querySelector(".selected-pring");
+
+    pring.src = groupData.profileLocation;
 }
 
 async function verifyNickname() {
@@ -62,38 +76,34 @@ async function isDuplicateNickname() {
         .then(response => response.status !== 200);
 }
 
-function createOrJoinGroup() {
-    if (join) {
-        joinGroup();
-    } else {
-        createGroup();
-    }
-}
-
-function createGroup() {
-    fetch("/api/groups",{
+async function createGroup() {
+    return await fetch("/api/groups",{
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            "groupName": groupName,
-            "profileLocation": profileLocation,
-            "nickname": nickname.value
-        })
-    }).then(response => response.json())
-        .then(data => data.code)
-}
-
-function joinGroup() {
-    fetch(`/api/groups/${groupId}/join`,{
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            "profileLocation": profileLocation,
+            "groupName": groupData.groupName,
+            "profileLocation": groupData.profileLocation,
             "nickname": nickname.value
         })
     })
+        .then(response => {
+            if (response.status !== 201) {
+                throw response.status;
+            }
+            return response.json();
+        })
+        .then(data => {
+            groupData.groupCode = data.code;
+            return true;
+        })
+        .catch(status => {
+            if (status === 409) {
+                openNotificationModal("error", ["그룹 정원이 가득 찼습니다."], 2000);
+                return false;
+            }
+            openNotificationModal("error", ["그룹 생성에 실패했습니다."], 2000);
+            return false;
+        });
 }
