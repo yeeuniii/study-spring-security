@@ -50,6 +50,9 @@ async function confirmStep4() {
         return await createGroup();
     }
     steps[5].draw = drawStep5Join;
+    if (error.innerText !== "") {
+        return false;
+    }
     return await joinGroup();
 }
 
