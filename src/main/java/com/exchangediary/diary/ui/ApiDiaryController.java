@@ -7,6 +7,7 @@ import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,8 +37,7 @@ public class ApiDiaryController {
     ) {
         Long diaryId = diaryCommandService.createDiary(diaryRequest, file, groupId, memberId);
         return ResponseEntity
-                .created(URI.create(String.format("/api/groups/%d/diary/%d", groupId, diaryId)))
-                .header("Content-Location", "/diary/" + diaryId)
+                .status(HttpStatus.CREATED)
                 .build();
     }
 
