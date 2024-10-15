@@ -53,7 +53,6 @@ function writeDiary() {
         .then(contentLocation => {
             closeModal(); // TODO: 약간의 딜레이 문제
             openNotificationModal("success", ["일기가 작성되었어요!"], 2000, contentLocation);
-            showSuccess(contentLocation);
         })
         .catch(() => {
             // ToDo: 예외 처리 로직 추가
@@ -72,9 +71,20 @@ function getMoodLocation() {
 }
 
 function getUploadImage() {
-    const uploadImage = null;
+    const camera = document.querySelector("#camera-input");
+    const gallery = document.querySelector("#gallery-input");
 
-    // TODO: 업로드 이미지 설정
-
-    return uploadImage;
+    if (camera.files.length === 0 && gallery.files.length === 0) {
+        return null
+    }
+    if (camera.files.length === 1 && gallery.files.length === 0) {
+        return camera.files[0];
+    }
+    if (camera.files.length === 0 && gallery.files.length === 1) {
+        return gallery.files[0];
+    }
+    if (camera.files[0].lastModified > gallery.files[0].lastModified) {
+        return camera.files[0];
+    }
+    return gallery.files[0];
 }
