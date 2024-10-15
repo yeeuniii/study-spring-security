@@ -24,7 +24,7 @@
         </div>
         <div class="content">
             <div class="image photo-btn">
-                <img src="/images/diary/write-page/photo_icon.svg" style="position: relative; top: 95px;">
+                <img class="image-icon" src="/images/diary/write-page/photo_icon.svg">
             </div>
             <div class="diary-content-area">
                 <textarea class="diary-content" placeholder="이곳을 클릭해 일기를 작성하세요."></textarea>
@@ -80,6 +80,8 @@
                             <span class="photo-text">카메라</span>
                         </div>
                     </a>
+                    <input id="camera-input" type="file" capture="user" accept="image/*" style="display: none;" />
+
                     <div class="partition-line"></div>
                     <a class="modal-btn gallery" href="#">
                         <div class="modal-icon">
@@ -100,6 +102,7 @@
     <script src="/js/diary/write-page/modal.js"></script>
     <script src="/js/diary/write-page/sync-textarea.js"></script>
     <script src="/js/diary/write-page/write-diary.js"></script>
+    <script src="/js/diary/write-page/photo.js"></script>
 </th:block>
 
 </html>

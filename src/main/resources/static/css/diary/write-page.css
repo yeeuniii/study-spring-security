@@ -16,6 +16,11 @@
     background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.00) 0%, #FFF 100%);
 }
 
+.image-icon {
+    position: relative;
+    top: 95px;
+}
+
 .bar-write {
     width: 38px; 
     height: 38px;
