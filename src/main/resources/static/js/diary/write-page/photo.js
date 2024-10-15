@@ -18,7 +18,6 @@ function clickInput(event, input) {
 function uploadImage(event) {
     const file = event.target.files[0];
 
-    console.log(file);
     if (file) {
         image.classList.remove("photo-btn");
         image.children[0].src = URL.createObjectURL(file);
