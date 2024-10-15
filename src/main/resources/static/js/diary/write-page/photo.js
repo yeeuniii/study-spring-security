@@ -18,10 +18,16 @@ function clickInput(event, input) {
 function uploadImage(event) {
     const file = event.target.files[0];
 
-    if (file) {
+    const reader = new FileReader();
+
+    reader.onloadend = function () {
         image.classList.remove("photo-btn");
-        image.children[0].src = URL.createObjectURL(file);
+        image.children[0].src = reader.result;
         image.children[0].classList = ["image"];
         closeModal();
+    };
+
+    if (file) {
+        reader.readAsDataURL(file);
     }
 }
