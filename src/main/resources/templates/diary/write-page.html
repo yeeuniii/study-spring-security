@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{base}">
+
+<th:block layout:fragment="header">
+    <title>스프링 - 일기 작성</title>
+    <link rel="stylesheet" href="/css/diary/diary-common.css" type="text/css">
+    <link rel="stylesheet" href="/css/diary/write-page.css" type="text/css">
+    <link rel="stylesheet" href="/css/diary/modal.css" type="text/css">
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="background" style="background-image: url('/images/diary/write-page/background.svg');">
+        <div class="top-bar">
+            <div class="bar-back">
+                <a href="/" class="back-btn"><img class="bar-icon" src="/images/common/back_icon.svg" /></a>
+            </div>
+            <div class="bar-main">
+                <span class="date"></span>
+                <a href="#" class="mood-btn"><img src="/images/diary/write-page/mood_icon.svg"/></a>
+            </div>
+            <div class="bar-write">
+                <a href="#" class="write-btn"><img class="bar-icon" src="/images/diary/write-page/write_icon.svg"/></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="image photo-btn">
+                <img src="/images/diary/write-page/photo_icon.svg" style="position: relative; top: 95px;">
+            </div>
+            <div class="diary-content-area">
+                <textarea class="diary-content" placeholder="여기에 일기를 작성해주세요〰️"></textarea>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="body">
+    <div id="modal" class="modal">
+        <div class="modal-body">
+            <div class="modal-content">
+                <div class="emojies">
+                    <div class="modal-title">
+                        <p class="modal-text">오늘 기분을 골라보세요.</p>
+                    </div>
+                    <table style="position: relative; left: -7px;">
+                        <tr>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/hilarious.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/wink.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/soso.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/calm.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/surprise.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/panic.svg"/></a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/dislike.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/dizzy.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/happy.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/bigsmile.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/hate.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/vexation.svg"/></a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/sunglasses.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/funny.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/smirk.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/beam.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/disgust.svg"/></a></td>
+                            <td><a href="#"><img class="emoji" src="/images/diary/write-page/emoji/sleepy.svg"/></a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="photo">
+                    <div class="modal-title">
+                        <p class="modal-text">사진을 추가할 방법을 선택해주세요.</p>
+                    </div>
+                    <a class="modal-btn camera" href="#">
+                        <div class="modal-icon">
+                            <img src="/images/diary/write-page/modal/camera_icon.svg" style="width: 50px; height: 50px; flex-shrink: 0;"/>
+                        </div>
+                        <div class="modal-btn-text">
+                            <span class="photo-text">카메라</span>
+                        </div>
+                    </a>
+                    <div class="partition-line"></div>
+                    <a class="modal-btn gallery" href="#">
+                        <div class="modal-icon">
+                            <img src="/images/diary/write-page/modal/photo_icon.svg" style="width: 48px; height: 48px; flex-shrink: 0;"/>
+                        </div>
+                        <div class="modal-btn-text">
+                            <span class="photo-text">갤러리</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+
+<th:block layout:fragment="script">
+    <script src="/js/diary/write-page/modal.js"></script>
+    <script src="/js/diary/write-page/sync-textarea.js"></script>
+    <script src="/js/diary/write-page/write-diary.js"></script>
+</th:block>
+
+</html>

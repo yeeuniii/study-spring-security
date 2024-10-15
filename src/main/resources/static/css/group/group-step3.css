@@ -1,0 +1,68 @@
+@charset "utf-8";
+
+.line {
+    width: 100%;
+    height: 100px;
+    position: relative;
+}
+
+.character-btn {
+    width: 100px;
+    height: 100px;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.character-btn.selected {
+    border: 4px solid #FC0;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+.character-icon {
+    width: 70px;
+    height: 70px;
+}
+
+.character-icon.green {
+    width: auto;
+}
+
+.character-icon.blue {
+    height: auto;
+    margin-bottom: 13px;
+}
+
+a.gray {
+    pointer-events: none
+}
+
+#pring1.gray .character-icon {
+    content: url("/images/group/character/gray-pring1.svg")
+}
+
+#pring2.gray .character-icon {
+    content: url("/images/group/character/gray-pring2.svg")
+}
+
+#pring3.gray .character-icon {
+    content: url("/images/group/character/gray-pring3.svg")
+}
+
+#pring4.gray .character-icon {
+    content: url("/images/group/character/gray-pring4.svg")
+}
+
+#pring5.gray .character-icon {
+    content: url("/images/group/character/gray-pring5.svg")
+}
+
+#pring6.gray .character-icon {
+    content: url("/images/group/character/gray-pring6.svg")
+}
+
+#pring7.gray .character-icon {
+    content: url("/images/group/character/gray-pring7.svg")
+}

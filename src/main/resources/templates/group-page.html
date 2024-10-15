@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{base}">
+
+<th:block layout:fragment="header">
+    <title>스프링 - 그룹 생성 및 가입</title>
+    <link rel="stylesheet" href="/css/group/group-common.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-step1.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-step2.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-step3.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-step4.css" type="text/css">
+    <link rel="stylesheet" href="/css/group/group-step5.css" type="text/css">
+
+    <script src="/js/group/group-step1.js"></script>
+    <script src="/js/group/group-step2.js"></script>
+    <script src="/js/group/group-step3.js"></script>
+    <script src="/js/group/group-step4.js"></script>
+    <script src="/js/group/group-step5.js"></script>
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="background" style="background-image: url('/images/group/background.svg');">
+        <div class="top-bar">
+            <div class="bar-back">
+                <a href="/" class="back-btn"><img class="back-icon" src="/images/common/back_icon.svg"/></a>
+            </div>
+            <div class="logo">
+                <img class="logo-icon" src="/images/group/logo.svg">
+            </div>
+        </div>
+        <div class="content">
+            <div class="note">
+                <div class="note-header">
+                    <div class="step-bar">
+                        <div class="step-icon step1 fill"></div>
+                        <div class="step-icon step2"></div>
+                        <div class="step-icon step3"></div>
+                        <div class="step-icon step4"></div>
+                        <div class="step-icon step5"></div>
+                    </div>
+                </div>
+                <div class="note-body">
+                </div>
+                <div class="note-footer">
+                    <a href="#" class="confirm-btn">
+                        <span class="confirm-text">확인</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script src="/js/group/group-common.js"></script>
+</th:block>
+
+</html>
