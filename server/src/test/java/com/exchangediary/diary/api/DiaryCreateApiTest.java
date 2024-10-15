@@ -50,7 +50,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
                         .statusCode(HttpStatus.CREATED.value())
                         .extract()
                         .header("Location")
-                        .replace("/api/diary/", "")
+                        .replace(String.format("/api/groups/%d/diary/", group.getId()), "")
         );
 
         Diary newDiary = diaryRepository.findById(diaryId).get();
@@ -81,7 +81,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
                         .statusCode(HttpStatus.CREATED.value())
                         .extract()
                         .header("Location")
-                        .replace("/api/diary/", "")
+                        .replace(String.format("/api/groups/%d/diary/", group.getId()), "")
         );
 
         Diary newDiary = diaryRepository.findById(diaryId).get();
