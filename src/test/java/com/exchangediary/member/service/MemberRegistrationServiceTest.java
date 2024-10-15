@@ -35,7 +35,6 @@ public class MemberRegistrationServiceTest {
         when(memberRepository.findBykakaoId(kakaoId)).thenReturn(Optional.empty());
         when(memberRepository.save(any(Member.class))).thenReturn(newMember);
 
-
         Long result = memberRegistrationService.getOrCreateMember(kakaoId).memberId();
 
         assertThat(result).isEqualTo(newMember.getId());
@@ -52,7 +51,6 @@ public class MemberRegistrationServiceTest {
                 .build();
 
         when(memberRepository.findBykakaoId(kakaoId)).thenReturn(Optional.ofNullable(member));
-
 
         Long result = memberRegistrationService.getOrCreateMember(kakaoId).memberId();
 
