@@ -46,17 +46,22 @@ function writeDiary() {
     })
         .then(response => {
             if (response.status !== 201) {
-                throw new Error();
+                throw response;
             }
             return response.headers.get("content-location");
         })
         .then(contentLocation => {
             closeModal(); // TODO: 약간의 딜레이 문제
             openNotificationModal("success", ["일기가 작성되었어요!"], 2000, contentLocation);
-            showSuccess(contentLocation);
         })
-        .catch(() => {
-            // ToDo: 예외 처리 로직 추가
+        .catch(response => {
+            if (response.status === 400 || response.status === 500) {
+                return response.json();
+            }
+        })
+        .then(data => {
+            const messages = data.message.split("\n");
+            openNotificationModal("error", messages, 2000);
         })
 }
 
