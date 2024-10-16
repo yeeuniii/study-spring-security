@@ -79,21 +79,20 @@ function selectIcon(event) {
     selectedIcon.classList.add("selected");
 }
 
-async function viewSelectableCharacter() {
+function viewSelectableCharacter() {
     const groupId = groupData.groupId;
 
-    const selectedImages = await fetch(`/api/groups/${groupId}/profile-image`)
+    fetch(`/api/groups/${groupId}/profile-image`)
         .then(response => response.json())
-        .then(data => data.selectedImages);
+        .then(data => data.selectedImages)
+        .then(selectedImages => {
+            selectedImages.forEach(image => {
+                const profileImage = document.querySelector(`#${image.profileLocation}`); // TODO: profileImage로
 
-    selectedImages.forEach(image => {
-        const profileLocation = image.profileLocation
-        const index = profileLocation.indexOf("pring");
-        const name = profileLocation.substr(index, 6);
-        const pring = document.getElementById(name);
-
-        pring.classList.add("gray");
-    });
+                profileImage.parentElement.classList.add("gray");
+                profileImage.classList.add("gray");
+            });
+        });
 }
 
 function confirmStep3() {

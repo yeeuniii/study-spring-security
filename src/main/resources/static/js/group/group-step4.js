@@ -122,7 +122,7 @@ async function joinGroup() {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            "profileLocation": groupData.profileImage,
+            "profileLocation": groupData.profileImage, // TODO: profileImage로
             "nickname": nickname.value
         })
     })
