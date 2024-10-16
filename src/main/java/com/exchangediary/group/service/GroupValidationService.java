@@ -14,7 +14,7 @@ public class GroupValidationService {
         if (numberOfMembers >= 7) {
             throw new ConfilctException(
                     ErrorCode.FULL_MEMBERS_OF_GROUP,
-                    "",
+                    "그룹원이 꽉 차\n해당 그룹에 들어갈 수 없습니다.",
                     String.valueOf(numberOfMembers)
             );
         }

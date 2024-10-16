@@ -35,6 +35,5 @@ public class GroupCreateService {
         Member member = memberQueryService.findMember(memberId);
         member.updateMemberGroupInfo(request.nickname(), request.profileLocation(), 1, group);
         memberRepository.save(member);
-
     }
 }
