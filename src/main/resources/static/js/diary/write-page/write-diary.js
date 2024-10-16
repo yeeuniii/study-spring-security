@@ -40,6 +40,7 @@ function writeDiary() {
     formData.append("data", new Blob([json], {type: "application/json"}));
     formData.append("file", getUploadImage());
 
+    closeModal();
     fetch(`api/groups/${groupId}/diaries`, {
         method: "post",
         body: formData
@@ -51,18 +52,17 @@ function writeDiary() {
             return response.headers.get("content-location");
         })
         .then(contentLocation => {
-            closeModal(); // TODO: 약간의 딜레이 문제
             openNotificationModal("success", ["일기가 작성되었어요!"], 2000, contentLocation);
         })
-        .catch(response => {
+        .catch(async response => {
             if (response.status === 400 || response.status === 500) {
-                return response.json();
+                throw await response.json();
             }
         })
-        .then(data => {
+        .catch(async data => {
             const messages = data.message.split("\n");
             openNotificationModal("error", messages, 2000);
-        })
+        });
 }
 
 function getMoodLocation() {
