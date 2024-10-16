@@ -18,4 +18,9 @@ public class HomeController {
         }
         return "index.html";
     }
+
+    @GetMapping("/start")
+    public String start() {
+        return "start.html";
+    }
 }

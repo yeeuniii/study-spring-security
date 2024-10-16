@@ -49,8 +49,8 @@ class DiaryCreateApiTest extends ApiBaseTest {
                         .then().log().all()
                         .statusCode(HttpStatus.CREATED.value())
                         .extract()
-                        .header("Location")
-                        .replace("/api/diary/", "")
+                        .header("Content-Location")
+                        .replace("/diary/", "")
         );
 
         Diary newDiary = diaryRepository.findById(diaryId).get();
@@ -80,8 +80,8 @@ class DiaryCreateApiTest extends ApiBaseTest {
                         .then().log().all()
                         .statusCode(HttpStatus.CREATED.value())
                         .extract()
-                        .header("Location")
-                        .replace("/api/diary/", "")
+                        .header("Content-Location")
+                        .replace("/diary/", "")
         );
 
         Diary newDiary = diaryRepository.findById(diaryId).get();
