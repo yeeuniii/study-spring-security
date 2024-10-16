@@ -87,7 +87,7 @@ function viewSelectableCharacter() {
         .then(data => data.selectedImages)
         .then(selectedImages => {
             selectedImages.forEach(image => {
-                const profileImage = document.querySelector(`#${image.profileLocation}`); // TODO: profileImage로
+                const profileImage = document.querySelector(`#${image.profileImage}`);
 
                 profileImage.parentElement.classList.add("gray");
                 profileImage.classList.add("gray");
