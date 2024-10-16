@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+#pring1 .character-icon {
+    content: url("/images/group/character/pring1.svg")
+}
+
+#pring2 .character-icon {
+    content: url("/images/group/character/pring2.svg")
+}
+
+#pring3 .character-icon {
+    content: url("/images/group/character/pring3.svg")
+}
+
+#pring4 .character-icon {
+    content: url("/images/group/character/pring4.svg")
+}
+
+#pring5 .character-icon {
+    content: url("/images/group/character/pring5.svg")
+}
+
+#pring6 .character-icon {
+    content: url("/images/group/character/pring6.svg")
+}
+
+#pring7 .character-icon {
+    content: url("/images/group/character/pring7.svg")
+}

@@ -5,12 +5,12 @@ const STEP3_HTML = `<div style="width: 100%; height: 34px;">
                                 <div style="margin-left: 90px; height: 100%">
                                     <div class="character-btn">
                                         <a id="pring2" href="#" class="character-icon">
-                                            <img src="/images/group/character/pring2.svg" class="character-icon">
+                                            <img class="character-icon">
                                         </a>
                                     </div>
                                     <div class="character-btn">
                                         <a id="pring3" href="#" class="character-icon">
-                                            <img src="/images/group/character/pring3.svg" class="character-icon">
+                                            <img class="character-icon">
                                         </a>
                                     </div>
                                 </div>
@@ -19,17 +19,17 @@ const STEP3_HTML = `<div style="width: 100%; height: 34px;">
                                 <div style="margin-left: 35px; height: 100%">
                                     <div class="character-btn">
                                         <a id="pring1" href="#" class="character-icon">
-                                            <img src="/images/group/character/pring1.svg" class="character-icon">
+                                            <img class="character-icon">
                                         </a>
                                     </div>
                                     <div class="character-btn">
                                         <a id="pring7" href="#" class="character-icon">
-                                            <img src="/images/group/character/pring7.svg" class="character-icon">
+                                            <img class="character-icon">
                                         </a>
                                     </div>
                                     <div class="character-btn">
                                         <a id="pring4" href="#" class="character-icon">
-                                            <img src="/images/group/character/pring4.svg" class="character-icon green">
+                                            <img class="character-icon green">
                                         </a>
                                     </div>
                                 </div>
@@ -38,12 +38,12 @@ const STEP3_HTML = `<div style="width: 100%; height: 34px;">
                                 <div style="margin-left: 90px; height: 100%">
                                     <div class="character-btn">
                                         <a id="pring5" href="#" class="character-icon">
-                                            <img src="/images/group/character/pring5.svg" class="character-icon blue">
+                                            <img class="character-icon blue">
                                         </a>                                    
                                     </div>
                                     <div class="character-btn">
                                         <a id="pring6" href="#" class="character-icon">
-                                            <img src="/images/group/character/pring6.svg" class="character-icon">
+                                            <img class="character-icon">
                                         </a>
                                     </div>           
                                 </div>
@@ -98,7 +98,7 @@ async function viewSelectableCharacter() {
 
 function confirmStep3() {
     if (selectedIcon != null) {
-        groupData.profileLocation = selectedIcon.children[0].children[0].src;
+        groupData.profileLocation = selectedIcon.children[0].id;
         return true;
     }
     openNotificationModal("error", ["캐릭터를 선택해주세요."], 2000);
