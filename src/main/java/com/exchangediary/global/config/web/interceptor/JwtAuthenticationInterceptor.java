@@ -37,7 +37,7 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
             Long memberId = jwtService.extractMemberId(token);
             request.setAttribute("memberId", memberId);
         } catch (UnauthorizedException exception) {
-            response.sendRedirect(request.getContextPath()+ "/login");
+            response.sendRedirect(request.getContextPath()+ "/start");
             return false;
         }
         return true;
