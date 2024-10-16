@@ -3,6 +3,7 @@ package com.exchangediary.diary.ui;
 import com.exchangediary.diary.service.DiaryCommandService;
 import com.exchangediary.diary.service.DiaryQueryService;
 import com.exchangediary.diary.ui.dto.request.DiaryRequest;
+import com.exchangediary.diary.ui.dto.response.DiaryBottomSheetResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import jakarta.validation.Valid;
@@ -65,5 +66,16 @@ public class ApiDiaryController {
         return ResponseEntity
                 .ok()
                 .body(diaryMonthlyResponse);
+    }
+
+    @GetMapping("/summary")
+    public ResponseEntity<DiaryBottomSheetResponse> viewBottomSheet(
+            @PathVariable Long groupId,
+            @RequestAttribute Long memberId
+    ) {
+        DiaryBottomSheetResponse response = diaryQueryService.viewBottomSheet(groupId, memberId);
+        return ResponseEntity
+                .ok()
+                .body(response);
     }
 }
