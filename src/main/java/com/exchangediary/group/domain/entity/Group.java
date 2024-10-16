@@ -41,7 +41,7 @@ public class Group extends BaseEntity {
     public static Group of(String groupName, String code) {
         return Group.builder()
                 .name(groupName)
-                .currentOrder(0)
+                .currentOrder(1)
                 .code(code)
                 .build();
     }

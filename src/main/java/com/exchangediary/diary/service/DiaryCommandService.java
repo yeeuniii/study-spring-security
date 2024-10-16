@@ -83,7 +83,7 @@ public class DiaryCommandService {
 
     private void setCurrentOrderOfGroup(Group group) {
         int currentOrder = group.getCurrentOrder() + 1;
-        if (group.getMembers().size() == group.getCurrentOrder())
+        if (group.getMembers().size() + 1 <= group.getCurrentOrder())
             currentOrder = 1;
         group.updateCurrentOrder(currentOrder);
         groupRepository.save(group);
