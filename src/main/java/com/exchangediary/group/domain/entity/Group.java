@@ -45,4 +45,8 @@ public class Group extends BaseEntity {
                 .code(code)
                 .build();
     }
+
+    public void updateCurrentOrder(Integer currentOrder) {
+        this.currentOrder = currentOrder;
+    }
 }

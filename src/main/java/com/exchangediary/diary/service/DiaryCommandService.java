@@ -7,6 +7,7 @@ import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.DuplicateException;
 import com.exchangediary.global.exception.serviceexception.FailedImageUploadException;
+import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.service.GroupQueryService;
 import com.exchangediary.member.domain.entity.Member;
@@ -27,6 +28,7 @@ public class DiaryCommandService {
     private final DiaryRepository diaryRepository;
     private final MemberQueryService memberQueryService;
     private final GroupQueryService groupQueryService;
+    private final GroupRepository groupRepository;
 
 
     public Long createDiary(DiaryRequest diaryRequest, MultipartFile file, Long groupId, Long memberId) {
@@ -49,6 +51,7 @@ public class DiaryCommandService {
             Diary savedDiary = diaryRepository.save(diary);
             diary.addMemberAndGroup(member, group);
             image.uploadToDiary(savedDiary);
+            setCurrentOrderOfGroup(group);
             return savedDiary.getId();
         } catch (IOException e) {
             throw new FailedImageUploadException(
@@ -78,4 +81,11 @@ public class DiaryCommandService {
         return file == null || file.isEmpty();
     }
 
+    private void setCurrentOrderOfGroup(Group group) {
+        int currentOrder = group.getCurrentOrder() + 1;
+        if (group.getMembers().size() == group.getCurrentOrder())
+            currentOrder = 1;
+        group.updateCurrentOrder(currentOrder);
+        groupRepository.save(group);
+    }
 }
