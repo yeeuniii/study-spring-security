@@ -38,6 +38,7 @@ public class ApiDiaryController {
         Long diaryId = diaryCommandService.createDiary(diaryRequest, file, groupId, memberId);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
+                .header("Content-Location", "/diary/" + diaryId)
                 .build();
     }
 

@@ -16,12 +16,10 @@ import org.springframework.http.MediaType;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class DiaryCreateApiTest extends ApiBaseTest {
     private static final String API_PATH = "/api/groups/%d/diaries";
@@ -40,19 +38,22 @@ class DiaryCreateApiTest extends ApiBaseTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(data);
 
-        RestAssured
-                .given().log().all()
-                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-                .multiPart("data", jsonData, "application/json")
-                .multiPart("file", new File("src/test/resources/images/test.jpg"), "image/png")
-                .cookie("token", token)
-                .when().post(String.format(API_PATH, group.getId()))
-                .then().log().all()
-                .statusCode(HttpStatus.CREATED.value());
+        Long diaryId = Long.parseLong(
+                RestAssured
+                        .given().log().all()
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                        .multiPart("data", jsonData, "application/json")
+                        .multiPart("file", new File("src/test/resources/images/test.jpg"), "image/png")
+                        .cookie("token", token)
+                        .when().post(String.format(API_PATH, group.getId()))
+                        .then().log().all()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .extract()
+                        .header("Content-Location")
+                        .replace("/diary/", "")
+        );
 
-        List<Diary> diaries = diaryRepository.findAll();
-        assertFalse(diaries.isEmpty());
-        Diary newDiary = diaries.get(diaries.size() - 1);
+        Diary newDiary = diaryRepository.findById(diaryId).get();
         assertThat(newDiary.getGroup().getId()).isEqualTo(group.getId());
         assertThat(newDiary.getMember().getId()).isEqualTo(member.getId());
         assertThat(newDiary.getContent()).isEqualTo(data.get("content"));
@@ -69,18 +70,21 @@ class DiaryCreateApiTest extends ApiBaseTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writeValueAsString(data);
 
-        RestAssured
-                .given().log().all()
-                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-                .multiPart("data", jsonData, "application/json")
-                .cookie("token", token)
-                .when().post(String.format(API_PATH, group.getId()))
-                .then().log().all()
-                .statusCode(HttpStatus.CREATED.value());
+        Long diaryId = Long.parseLong(
+                RestAssured
+                        .given().log().all()
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                        .multiPart("data", jsonData, "application/json")
+                        .cookie("token", token)
+                        .when().post(String.format(API_PATH, group.getId()))
+                        .then().log().all()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .extract()
+                        .header("Content-Location")
+                        .replace("/diary/", "")
+        );
 
-        List<Diary> diaries = diaryRepository.findAll();
-        assertFalse(diaries.isEmpty());
-        Diary newDiary = diaries.get(diaries.size() - 1);
+        Diary newDiary = diaryRepository.findById(diaryId).get();
         assertThat(newDiary.getGroup().getId()).isEqualTo(group.getId());
         assertThat(newDiary.getMember().getId()).isEqualTo(member.getId());
         assertThat(newDiary.getContent()).isEqualTo(data.get("content"));
