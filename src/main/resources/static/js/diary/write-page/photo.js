@@ -1,14 +1,8 @@
-const cameraBtn = document.querySelector(".modal-btn.camera");
-const cameraInput = document.querySelector("#camera-input");
-const galleryBtn = document.querySelector(".modal-btn.gallery");
-const galleryInput = document.querySelector("#gallery-input");
-const image = document.querySelector(".photo-btn");
+const photoBtn = document.querySelector(".photo-btn");
+const photoInput = document.querySelector("#photo-input");
 
-cameraBtn.addEventListener("click", (event) => clickInput(event, cameraInput));
-galleryBtn.addEventListener("click", (event) => clickInput(event, galleryInput));
-
-cameraInput.addEventListener("change", uploadImage);
-galleryInput.addEventListener("change", uploadImage);
+photoBtn.addEventListener("click", (event) => clickInput(event, photoInput));
+photoInput.addEventListener("change", uploadImage);
 
 function clickInput(event, input) {
     event.preventDefault();
@@ -21,9 +15,9 @@ function uploadImage(event) {
     const reader = new FileReader();
 
     reader.onloadend = function () {
-        image.classList.remove("photo-btn");
-        image.children[0].src = reader.result;
-        image.children[0].classList = ["image"];
+        photoBtn.classList.remove("photo-btn");
+        photoBtn.children[0].src = reader.result;
+        photoBtn.children[0].classList = ["image"];
         closeModal();
     };
 

@@ -71,20 +71,10 @@ function getMoodLocation() {
 }
 
 function getUploadImage() {
-    const camera = document.querySelector("#camera-input");
-    const gallery = document.querySelector("#gallery-input");
+    const photo = document.querySelector("#photo-input");
 
-    if (camera.files.length === 0 && gallery.files.length === 0) {
-        return null
+    if (photo.files.length === 1) {
+        return photo.files[0];
     }
-    if (camera.files.length === 1 && gallery.files.length === 0) {
-        return camera.files[0];
-    }
-    if (camera.files.length === 0 && gallery.files.length === 1) {
-        return gallery.files[0];
-    }
-    if (camera.files[0].lastModified > gallery.files[0].lastModified) {
-        return camera.files[0];
-    }
-    return gallery.files[0];
+    return null;
 }
