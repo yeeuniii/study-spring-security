@@ -1,6 +1,6 @@
 const STEP4_HTML = `
-                        <div style="width: 100px; height: 100px;">
-                            <img class="selected-pring" src="" style="width: 100px; height: 100px;">
+                        <div style="">
+                            <img id="selected-character" style="width: 100px; height: 100px;">
                         </div>
                         <div style="width: 100%; height: 34px; position: relative; top: 16px;">
                             <span class="subject">캐릭터 이름을 지어주세요.</span>
@@ -57,9 +57,9 @@ async function confirmStep4() {
 }
 
 function setProfileImage() {
-    const pring = document.querySelector(".selected-pring");
+    const profileImage = document.querySelector("#selected-character");
 
-    pring.src = groupData.profileLocation;
+    profileImage.id = groupData.profileImage;
 }
 
 async function verifyNickname() {
@@ -90,7 +90,7 @@ async function createGroup() {
         },
         body: JSON.stringify({
             "groupName": groupData.groupName,
-            "profileLocation": groupData.profileLocation,
+            "profileImage": groupData.profileImage,
             "nickname": nickname.value
         })
     })
@@ -122,7 +122,7 @@ async function joinGroup() {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            "profileLocation": groupData.profileLocation,
+            "profileImage": groupData.profileImage,
             "nickname": nickname.value
         })
     })
