@@ -48,32 +48,32 @@ function initStep2() {
 
     inputValue.addEventListener("input", () => {
         changeBoxBorderStyle();
-        if (isCreate()) {
+        if (isCreateInStep2()) {
             error.innerText = verifyGroupName();
         }
     })
 }
 
 async function confirmStep2() {
-    if (isCreate() && error.innerText === "") {
-        if (inputValue.value === "") {
-            openNotificationModal("error", ["그룹명을 입력해주세요."], 2000);
-            return false;
-        }
+    if (isJoinInStep2()) {
+        return await matchGroupByGroupCode()
+    }
+    if (inputValue.value === "") {
+        openNotificationModal("error", ["그룹명을 입력해주세요."], 2000);
+        return false;
+    }
+    if (isCreateInStep2() && error.innerText === "") {
         groupData.groupName = inputValue.value;
         return true;
-    }
-    if (isJoin()) {
-        return await matchGroupByGroupCode()
     }
     return false;
 }
 
-function isCreate() {
+function isCreateInStep2() {
     return inputValue.classList.contains("group-name");
 }
 
-function isJoin() {
+function isJoinInStep2() {
     return inputValue.classList.contains("group-code");
 }
 
@@ -117,18 +117,17 @@ async function matchGroupByGroupCode() {
             "code": groupCode.value
         })
     })
-        .then(response => {
-        if (response.status !== 200) {
-            throw response;
-        }
-        return response.json();
+        .then(async response => {
+            if (response.status !== 200) {
+                throw await response.json();
+            }
+            return response.json();
     })
         .then(data => {
             groupData.groupId = data.groupId;
             return true;
         })
-        .catch(response => response.json())
-        .then(data => {
+        .catch(data => {
             openNotificationModal("error", [data.message], 2000);
             return false;
         });
