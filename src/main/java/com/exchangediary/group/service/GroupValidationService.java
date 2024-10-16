@@ -25,7 +25,7 @@ public class GroupValidationService {
                 .anyMatch(member -> member.getNickname().equals(nickname))) {
             throw new DuplicateException(
                     ErrorCode.NICKNAME_DUPLICATED,
-                    "",
+                    "이미 존재하는 이름입니다.",
                     nickname
             );
         }
@@ -36,7 +36,7 @@ public class GroupValidationService {
                 .anyMatch(member -> member.getProfileLocation().equals(profileLocation))) {
             throw new DuplicateException(
                     ErrorCode.PROFILE_DUPLICATED,
-                    "",
+                    "이미 선택된 캐릭터입니다.",
                     profileLocation
             );
         }
