@@ -5,7 +5,7 @@ const STEP2_HTML_CREATE = `
                         <div class="input-box">
                             <div class="input-textarea">
                                 <label>
-                                    <textarea class="group-name input-value" placeholder="그룹명" spellcheck="false" maxlength="10"></textarea>
+                                    <textarea class="group-name input-value" placeholder="그룹명" spellcheck="false" maxlength="11"></textarea>
                                 </label>
                             </div>
                         </div>
@@ -64,10 +64,6 @@ async function confirmStep2() {
         return true;
     }
     if (isJoin()) {
-        if (inputValue.value === "") {
-            openNotificationModal("error", ["그룹코드를 입력해주세요."], 2000);
-            return false;
-        }
         return await matchGroupByGroupCode()
     }
     return false;
@@ -123,7 +119,7 @@ async function matchGroupByGroupCode() {
     })
         .then(response => {
         if (response.status !== 200) {
-            throw new Error();
+            throw response;
         }
         return response.json();
     })
@@ -131,8 +127,9 @@ async function matchGroupByGroupCode() {
             groupData.groupId = data.groupId;
             return true;
         })
-        .catch(() => {
-            openNotificationModal("error", ["그룹코드가 유효하지 않습니다."], 2000);
+        .catch(response => response.json())
+        .then(data => {
+            openNotificationModal("error", [data.message], 2000);
             return false;
         });
 }
