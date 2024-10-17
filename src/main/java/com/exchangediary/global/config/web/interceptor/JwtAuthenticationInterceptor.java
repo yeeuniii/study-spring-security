@@ -7,22 +7,16 @@ import com.exchangediary.member.service.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.io.IOException;
 
+@RequiredArgsConstructor
 public class JwtAuthenticationInterceptor implements HandlerInterceptor {
     private static final String COOKIE_NAME = "token";
     private final JwtService jwtService;
     private final CookieService cookieService;
-
-    public JwtAuthenticationInterceptor(
-            JwtService jwtService,
-            CookieService cookieService
-    ) {
-        this.jwtService = jwtService;
-        this.cookieService = cookieService;
-    }
 
     @Override
     public boolean preHandle(
