@@ -87,14 +87,14 @@ function drawBottom() {
             return response.json()
         })
         .then(data => {
-            calendarBottom.innerHTML = `<a href="/diary/${data.diaryId}" class="bottom-font">
+            calendarBottom.innerHTML = `<a href="/group/${groupId}/diary/${data.diaryId}" class="bottom-font">
                                                         <span class="font-bold">오늘 일기가 업로드 되었어요.</span>
                                                         <br>
                                                         <span>날짜를 눌러 확인해보세요!</span>
                                                     </a>`
         })
         .catch(() => {
-            calendarBottom.innerHTML = `<a href="/diary" class="bottom-font">
+            calendarBottom.innerHTML = `<a href="/group/${groupId}/diary" class="bottom-font">
                                             <span>내가 일기를 작성할 차례에요.</span>
                                             <br>
                                             <span>기다리는 친구들을 위해</span>
