@@ -38,8 +38,9 @@ public class DiaryCommandService {
 
         if (isEmptyFile(file)) {
             Diary diary = Diary.of(diaryRequest, null);
-            Diary savedDiary = diaryRepository.save(diary);
+            setCurrentOrderOfGroup(group);
             diary.addMemberAndGroup(member, group);
+            Diary savedDiary = diaryRepository.save(diary);
             return savedDiary.getId();
         }
 
@@ -48,10 +49,10 @@ public class DiaryCommandService {
                     .image(file.getBytes())
                     .build();
             Diary diary = Diary.of(diaryRequest, image);
-            Diary savedDiary = diaryRepository.save(diary);
-            diary.addMemberAndGroup(member, group);
-            image.uploadToDiary(savedDiary);
             setCurrentOrderOfGroup(group);
+            diary.addMemberAndGroup(member, group);
+            Diary savedDiary = diaryRepository.save(diary);
+            image.uploadToDiary(savedDiary);
             return savedDiary.getId();
         } catch (IOException e) {
             throw new FailedImageUploadException(
@@ -83,7 +84,7 @@ public class DiaryCommandService {
 
     private void setCurrentOrderOfGroup(Group group) {
         int currentOrder = group.getCurrentOrder() + 1;
-        if (group.getMembers().size() + 1 <= group.getCurrentOrder())
+        if (group.getMembers().size() < currentOrder)
             currentOrder = 1;
         group.updateCurrentOrder(currentOrder);
         groupRepository.save(group);

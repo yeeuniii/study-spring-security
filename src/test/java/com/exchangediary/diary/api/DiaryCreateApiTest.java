@@ -6,6 +6,7 @@ import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
+import com.exchangediary.member.domain.entity.Member;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +32,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
 
     @Test
     void 일기_작성_성공() throws JsonProcessingException {
-        Group group = createGroup();
+        Group group = createGroup(1);
         groupRepository.save(group);
         Map<String, String> data = new HashMap<>();
         data.put("content", "buddies");
@@ -62,7 +64,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
 
     @Test
     void 일기_작성_성공_내용만() throws JsonProcessingException {
-        Group group = createGroup();
+        Group group = createGroup(1);
         groupRepository.save(group);
         Map<String, String> data = new HashMap<>();
         data.put("content", "buddies");
@@ -93,7 +95,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
 
     @Test
     void 일기_작성_실패_오늘_이미_작성() throws JsonProcessingException {
-        Group group = createGroup();
+        Group group = createGroup(1);
         groupRepository.save(group);
         Diary diary = createDiary(group);
         diaryRepository.save(diary);
@@ -115,6 +117,82 @@ class DiaryCreateApiTest extends ApiBaseTest {
                 .body("message", equalTo(ErrorCode.DIARY_DUPLICATED.getMessage()));
     }
 
+    @Test
+    void 일기_작성_성공_순서_확인() throws JsonProcessingException {
+        Group group = createGroup(1);
+        groupRepository.save(group);
+        member.updateMemberGroupInfo("api요청멤버", "orange", 1, group);
+        Member groupMember = createMemberInGroup(group);
+        Member groupMember2 = createMemberInGroup(group);
+        memberRepository.saveAll(Arrays.asList(member, groupMember, groupMember2));
+        Map<String, String> data = new HashMap<>();
+        data.put("content", "buddies");
+        data.put("moodLocation", "/images/sad.png");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonData = objectMapper.writeValueAsString(data);
+
+        Long diaryId = Long.parseLong(
+                RestAssured
+                        .given().log().all()
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                        .multiPart("data", jsonData, "application/json")
+                        .multiPart("file", new File("src/test/resources/images/test.jpg"), "image/png")
+                        .cookie("token", token)
+                        .when().post(String.format(API_PATH, group.getId()))
+                        .then().log().all()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .extract()
+                        .header("Content-Location")
+                        .replace("/diary/", "")
+        );
+
+        Group updatedGroup = groupRepository.findById(group.getId()).get();
+        Diary newDiary = diaryRepository.findById(diaryId).get();
+        assertThat(newDiary.getGroup().getId()).isEqualTo(group.getId());
+        assertThat(updatedGroup.getCurrentOrder()).isEqualTo(2);
+        assertThat(newDiary.getMember().getId()).isEqualTo(member.getId());
+        assertThat(newDiary.getContent()).isEqualTo(data.get("content"));
+        assertThat(newDiary.getMoodLocation()).isEqualTo(data.get("moodLocation"));
+    }
+
+    @Test
+    void 일기_작성_성공_순서_확인_맨_첫_순서로() throws JsonProcessingException {
+        Group group = createGroup(3);
+        groupRepository.save(group);
+        member.updateMemberGroupInfo("api요청멤버", "orange", 1, group);
+        Member groupMember = createMemberInGroup(group);
+        Member groupMember2 = createMemberInGroup(group);
+        memberRepository.saveAll(Arrays.asList(member, groupMember, groupMember2));
+        Map<String, String> data = new HashMap<>();
+        data.put("content", "buddies");
+        data.put("moodLocation", "/images/sad.png");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonData = objectMapper.writeValueAsString(data);
+
+        Long diaryId = Long.parseLong(
+                RestAssured
+                        .given().log().all()
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                        .multiPart("data", jsonData, "application/json")
+                        .multiPart("file", new File("src/test/resources/images/test.jpg"), "image/png")
+                        .cookie("token", token)
+                        .when().post(String.format(API_PATH, group.getId()))
+                        .then().log().all()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .extract()
+                        .header("Content-Location")
+                        .replace("/diary/", "")
+        );
+
+        Group updatedGroup = groupRepository.findById(group.getId()).get();
+        Diary newDiary = diaryRepository.findById(diaryId).get();
+        assertThat(newDiary.getGroup().getId()).isEqualTo(group.getId());
+        assertThat(updatedGroup.getCurrentOrder()).isEqualTo(1);
+        assertThat(newDiary.getMember().getId()).isEqualTo(member.getId());
+        assertThat(newDiary.getContent()).isEqualTo(data.get("content"));
+        assertThat(newDiary.getMoodLocation()).isEqualTo(data.get("moodLocation"));
+    }
+
     private Diary createDiary(Group group) {
         return Diary.builder()
                 .content("하이하이")
@@ -123,11 +201,19 @@ class DiaryCreateApiTest extends ApiBaseTest {
                 .build();
     }
 
-    private Group createGroup() {
+    private Group createGroup(int currentOrder) {
         return Group.builder()
                 .name("버니즈")
-                .currentOrder(0)
+                .currentOrder(currentOrder)
                 .code("code")
+                .build();
+    }
+
+    private Member createMemberInGroup(Group group) {
+        return Member.builder()
+                .kakaoId(12345L)
+                .profileImage("red")
+                .group(group)
                 .build();
     }
 }
