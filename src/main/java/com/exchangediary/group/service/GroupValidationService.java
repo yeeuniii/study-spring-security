@@ -14,7 +14,7 @@ public class GroupValidationService {
         if (numberOfMembers >= 7) {
             throw new ConfilctException(
                     ErrorCode.FULL_MEMBERS_OF_GROUP,
-                    "그룹원이 꽉 차\n해당 그룹에 들어갈 수 없습니다.",
+                    "",
                     String.valueOf(numberOfMembers)
             );
         }
@@ -25,7 +25,7 @@ public class GroupValidationService {
                 .anyMatch(member -> member.getNickname().equals(nickname))) {
             throw new DuplicateException(
                     ErrorCode.NICKNAME_DUPLICATED,
-                    "이미 존재하는 이름입니다.",
+                    "",
                     nickname
             );
         }
@@ -36,7 +36,7 @@ public class GroupValidationService {
                 .anyMatch(member -> member.getProfileImage().equals(profileImage))) {
             throw new DuplicateException(
                     ErrorCode.PROFILE_DUPLICATED,
-                    "이미 선택된 캐릭터입니다.",
+                    "",
                     profileImage
             );
         }
