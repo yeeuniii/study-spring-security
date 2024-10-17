@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/diary")
+@RequestMapping("/group/{groupId}/diary")
 public class DiaryController {
     private final DiaryQueryService diaryQueryService;
 
     @GetMapping
-    public String writePage() {
+    public String writePage(Model model, @PathVariable Long groupId) {
+        model.addAttribute("groupId", groupId);
         return "diary/write-page";
     }
 

@@ -3,6 +3,7 @@ package com.exchangediary.group.ui;
 import com.exchangediary.member.service.MemberQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -28,8 +29,9 @@ public class GroupController {
     }
 
     @GetMapping("/{groupId}")
-    public String showCalendar(@PathVariable Long groupId) {
+    public String showCalendar(Model model, @PathVariable Long groupId) {
         // 인가 거쳤다고 가정
+        model.addAttribute("groupId", groupId);
         return "group/group-calendar";
     }
 }

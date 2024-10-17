@@ -108,6 +108,9 @@
 </th:block>
 
 <th:block layout:fragment="script">
+    <script>
+        const groupId = [[${groupId}]];
+    </script>
     <script src="/js/monthly-page/draw-calendar.js"></script>
     <script src="/js/monthly-page/calendar-arrow.js"></script>
 </th:block>

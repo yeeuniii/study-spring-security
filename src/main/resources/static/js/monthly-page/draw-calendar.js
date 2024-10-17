@@ -4,7 +4,6 @@ const month = document.querySelector(".month");
 const trs = Array.from(table.children[0].children).slice(3);
 const today = new Date();
 const calendarBottom = document.querySelector(".calendar-bottom")
-const groupId = localStorage.getItem("groupId");
 
 function init() {
     year.innerText = today.getFullYear();
@@ -49,7 +48,7 @@ function makeCircle(date, diaryDays) {
         return `<a class="date day${date} diary highlight" href="/api/groups/${groupId}/diaries">${date}</a>`;
     }
     if (isToday(date)) {
-        return `<a class="date day${date} today highlight" href="/diary">${date}</a>`;
+        return `<a class="date day${date} today highlight" href="/group/${groupId}/diary">${date}</a>`;
     }
     return `<span class="date day${date}">${date}</span>`;
 }
@@ -76,7 +75,7 @@ function showDiary(event) {
     const url = event.target.href
     fetch(`${url}?year=${year.innerText}&month=${month.innerText}&day=${event.target.innerText}`)
         .then(response => response.json())
-        .then(data => window.location.href = `/diary/${data.diaryId}`);
+        .then(data => window.location.href = `/group/${groupId}/diary/${data.diaryId}`);
 }
 
 function drawBottom() {

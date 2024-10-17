@@ -7,8 +7,6 @@ function init() {
     addEventToWriteBtn();
 }
 
-const groupId = localStorage.getItem("groupId");
-
 function addEventToTextArea() {
     const textArea = document.querySelector("textarea");
 
