@@ -30,7 +30,6 @@ public class DiaryCommandService {
     private final GroupQueryService groupQueryService;
     private final GroupRepository groupRepository;
 
-
     public Long createDiary(DiaryRequest diaryRequest, MultipartFile file, Long groupId, Long memberId) {
         Member member = memberQueryService.findMember(memberId);
         Group group = groupQueryService.findGroup(groupId);
@@ -57,7 +56,7 @@ public class DiaryCommandService {
         } catch (IOException e) {
             throw new FailedImageUploadException(
                     ErrorCode.FAILED_UPLOAD_IMAGE,
-                    "",
+                    "네트워크 오류로 인해 \n일기 업로드에 실패했습니다.\n다시 시도해주세요.",
                     file.getOriginalFilename()
             );
         }
