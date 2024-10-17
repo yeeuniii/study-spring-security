@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtAuthenticationInterceptor(jwtService, cookieService))
-                .addPathPatterns("/", "/diary/**", "/group/**", "/api/**")
+                .addPathPatterns("/group", "/diary/**", "/group/**", "/api/**")
                 .excludePathPatterns("/api/kakao/callback");
     }
 }
