@@ -22,8 +22,13 @@ public class DiaryController {
     }
 
     @GetMapping("/{diaryId}")
-    public String viewDiary(Model model, @PathVariable Long diaryId) {
+    public String viewDiary(
+            Model model,
+            @PathVariable Long groupId,
+            @PathVariable Long diaryId
+    ) {
         DiaryResponse diary = diaryQueryService.viewDiary(diaryId);
+        model.addAttribute("groupId", groupId);
         model.addAttribute("diary", diary);
         return "diary/view-diary";
     }
