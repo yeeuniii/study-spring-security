@@ -32,8 +32,8 @@
 
 <th:block layout:fragment="script">
     <script th:inline="javascript">
-        window.moodLocation = [[${diary.moodLocation}]];
-        window.uploadImage = [[${diary.uploadImage}]];
+        const moodLocation = [[${diary.moodLocation}]];
+        const uploadImage = [[${diary.uploadImage}]];
     </script>
     <script src="/js/diary/view-diary/draw-diary.js"></script>
 </th:block>
