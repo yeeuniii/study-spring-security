@@ -2,7 +2,7 @@ package com.exchangediary.diary.service;
 
 import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.DiaryRepository;
-import com.exchangediary.diary.ui.dto.response.DiaryWritableResponse;
+import com.exchangediary.diary.ui.dto.response.DiaryWritableStatusResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryResponse;
@@ -61,10 +61,10 @@ public class DiaryQueryService {
                 .build();
     }
 
-    public DiaryWritableResponse getDiaryWritableStatus(Long groupId, Long memberId) {
+    public DiaryWritableStatusResponse getDiaryWritableStatus(Long groupId, Long memberId) {
         Boolean isMyOrder = isCurrentOrder(groupId, memberId);
         Boolean writtenTodayDiary = isTodayDiaryExistent(groupId);
-        return DiaryWritableResponse.of(isMyOrder, writtenTodayDiary);
+        return DiaryWritableStatusResponse.of(isMyOrder, writtenTodayDiary);
     }
 
     private void checkValidDate(int year, int month, Integer day) {

@@ -10,6 +10,7 @@ import com.exchangediary.member.domain.entity.Member;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -94,7 +95,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
     }
 
     @Test
-    void 일기_작성_실패_오늘_이미_작성() throws JsonProcessingException {
+    void 일기_작성_실패_오늘작성완료() throws JsonProcessingException {
         Group group = createGroup(1);
         groupRepository.save(group);
         Diary diary = createDiary(group);
@@ -117,6 +118,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
                 .body("message", equalTo(ErrorCode.DIARY_DUPLICATED.getMessage()));
     }
 
+    @DisplayName("일기 작성시 그룹내 순서 갱신")
     @Test
     void 일기_작성_성공_순서_확인() throws JsonProcessingException {
         Group group = createGroup(1);
@@ -155,6 +157,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
         assertThat(newDiary.getMoodLocation()).isEqualTo(data.get("moodLocation"));
     }
 
+    @DisplayName("일기 작성시 그룹내 순서 갱신 - 마지막 순서에서 첫번째 순서로 갱신")
     @Test
     void 일기_작성_성공_순서_확인_맨_첫_순서로() throws JsonProcessingException {
         Group group = createGroup(3);
@@ -193,6 +196,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
         assertThat(newDiary.getMoodLocation()).isEqualTo(data.get("moodLocation"));
     }
 
+    @DisplayName("일기 작성시 그룹내 순서 갱신 - 내용만 있는 경우")
     @Test
     void 일기_작성_성공_순서_확인_내용만() throws JsonProcessingException {
         Group group = createGroup(1);

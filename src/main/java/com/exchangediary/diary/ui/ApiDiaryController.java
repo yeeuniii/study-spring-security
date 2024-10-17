@@ -3,7 +3,7 @@ package com.exchangediary.diary.ui;
 import com.exchangediary.diary.service.DiaryCommandService;
 import com.exchangediary.diary.service.DiaryQueryService;
 import com.exchangediary.diary.ui.dto.request.DiaryRequest;
-import com.exchangediary.diary.ui.dto.response.DiaryWritableResponse;
+import com.exchangediary.diary.ui.dto.response.DiaryWritableStatusResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import jakarta.validation.Valid;
@@ -67,11 +67,11 @@ public class ApiDiaryController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<DiaryWritableResponse> getDiaryWritableStatus(
+    public ResponseEntity<DiaryWritableStatusResponse> getDiaryWritableStatus(
             @PathVariable Long groupId,
             @RequestAttribute Long memberId
     ) {
-        DiaryWritableResponse response = diaryQueryService.getDiaryWritableStatus(groupId, memberId);
+        DiaryWritableStatusResponse response = diaryQueryService.getDiaryWritableStatus(groupId, memberId);
         return ResponseEntity
                 .ok()
                 .body(response);

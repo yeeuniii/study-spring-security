@@ -3,7 +3,7 @@ package com.exchangediary.diary.api;
 import com.exchangediary.ApiBaseTest;
 import com.exchangediary.diary.domain.DiaryRepository;
 import com.exchangediary.diary.domain.entity.Diary;
-import com.exchangediary.diary.ui.dto.response.DiaryWritableResponse;
+import com.exchangediary.diary.ui.dto.response.DiaryWritableStatusResponse;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.member.domain.entity.Member;
@@ -33,14 +33,14 @@ public class DiaryWritableStatusApiTest extends ApiBaseTest {
         Diary diary = createDiary(group, member);
         diaryRepository.save(diary);
 
-        DiaryWritableResponse response = RestAssured
+        DiaryWritableStatusResponse response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .cookie("token", token)
                 .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(DiaryWritableResponse.class);
+                .extract().as(DiaryWritableStatusResponse.class);
 
         assertThat(response.isMyOrder()).isEqualTo(true);
         assertThat(response.writtenTodayDiary()).isEqualTo(true);
@@ -53,14 +53,14 @@ public class DiaryWritableStatusApiTest extends ApiBaseTest {
         member.updateMemberGroupInfo("api요청멤버", "orange", 1, group);
         memberRepository.save(member);
 
-        DiaryWritableResponse response = RestAssured
+        DiaryWritableStatusResponse response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .cookie("token", token)
                 .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(DiaryWritableResponse.class);
+                .extract().as(DiaryWritableStatusResponse.class);
 
         assertThat(response.isMyOrder()).isEqualTo(true);
         assertThat(response.writtenTodayDiary()).isEqualTo(false);
@@ -76,14 +76,14 @@ public class DiaryWritableStatusApiTest extends ApiBaseTest {
         Diary diary = createDiary(group, groupMember);
         diaryRepository.save(diary);
 
-        DiaryWritableResponse response = RestAssured
+        DiaryWritableStatusResponse response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .cookie("token", token)
                 .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(DiaryWritableResponse.class);
+                .extract().as(DiaryWritableStatusResponse.class);
 
         assertThat(response.isMyOrder()).isEqualTo(false);
         assertThat(response.writtenTodayDiary()).isEqualTo(true);
@@ -97,14 +97,14 @@ public class DiaryWritableStatusApiTest extends ApiBaseTest {
         Member groupMember = createMemberInGroup(group);
         memberRepository.saveAll(Arrays.asList(member, groupMember));
 
-        DiaryWritableResponse response = RestAssured
+        DiaryWritableStatusResponse response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .cookie("token", token)
                 .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(DiaryWritableResponse.class);
+                .extract().as(DiaryWritableStatusResponse.class);
 
         assertThat(response.isMyOrder()).isEqualTo(false);
         assertThat(response.writtenTodayDiary()).isEqualTo(false);
