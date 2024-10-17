@@ -1,6 +1,7 @@
 package com.exchangediary.global.config.web;
 
 import com.exchangediary.global.config.web.interceptor.JwtAuthenticationInterceptor;
+import com.exchangediary.global.config.web.interceptor.LoginInterceptor;
 import com.exchangediary.member.service.CookieService;
 import com.exchangediary.member.service.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -19,5 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new JwtAuthenticationInterceptor(jwtService, cookieService))
                 .addPathPatterns("/group", "/diary/**", "/group/**", "/api/**")
                 .excludePathPatterns("/api/kakao/callback");
+        registry.addInterceptor(new LoginInterceptor(jwtService, cookieService))
+                .addPathPatterns("/login");
     }
 }
