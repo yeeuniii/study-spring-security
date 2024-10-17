@@ -193,6 +193,43 @@ class DiaryCreateApiTest extends ApiBaseTest {
         assertThat(newDiary.getMoodLocation()).isEqualTo(data.get("moodLocation"));
     }
 
+    @Test
+    void 일기_작성_성공_순서_확인_내용만() throws JsonProcessingException {
+        Group group = createGroup(1);
+        groupRepository.save(group);
+        member.updateMemberGroupInfo("api요청멤버", "orange", 1, group);
+        Member groupMember = createMemberInGroup(group);
+        Member groupMember2 = createMemberInGroup(group);
+        memberRepository.saveAll(Arrays.asList(member, groupMember, groupMember2));
+        Map<String, String> data = new HashMap<>();
+        data.put("content", "buddies");
+        data.put("moodLocation", "/images/sad.png");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonData = objectMapper.writeValueAsString(data);
+
+        Long diaryId = Long.parseLong(
+                RestAssured
+                        .given().log().all()
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                        .multiPart("data", jsonData, "application/json")
+                        .cookie("token", token)
+                        .when().post(String.format(API_PATH, group.getId()))
+                        .then().log().all()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .extract()
+                        .header("Content-Location")
+                        .replace("/diary/", "")
+        );
+
+        Group updatedGroup = groupRepository.findById(group.getId()).get();
+        Diary newDiary = diaryRepository.findById(diaryId).get();
+        assertThat(newDiary.getGroup().getId()).isEqualTo(group.getId());
+        assertThat(updatedGroup.getCurrentOrder()).isEqualTo(2);
+        assertThat(newDiary.getMember().getId()).isEqualTo(member.getId());
+        assertThat(newDiary.getContent()).isEqualTo(data.get("content"));
+        assertThat(newDiary.getMoodLocation()).isEqualTo(data.get("moodLocation"));
+    }
+
     private Diary createDiary(Group group) {
         return Diary.builder()
                 .content("하이하이")
