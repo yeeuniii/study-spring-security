@@ -34,6 +34,13 @@ public class DiaryCommandService {
         Member member = memberQueryService.findMember(memberId);
         Group group = groupQueryService.findGroup(groupId);
         checkTodayDiaryExistent(groupId);
+        if (member.getOrderInGroup() != group.getCurrentOrder()) {
+            throw new FailedImageUploadException(
+                    ErrorCode.MEMBER_NOT_FOUND,
+                    "",
+                    String.valueOf(group.getCurrentOrder())
+            );
+        } //Todo: 일기 작성 인가 후 삭제
 
         if (isEmptyFile(file)) {
             Diary diary = Diary.of(diaryRequest, null);
