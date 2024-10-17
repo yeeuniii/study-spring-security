@@ -121,7 +121,7 @@ async function createGroup() {
             return true;
         })
         .catch(async response => {
-            if (response.status === 400 || response.status === 409) {
+            if (response.status === 400) {
                 throw await response.json();
             }
         })
@@ -150,7 +150,7 @@ async function joinGroup() {
             return true;
         })
         .catch(async response => {
-            if (response.status === 400) {
+            if (response.status === 400  || response.status === 409) {
                 throw await response.json();
             }
         })
