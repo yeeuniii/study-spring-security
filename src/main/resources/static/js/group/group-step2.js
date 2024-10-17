@@ -91,13 +91,13 @@ function changeBoxBorderStyle() {
 function verifyGroupName() {
     const groupName = document.querySelector(".group-name");
     const specialChar = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/;
-    const whiteSpace = /^\s/;
+    const whiteSpace = /\s/;
 
     if (specialChar.test(groupName.value)) {
         return "특수문자는 사용할 수 없습니다.";
     }
     if (whiteSpace.test(groupName.value)) {
-        return "공백으로 시작할 수 없습니다.";
+        return "공백을 포함할 수 없습니다.";
     }
     if (groupName.value.length > 10) {
         return "최대 10자까지 입력 가능합니다.";

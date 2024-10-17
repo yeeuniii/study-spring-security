@@ -8,7 +8,7 @@ const STEP4_HTML = `
                         <div class="input-box">
                             <div class="input-textarea">
                                 <label>
-                                    <textarea class="nickname input-value" placeholder="이름" maxlength="10" spellcheck="false"></textarea>
+                                    <textarea class="nickname input-value" placeholder="이름" maxlength="11" spellcheck="false"></textarea>
                                 </label>
                             </div>
                         </div>
@@ -69,9 +69,16 @@ async function changeStyleAndGetErrorMessage() {
 
 async function verifyNickname() {
     const specialChar = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"₩]/;
+    const whiteSpace = /\s/;
 
     if (specialChar.test(nickname.value)) {
         return "특수문자는 사용할 수 없습니다.";
+    }
+    if (whiteSpace.test(nickname.value)) {
+        return "공백을 포함할 수 없습니다.";
+    }
+    if (nickname.value.length > 10) {
+        return "최대 10자까지 입력 가능합니다.";
     }
     return await isDuplicateNickname();
 }
