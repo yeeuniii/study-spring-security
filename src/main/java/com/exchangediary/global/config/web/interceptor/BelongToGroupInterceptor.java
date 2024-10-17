@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,8 +23,12 @@ public class BelongToGroupInterceptor implements HandlerInterceptor {
         Long memberId = (Long) request.getAttribute("memberId");
         Optional<Long> groupId = memberQueryService.findGroupBelongTo(memberId);
 
-        if (groupId.isEmpty()) {
+        if (groupId.isEmpty() && !Objects.equals(request.getRequestURI(), "/group")) {
             response.sendRedirect(request.getContextPath()+ "/group");
+            return false;
+        }
+        if (groupId.isPresent() && Objects.equals(request.getRequestURI(), "/group")) {
+            response.sendRedirect(request.getContextPath()+ "/group/" + groupId.get());
             return false;
         }
         return true;
