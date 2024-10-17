@@ -4,13 +4,13 @@ import lombok.Builder;
 
 @Builder
 public record DiaryBottomSheetResponse(
-        Boolean myOrder,
-        Boolean todayDiary
+        Boolean isMyOrder,
+        Boolean writtenTodayDiary
 ) {
-    public static DiaryBottomSheetResponse of(Boolean myOrder, Boolean todayDiary) {
+    public static DiaryBottomSheetResponse of(Boolean isMyOrder, Boolean writtenTodayDiary) {
         return DiaryBottomSheetResponse.builder()
-                .myOrder(myOrder)
-                .todayDiary(todayDiary)
+                .isMyOrder(isMyOrder)
+                .writtenTodayDiary(writtenTodayDiary)
                 .build();
     }
 }

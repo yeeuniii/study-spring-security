@@ -7,7 +7,6 @@ import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryResponse;
 import com.exchangediary.global.exception.ErrorCode;
-import com.exchangediary.global.exception.serviceexception.DuplicateException;
 import com.exchangediary.global.exception.serviceexception.InvalidDateException;
 import com.exchangediary.global.exception.serviceexception.NotFoundException;
 import com.exchangediary.group.domain.entity.Group;
@@ -63,9 +62,9 @@ public class DiaryQueryService {
     }
 
     public DiaryBottomSheetResponse viewBottomSheet(Long groupId, Long memberId) {
-        Boolean myOrder = checkCurrentOrder(groupId, memberId);
-        Boolean todayDiary = checkTodayDiaryExistent(groupId);
-        return DiaryBottomSheetResponse.of(myOrder, todayDiary);
+        Boolean isMyOrder = checkCurrentOrder(groupId, memberId);
+        Boolean writtenTodayDiary = checkTodayDiaryExistent(groupId);
+        return DiaryBottomSheetResponse.of(isMyOrder, writtenTodayDiary);
     }
 
     private void checkValidDate(int year, int month, Integer day) {
