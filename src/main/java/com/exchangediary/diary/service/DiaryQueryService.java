@@ -2,7 +2,7 @@ package com.exchangediary.diary.service;
 
 import com.exchangediary.diary.domain.entity.Diary;
 import com.exchangediary.diary.domain.DiaryRepository;
-import com.exchangediary.diary.ui.dto.response.DiaryBottomSheetResponse;
+import com.exchangediary.diary.ui.dto.response.DiaryWritableResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryIdResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryMonthlyResponse;
 import com.exchangediary.diary.ui.dto.response.DiaryResponse;
@@ -61,10 +61,10 @@ public class DiaryQueryService {
                 .build();
     }
 
-    public DiaryBottomSheetResponse viewBottomSheet(Long groupId, Long memberId) {
-        Boolean isMyOrder = checkCurrentOrder(groupId, memberId);
-        Boolean writtenTodayDiary = checkTodayDiaryExistent(groupId);
-        return DiaryBottomSheetResponse.of(isMyOrder, writtenTodayDiary);
+    public DiaryWritableResponse getDiaryWritableStatus(Long groupId, Long memberId) {
+        Boolean isMyOrder = isCurrentOrder(groupId, memberId);
+        Boolean writtenTodayDiary = isTodayDiaryExistent(groupId);
+        return DiaryWritableResponse.of(isMyOrder, writtenTodayDiary);
     }
 
     private void checkValidDate(int year, int month, Integer day) {
@@ -87,23 +87,17 @@ public class DiaryQueryService {
         }
     }
 
-    private Boolean checkCurrentOrder(Long groupId, Long memberId) {
+    private Boolean isCurrentOrder(Long groupId, Long memberId) {
         Group group = groupQueryService.findGroup(groupId);
         Member member = memberQueryService.findMember(memberId);
-        if (group.getCurrentOrder() == member.getOrderInGroup())
-            return true;
-        return false;
+        return group.getCurrentOrder() == member.getOrderInGroup();
     }
 
-    private Boolean checkTodayDiaryExistent(Long groupId) {
+    private Boolean isTodayDiaryExistent(Long groupId) {
         LocalDate today = LocalDate.now();
         Optional<Long> todayDiary =
                 diaryRepository.findIdByGroupAndDate(
                         groupId, today.getYear(), today.getMonthValue(), today.getDayOfMonth());
-
-        if (todayDiary.isPresent()) {
-            return true;
-        }
-        return false;
+        return todayDiary.isPresent();
     }
 }

@@ -3,7 +3,7 @@ package com.exchangediary.diary.api;
 import com.exchangediary.ApiBaseTest;
 import com.exchangediary.diary.domain.DiaryRepository;
 import com.exchangediary.diary.domain.entity.Diary;
-import com.exchangediary.diary.ui.dto.response.DiaryBottomSheetResponse;
+import com.exchangediary.diary.ui.dto.response.DiaryWritableResponse;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.member.domain.entity.Member;
@@ -17,8 +17,8 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DiaryViewBottomApiTest extends ApiBaseTest {
-    private static final String API_PATH = "/api/groups/%d/diaries/summary";
+public class DiaryWritableStatusApiTest extends ApiBaseTest {
+    private static final String API_PATH = "/api/groups/%d/diaries/status";
     @Autowired
     private GroupRepository groupRepository;
     @Autowired
@@ -33,14 +33,14 @@ public class DiaryViewBottomApiTest extends ApiBaseTest {
         Diary diary = createDiary(group, member);
         diaryRepository.save(diary);
 
-        DiaryBottomSheetResponse response = RestAssured
+        DiaryWritableResponse response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .cookie("token", token)
                 .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(DiaryBottomSheetResponse.class);
+                .extract().as(DiaryWritableResponse.class);
 
         assertThat(response.isMyOrder()).isEqualTo(true);
         assertThat(response.writtenTodayDiary()).isEqualTo(true);
@@ -53,14 +53,14 @@ public class DiaryViewBottomApiTest extends ApiBaseTest {
         member.updateMemberGroupInfo("api요청멤버", "orange", 1, group);
         memberRepository.save(member);
 
-        DiaryBottomSheetResponse response = RestAssured
+        DiaryWritableResponse response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .cookie("token", token)
                 .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(DiaryBottomSheetResponse.class);
+                .extract().as(DiaryWritableResponse.class);
 
         assertThat(response.isMyOrder()).isEqualTo(true);
         assertThat(response.writtenTodayDiary()).isEqualTo(false);
@@ -76,14 +76,14 @@ public class DiaryViewBottomApiTest extends ApiBaseTest {
         Diary diary = createDiary(group, groupMember);
         diaryRepository.save(diary);
 
-        DiaryBottomSheetResponse response = RestAssured
+        DiaryWritableResponse response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .cookie("token", token)
                 .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(DiaryBottomSheetResponse.class);
+                .extract().as(DiaryWritableResponse.class);
 
         assertThat(response.isMyOrder()).isEqualTo(false);
         assertThat(response.writtenTodayDiary()).isEqualTo(true);
@@ -97,14 +97,14 @@ public class DiaryViewBottomApiTest extends ApiBaseTest {
         Member groupMember = createMemberInGroup(group);
         memberRepository.saveAll(Arrays.asList(member, groupMember));
 
-        DiaryBottomSheetResponse response = RestAssured
+        DiaryWritableResponse response = RestAssured
                 .given().log().all()
                 .contentType(ContentType.JSON)
                 .cookie("token", token)
                 .when().get(String.format(API_PATH, group.getId()))
                 .then().log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(DiaryBottomSheetResponse.class);
+                .extract().as(DiaryWritableResponse.class);
 
         assertThat(response.isMyOrder()).isEqualTo(false);
         assertThat(response.writtenTodayDiary()).isEqualTo(false);

@@ -38,7 +38,7 @@ public class DiaryCommandService {
 
         if (isEmptyFile(file)) {
             Diary diary = Diary.of(diaryRequest, null);
-            setCurrentOrderOfGroup(group);
+            changeCurrentOrderOfGroup(group);
             diary.addMemberAndGroup(member, group);
             Diary savedDiary = diaryRepository.save(diary);
             return savedDiary.getId();
@@ -49,7 +49,7 @@ public class DiaryCommandService {
                     .image(file.getBytes())
                     .build();
             Diary diary = Diary.of(diaryRequest, image);
-            setCurrentOrderOfGroup(group);
+            changeCurrentOrderOfGroup(group);
             diary.addMemberAndGroup(member, group);
             Diary savedDiary = diaryRepository.save(diary);
             image.uploadToDiary(savedDiary);
@@ -82,7 +82,7 @@ public class DiaryCommandService {
         return file == null || file.isEmpty();
     }
 
-    private void setCurrentOrderOfGroup(Group group) {
+    private void changeCurrentOrderOfGroup(Group group) {
         int currentOrder = group.getCurrentOrder() + 1;
         if (group.getMembers().size() < currentOrder)
             currentOrder = 1;
