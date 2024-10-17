@@ -16,8 +16,12 @@ function uploadImage(event) {
 
     reader.onloadend = function () {
         photoBtn.classList.remove("photo-btn");
-        photoBtn.children[0].src = reader.result;
-        photoBtn.children[0].classList = ["image"];
+        photoBtn.innerHTML = `
+                            <img src="${reader.result}" class="image">
+                                <div class="cancel-photo cancel-icon">
+                                    <img src="/images/diary/write-page/cancel-upload.svg" class="cancel-icon">
+                                </div>
+                            `;
         closeModal();
     };
 
