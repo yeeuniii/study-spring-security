@@ -35,6 +35,8 @@ class DiaryCreateApiTest extends ApiBaseTest {
     void 일기_작성_성공() throws JsonProcessingException {
         Group group = createGroup(1);
         groupRepository.save(group);
+        member.updateMemberGroupInfo("api요청멤버", "orange", 1, group);
+        memberRepository.save(member);
         Map<String, String> data = new HashMap<>();
         data.put("content", "buddies");
         data.put("moodLocation", "/images/sad.png");
@@ -53,7 +55,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
                         .statusCode(HttpStatus.CREATED.value())
                         .extract()
                         .header("Content-Location")
-                        .replace("/diary/", "")
+                        .split("/")[4]
         );
 
         Diary newDiary = diaryRepository.findById(diaryId).get();
@@ -67,6 +69,8 @@ class DiaryCreateApiTest extends ApiBaseTest {
     void 일기_작성_성공_내용만() throws JsonProcessingException {
         Group group = createGroup(1);
         groupRepository.save(group);
+        member.updateMemberGroupInfo("api요청멤버", "orange", 1, group);
+        memberRepository.save(member);
         Map<String, String> data = new HashMap<>();
         data.put("content", "buddies");
         data.put("moodLocation", "/images/sad.png");
@@ -84,7 +88,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
                         .statusCode(HttpStatus.CREATED.value())
                         .extract()
                         .header("Content-Location")
-                        .replace("/diary/", "")
+                        .split("/")[4]
         );
 
         Diary newDiary = diaryRepository.findById(diaryId).get();
@@ -145,7 +149,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
                         .statusCode(HttpStatus.CREATED.value())
                         .extract()
                         .header("Content-Location")
-                        .replace("/diary/", "")
+                        .split("/")[4]
         );
 
         Group updatedGroup = groupRepository.findById(group.getId()).get();
@@ -162,7 +166,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
     void 일기_작성_성공_순서_확인_맨_첫_순서로() throws JsonProcessingException {
         Group group = createGroup(3);
         groupRepository.save(group);
-        member.updateMemberGroupInfo("api요청멤버", "orange", 1, group);
+        member.updateMemberGroupInfo("api요청멤버", "orange", 3, group);
         Member groupMember = createMemberInGroup(group);
         Member groupMember2 = createMemberInGroup(group);
         memberRepository.saveAll(Arrays.asList(member, groupMember, groupMember2));
@@ -184,7 +188,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
                         .statusCode(HttpStatus.CREATED.value())
                         .extract()
                         .header("Content-Location")
-                        .replace("/diary/", "")
+                        .split("/")[4]
         );
 
         Group updatedGroup = groupRepository.findById(group.getId()).get();
@@ -222,7 +226,7 @@ class DiaryCreateApiTest extends ApiBaseTest {
                         .statusCode(HttpStatus.CREATED.value())
                         .extract()
                         .header("Content-Location")
-                        .replace("/diary/", "")
+                        .split("/")[4]
         );
 
         Group updatedGroup = groupRepository.findById(group.getId()).get();
