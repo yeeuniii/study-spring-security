@@ -53,7 +53,6 @@ function writeDiary() {
         .then(contentLocation => {
             closeModal(); // TODO: 약간의 딜레이 문제
             openNotificationModal("success", ["일기가 작성되었어요!"], 2000, contentLocation);
-            showSuccess(contentLocation);
         })
         .catch(() => {
             // ToDo: 예외 처리 로직 추가
@@ -72,9 +71,10 @@ function getMoodLocation() {
 }
 
 function getUploadImage() {
-    const uploadImage = null;
+    const photo = document.querySelector("#photo-input");
 
-    // TODO: 업로드 이미지 설정
-
-    return uploadImage;
+    if (photo.files.length === 1) {
+        return photo.files[0];
+    }
+    return null;
 }
