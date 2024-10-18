@@ -7,6 +7,8 @@ import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.DuplicateException;
 import com.exchangediary.global.exception.serviceexception.FailedImageUploadException;
+import com.exchangediary.global.exception.serviceexception.ForbiddenException;
+import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.service.GroupQueryService;
 import com.exchangediary.member.domain.entity.Member;
@@ -27,16 +29,26 @@ public class DiaryCommandService {
     private final DiaryRepository diaryRepository;
     private final MemberQueryService memberQueryService;
     private final GroupQueryService groupQueryService;
+    private final GroupRepository groupRepository;
 
     public Long createDiary(DiaryRequest diaryRequest, MultipartFile file, Long groupId, Long memberId) {
         Member member = memberQueryService.findMember(memberId);
         Group group = groupQueryService.findGroup(groupId);
         checkTodayDiaryExistent(groupId);
+        //Todo: 일기 작성 인가 후 삭제
+        if (!member.getOrderInGroup().equals(group.getCurrentOrder())) {
+            throw new ForbiddenException(
+                    ErrorCode.DIARY_WRITE_FORBIDDEN,
+                    "",
+                    String.valueOf(group.getCurrentOrder())
+            );
+        }
 
         if (isEmptyFile(file)) {
             Diary diary = Diary.of(diaryRequest, null);
-            Diary savedDiary = diaryRepository.save(diary);
+            changeCurrentOrderOfGroup(group);
             diary.addMemberAndGroup(member, group);
+            Diary savedDiary = diaryRepository.save(diary);
             return savedDiary.getId();
         }
 
@@ -45,8 +57,9 @@ public class DiaryCommandService {
                     .image(file.getBytes())
                     .build();
             Diary diary = Diary.of(diaryRequest, image);
-            Diary savedDiary = diaryRepository.save(diary);
+            changeCurrentOrderOfGroup(group);
             diary.addMemberAndGroup(member, group);
+            Diary savedDiary = diaryRepository.save(diary);
             image.uploadToDiary(savedDiary);
             return savedDiary.getId();
         } catch (IOException e) {
@@ -75,5 +88,13 @@ public class DiaryCommandService {
 
     private boolean isEmptyFile(MultipartFile file) {
         return file == null || file.isEmpty();
+    }
+
+    private void changeCurrentOrderOfGroup(Group group) {
+        int currentOrder = group.getCurrentOrder() + 1;
+        if (group.getMembers().size() < currentOrder)
+            currentOrder = 1;
+        group.updateCurrentOrder(currentOrder);
+        groupRepository.save(group);
     }
 }
