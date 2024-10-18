@@ -2,6 +2,7 @@ package com.exchangediary.global.exception;
 
 import com.exchangediary.global.exception.serviceexception.ConfilctException;
 import com.exchangediary.global.exception.serviceexception.FailedImageUploadException;
+import com.exchangediary.global.exception.serviceexception.ForbiddenException;
 import com.exchangediary.global.exception.serviceexception.KakaoLoginFailureException;
 import com.exchangediary.global.exception.serviceexception.DuplicateException;
 import com.exchangediary.global.exception.serviceexception.ServiceException;
@@ -44,6 +45,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({UnauthorizedException.class})
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     public ApiErrorResponse handleUnauthorizedException(ServiceException exception) {
+        return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
+    }
+
+    @ExceptionHandler({ForbiddenException.class})
+    @ResponseStatus(code = HttpStatus.FORBIDDEN)
+    public ApiErrorResponse handleForbiddenException(ForbiddenException exception) {
         return ApiErrorResponse.from(exception.getErrorCode(), exception.getMessage(), exception.getValue());
     }
 

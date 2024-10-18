@@ -7,6 +7,7 @@ import com.exchangediary.diary.ui.dto.request.DiaryRequest;
 import com.exchangediary.global.exception.ErrorCode;
 import com.exchangediary.global.exception.serviceexception.DuplicateException;
 import com.exchangediary.global.exception.serviceexception.FailedImageUploadException;
+import com.exchangediary.global.exception.serviceexception.ForbiddenException;
 import com.exchangediary.group.domain.GroupRepository;
 import com.exchangediary.group.domain.entity.Group;
 import com.exchangediary.group.service.GroupQueryService;
@@ -34,13 +35,14 @@ public class DiaryCommandService {
         Member member = memberQueryService.findMember(memberId);
         Group group = groupQueryService.findGroup(groupId);
         checkTodayDiaryExistent(groupId);
-        if (member.getOrderInGroup() != group.getCurrentOrder()) {
-            throw new FailedImageUploadException(
-                    ErrorCode.MEMBER_NOT_FOUND,
+        //Todo: 일기 작성 인가 후 삭제
+        if (!member.getOrderInGroup().equals(group.getCurrentOrder())) {
+            throw new ForbiddenException(
+                    ErrorCode.DIARY_WRITE_FORBIDDEN,
                     "",
                     String.valueOf(group.getCurrentOrder())
             );
-        } //Todo: 일기 작성 인가 후 삭제
+        }
 
         if (isEmptyFile(file)) {
             Diary diary = Diary.of(diaryRequest, null);
