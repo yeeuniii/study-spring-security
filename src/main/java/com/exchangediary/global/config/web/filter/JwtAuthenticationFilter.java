@@ -44,18 +44,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             Long memberId = jwtService.extractMemberId(token);
             request.setAttribute("memberId", memberId);
             List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER")); // 반드시 ROLE_ 로 시작해야??
+//            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
             SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
             AbstractAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(memberId, null, authorities); // 주체의 정보, 비밀번호, 권한 리스트
+                    new UsernamePasswordAuthenticationToken(memberId, null, authorities);
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             securityContext.setAuthentication(authenticationToken);
             SecurityContextHolder.setContext(securityContext);
 
         } catch (UnauthorizedException exception) {
             exception.fillInStackTrace();
-            response.sendRedirect(request.getContextPath()+ "/");
+//            response.sendRedirect(request.getContextPath()+ "/");
         }
         filterChain.doFilter(request, response);
     }
