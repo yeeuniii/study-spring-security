@@ -1,6 +1,6 @@
-package com.exchangediary.global.config.web;
+package com.exchangediary.global.config.security;
 
-import com.exchangediary.global.config.web.filter.JwtAuthenticationFilter;
+import com.exchangediary.global.config.security.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +36,8 @@ public class WebSecurityConfig {
                     .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                     .anyRequest().authenticated()
             )
+            .exceptionHandling(exceptionHandling -> exceptionHandling
+                    .authenticationEntryPoint(new FaliedAuthenticationEntryPoint()))
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
